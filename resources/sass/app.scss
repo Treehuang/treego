@@ -10,7 +10,13 @@
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/brands';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+body {
+  font-size: 14px;
+  margin-bottom: 70px;
+  font-family: Helvetica, "Microsoft YaHei", Arial, sans-serif;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
 }
