@@ -16442,3 +16442,45 @@ html {
   min-height: 100%;
 }
 
+.fh5co-form {
+  padding: 30px;
+  margin-top: 4em;
+  -o-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+}
+
+input::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: #cbd1d7 !important;
+}
+
+input::-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #cbd1d7 !important;
+}
+
+input:-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #cbd1d7 !important;
+}
+
+input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #cbd1d7 !important;
+}
+
+.form-control:focus,
+.form-control.is-invalid:focus {
+  box-shadow: none;
+}
+
+.invalid-feedback {
+  color: #d36b75;
+}
+
+.form-control.is-invalid {
+  border-color: #d36b75;
+  background-image: none;
+}
+
