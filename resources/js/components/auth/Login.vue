@@ -36,7 +36,7 @@
                     <div class="form-group">
                         <!-- 登录按钮 -->
                         <div class="form-group">
-                            <button type="submit" class="btn login"><span>Sign In <i :class="[isloading ? 'spinner-border spinner-border-sm': 'fas fa-sign-in-alt']"></i></span></button>
+                            <button type="submit" class="btn login"><span>Sign In <i :class="[isloading ? 'spinner-border spinner-border-sm' : 'fas fa-sign-in-alt']"></i></span></button>
                         </div>
                     </div>
                 </form>

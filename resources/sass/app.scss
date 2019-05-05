@@ -45,8 +45,13 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
   color: #cbd1d7 !important;
 }
 
-.form-control:focus, .form-control.is-invalid:focus {
+.form-control:focus {
+  box-shadow: none;
+}
+
+.form-control.is-invalid:focus {
     box-shadow: none;
+    border-color: #d36b75;
 }
 
 .invalid-feedback {
