@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="fa-pull-right">
-                        <p><router-link to="#"> 注册 </router-link> / <router-link to="#">忘记密码?</router-link></p>
+                        <p><router-link to="/register"> 注册 </router-link> / <router-link to="#">忘记密码?</router-link></p>
                     </div>
 
                     <div class="clearfix"></div>
@@ -86,11 +86,6 @@
 </script>
 
 <style scoped>
-    a {
-        text-decoration: none;
-    }
-
-
 
     .check {
         color: #636b6f;

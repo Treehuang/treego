@@ -45,6 +45,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
   color: #cbd1d7 !important;
 }
 
+// 输入框警告
 .form-control:focus {
   box-shadow: none;
 }
@@ -61,4 +62,12 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 .form-control.is-invalid {
     border-color: #d36b75;
     background-image: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+p {
+  color: #636b6f;
 }

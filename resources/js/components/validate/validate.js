@@ -18,6 +18,13 @@ Validator.extend('password', {
     }
 });
 
+Validator.extend('phone', {
+    getMessage: field => '请输入正确的手机号',
+    validate: value => {
+        return /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(value)
+    }
+});
+
 const dictionary = {
     en: {
         custom : {
@@ -26,6 +33,9 @@ const dictionary = {
             },
             password : {
                 required : () => '请输入6-16位密码,区分大小写'
+            },
+            phone: {
+                required: () => '手机号不能为空'
             }
         }
     },

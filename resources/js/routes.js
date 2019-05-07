@@ -11,6 +11,11 @@ let routes = [
         name: 'login',
         components: require('./components/auth/Login')
     },
+    {
+        path: '/register',
+        name: 'register',
+        components: require('./components/auth/Register')
+    }
 ];
 
 export default new VueRouter({
