@@ -16,6 +16,10 @@
                         <span class="invalid-feedback" v-if="errors.has('phone')">{{ errors.first('phone') }}</span>
                     </div>
 
+                    <div class="form-group">
+                        <geet-test @getGeet="getGeetTestObj"></geet-test>
+                        <span class="error" v-if="noGeet">请完成验证操作</span>
+                    </div>
                     <!-- github登录 -->
                     <div class="form-group">
                         <a href="#">
@@ -45,32 +49,56 @@
 
 <script>
 
+    import GeetTest from '../validate/GeetTest'
+
     export default {
+        components: {
+          GeetTest
+        },
+
         data() {
             return {
-                phone: ''
+                phone: '',
+                noGeet: false,
+                geetestObj: null,
             }
         },
 
         methods: {
             register() {
-                let formData = {
-                    phone: this.phone
-                };
-
+                this.noGeet = !this.geetestObj;
+                // 校验输入框数据
                 this.$validator.validateAll().then((result) => {
-                    if(result) {
+                    if(result && !this.noGeet) {
 
-                        // to do
-                        console.log(formData)
+                        let formData = {
+                            phone: this.phone,
+                            geetest_seccode: this.geetestObj.geetest_seccode,
+                            geetest_validate: this.geetestObj.geetest_validate,
+                            geetest_challenge: this.geetestObj.geetest_challenge
+                        };
+                        console.log(formData);
+                        this.$axios.post('/api/register', formData).then(response => {
+                            console.log(response.data);
+                        });
                     }
-                })
+                });
+            },
+
+            // 极验子组件传递数据
+            getGeetTestObj: function(data) {
+                this.noGeet = false;
+                this.geetestObj = data;
             }
         }
     }
 </script>
 
 <style scoped>
+    .container {
+        min-width: 1100px;
+    }
+
     .github{
         color: #606060;
         box-shadow: none;

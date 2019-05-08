@@ -1894,6 +1894,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _validate_GeetTest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validate/GeetTest */ "./resources/js/components/validate/GeetTest.vue");
 //
 //
 //
@@ -1939,23 +1940,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    GeetTest: _validate_GeetTest__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
-      phone: ''
+      phone: '',
+      noGeet: false,
+      geetestObj: null
     };
   },
   methods: {
     register: function register() {
-      var formData = {
-        phone: this.phone
-      };
+      var _this = this;
+
+      this.noGeet = !this.geetestObj; // 校验输入框数据
+
       this.$validator.validateAll().then(function (result) {
-        if (result) {
-          // to do
+        if (result && !_this.noGeet) {
+          var formData = {
+            phone: _this.phone,
+            geetest_seccode: _this.geetestObj.geetest_seccode,
+            geetest_validate: _this.geetestObj.geetest_validate,
+            geetest_challenge: _this.geetestObj.geetest_challenge
+          };
           console.log(formData);
+
+          _this.$axios.post('/api/register', formData).then(function (response) {
+            console.log(response.data);
+          });
         }
       });
+    },
+    // 极验子组件传递数据
+    getGeetTestObj: function getGeetTestObj(data) {
+      this.noGeet = false;
+      this.geetestObj = data;
     }
   }
 });
@@ -2095,6 +2121,70 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/validate/GeetTest.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/validate/GeetTest.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'GeetTest',
+  data: function data() {
+    return {
+      geetestObj: {}
+    };
+  },
+  created: function created() {
+    this.getGeetest();
+  },
+  methods: {
+    getGeetest: function getGeetest() {
+      var _this = this;
+
+      this.$axios.get('/api/auth/geetest').then(function (response) {
+        initGeetest({
+          // 以下配置参数来自服务端 SDK，这是第一次验证，也就是获取到了后端的这个三个数据
+          gt: response.data.gt,
+          challenge: response.data.challenge,
+          offline: !response.data.success,
+          width: '100%',
+          // 宕机情况下使用，表示验证是 3.0 还是 2.0，3.0 的 sdk 该字段为 true
+          new_captcha: true
+        }, function (captchaObj) {
+          captchaObj.appendTo('#geetest');
+          captchaObj.onReady(function () {
+            $("#wait")[0].className = "hide";
+          });
+          captchaObj.onSuccess(function () {
+            var result = captchaObj.getValidate();
+
+            _this.$emit("getGeet", result);
+          });
+        });
+      })["catch"](function (err) {// to do
+      });
+    }
   }
 });
 
@@ -6576,7 +6666,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.github[data-v-d4f9cbe2]{\n    color: #606060;\n    box-shadow: none;\n    border-color: #ced4da;\n}\n.github[data-v-d4f9cbe2]:hover{\n    color: #32c6c6;\n    border-color: #32c6c6;\n    background-color: rgba(200, 255, 193, 0);\n}\n.register[data-v-d4f9cbe2]{\n    color: #ffffff;\n    border-color: #33cccc;\n    background-color: #33cdcd;\n    box-shadow: -4px 7px 20px 2px rgba(53, 212, 212, 0.2);\n}\n.register[data-v-d4f9cbe2]:hover{\n    background-color: #34d7d7;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-d4f9cbe2] {\n    min-width: 1100px;\n}\n.github[data-v-d4f9cbe2]{\n    color: #606060;\n    box-shadow: none;\n    border-color: #ced4da;\n}\n.github[data-v-d4f9cbe2]:hover{\n    color: #32c6c6;\n    border-color: #32c6c6;\n    background-color: rgba(200, 255, 193, 0);\n}\n.register[data-v-d4f9cbe2]{\n    color: #ffffff;\n    border-color: #33cccc;\n    background-color: #33cdcd;\n    box-shadow: -4px 7px 20px 2px rgba(53, 212, 212, 0.2);\n}\n.register[data-v-d4f9cbe2]:hover{\n    background-color: #34d7d7;\n}\n", ""]);
 
 // exports
 
@@ -49592,6 +49682,21 @@ var render = function() {
                 : _vm._e()
             ]),
             _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("geet-test", { on: { getGeet: _vm.getGeetTestObj } }),
+                _vm._v(" "),
+                _vm.noGeet
+                  ? _c("span", { staticClass: "error" }, [
+                      _vm._v("请完成验证操作")
+                    ])
+                  : _vm._e()
+              ],
+              1
+            ),
+            _vm._v(" "),
             _vm._m(1),
             _vm._v(" "),
             _c("div", { staticClass: "form-group fa-pull-right" }, [
@@ -49937,6 +50042,51 @@ var staticRenderFns = [
           ])
         ])
       ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/validate/GeetTest.vue?vue&type=template&id=35c3ea7d&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/validate/GeetTest.vue?vue&type=template&id=35c3ea7d& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { attrs: { id: "geetest" } }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "show sk-three-bounce", attrs: { id: "wait" } },
+        [
+          _c("div", { staticClass: "sk-bounce-1 sk-child" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "sk-bounce-2 sk-child" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "sk-bounce-3 sk-child" })
+        ]
+      )
     ])
   }
 ]
@@ -64781,12 +64931,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _components_validate_validate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/validate/validate */ "./resources/js/components/validate/validate.js");
+/* harmony import */ var _geetest_gt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./geetest/gt */ "./resources/js/geetest/gt.js");
+/* harmony import */ var _geetest_gt__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_geetest_gt__WEBPACK_IMPORTED_MODULE_5__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 
 
+
+ // 全局引入geetest
 
 
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
@@ -65393,6 +65547,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/validate/GeetTest.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/validate/GeetTest.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _GeetTest_vue_vue_type_template_id_35c3ea7d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GeetTest.vue?vue&type=template&id=35c3ea7d& */ "./resources/js/components/validate/GeetTest.vue?vue&type=template&id=35c3ea7d&");
+/* harmony import */ var _GeetTest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GeetTest.vue?vue&type=script&lang=js& */ "./resources/js/components/validate/GeetTest.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GeetTest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GeetTest_vue_vue_type_template_id_35c3ea7d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _GeetTest_vue_vue_type_template_id_35c3ea7d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/validate/GeetTest.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/validate/GeetTest.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/validate/GeetTest.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GeetTest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./GeetTest.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/validate/GeetTest.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GeetTest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/validate/GeetTest.vue?vue&type=template&id=35c3ea7d&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/validate/GeetTest.vue?vue&type=template&id=35c3ea7d& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GeetTest_vue_vue_type_template_id_35c3ea7d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./GeetTest.vue?vue&type=template&id=35c3ea7d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/validate/GeetTest.vue?vue&type=template&id=35c3ea7d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GeetTest_vue_vue_type_template_id_35c3ea7d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GeetTest_vue_vue_type_template_id_35c3ea7d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/validate/validate.js":
 /*!******************************************************!*\
   !*** ./resources/js/components/validate/validate.js ***!
@@ -65464,6 +65687,344 @@ var dictionary = {
 }; // 自定义validate error 信息
 
 vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize(dictionary);
+
+/***/ }),
+
+/***/ "./resources/js/geetest/gt.js":
+/*!************************************!*\
+  !*** ./resources/js/geetest/gt.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/* initGeetest 1.0.0
+ * 用于加载id对应的验证码库，并支持宕机模式
+ * 暴露 initGeetest 进行验证码的初始化
+ * 一般不需要用户进行修改
+ */
+(function (global, factory) {
+  "use strict";
+
+  if (( false ? undefined : _typeof(module)) === "object" && _typeof(module.exports) === "object") {
+    // CommonJS
+    module.exports = global.document ? factory(global, true) : function (w) {
+      if (!w.document) {
+        throw new Error("Geetest requires a window with a document");
+      }
+
+      return factory(w);
+    };
+  } else {
+    factory(global);
+  }
+})(typeof window !== "undefined" ? window : this, function (window, noGlobal) {
+  "use strict";
+
+  if (typeof window === 'undefined') {
+    throw new Error('Geetest requires browser environment');
+  }
+
+  var document = window.document;
+  var Math = window.Math;
+  var head = document.getElementsByTagName("head")[0];
+
+  function _Object(obj) {
+    this._obj = obj;
+  }
+
+  _Object.prototype = {
+    _each: function _each(process) {
+      var _obj = this._obj;
+
+      for (var k in _obj) {
+        if (_obj.hasOwnProperty(k)) {
+          process(k, _obj[k]);
+        }
+      }
+
+      return this;
+    }
+  };
+
+  function Config(config) {
+    var self = this;
+
+    new _Object(config)._each(function (key, value) {
+      self[key] = value;
+    });
+  }
+
+  Config.prototype = {
+    api_server: 'api.geetest.com',
+    protocol: 'http://',
+    type_path: '/gettype.php',
+    fallback_config: {
+      slide: {
+        static_servers: ["static.geetest.com", "dn-staticdown.qbox.me"],
+        type: 'slide',
+        slide: '/static/js/geetest.0.0.0.js'
+      },
+      fullpage: {
+        static_servers: ["static.geetest.com", "dn-staticdown.qbox.me"],
+        type: 'fullpage',
+        fullpage: '/static/js/fullpage.0.0.0.js'
+      }
+    },
+    _get_fallback_config: function _get_fallback_config() {
+      var self = this;
+
+      if (isString(self.type)) {
+        return self.fallback_config[self.type];
+      } else if (self.new_captcha) {
+        return self.fallback_config.fullpage;
+      } else {
+        return self.fallback_config.slide;
+      }
+    },
+    _extend: function _extend(obj) {
+      var self = this;
+
+      new _Object(obj)._each(function (key, value) {
+        self[key] = value;
+      });
+    }
+  };
+
+  var isNumber = function isNumber(value) {
+    return typeof value === 'number';
+  };
+
+  var isString = function isString(value) {
+    return typeof value === 'string';
+  };
+
+  var isBoolean = function isBoolean(value) {
+    return typeof value === 'boolean';
+  };
+
+  var isObject = function isObject(value) {
+    return _typeof(value) === 'object' && value !== null;
+  };
+
+  var isFunction = function isFunction(value) {
+    return typeof value === 'function';
+  };
+
+  var callbacks = {};
+  var status = {};
+
+  var random = function random() {
+    return parseInt(Math.random() * 10000) + new Date().valueOf();
+  };
+
+  var loadScript = function loadScript(url, cb) {
+    var script = document.createElement("script");
+    script.charset = "UTF-8";
+    script.async = true;
+
+    script.onerror = function () {
+      cb(true);
+    };
+
+    var loaded = false;
+
+    script.onload = script.onreadystatechange = function () {
+      if (!loaded && (!script.readyState || "loaded" === script.readyState || "complete" === script.readyState)) {
+        loaded = true;
+        setTimeout(function () {
+          cb(false);
+        }, 0);
+      }
+    };
+
+    script.src = url;
+    head.appendChild(script);
+  };
+
+  var normalizeDomain = function normalizeDomain(domain) {
+    return domain.replace(/^https?:\/\/|\/$/g, '');
+  };
+
+  var normalizePath = function normalizePath(path) {
+    path = path.replace(/\/+/g, '/');
+
+    if (path.indexOf('/') !== 0) {
+      path = '/' + path;
+    }
+
+    return path;
+  };
+
+  var normalizeQuery = function normalizeQuery(query) {
+    if (!query) {
+      return '';
+    }
+
+    var q = '?';
+
+    new _Object(query)._each(function (key, value) {
+      if (isString(value) || isNumber(value) || isBoolean(value)) {
+        q = q + encodeURIComponent(key) + '=' + encodeURIComponent(value) + '&';
+      }
+    });
+
+    if (q === '?') {
+      q = '';
+    }
+
+    return q.replace(/&$/, '');
+  };
+
+  var makeURL = function makeURL(protocol, domain, path, query) {
+    domain = normalizeDomain(domain);
+    var url = normalizePath(path) + normalizeQuery(query);
+
+    if (domain) {
+      url = protocol + domain + url;
+    }
+
+    return url;
+  };
+
+  var load = function load(protocol, domains, path, query, cb) {
+    var tryRequest = function tryRequest(at) {
+      var url = makeURL(protocol, domains[at], path, query);
+      loadScript(url, function (err) {
+        if (err) {
+          if (at >= domains.length - 1) {
+            cb(true);
+          } else {
+            tryRequest(at + 1);
+          }
+        } else {
+          cb(false);
+        }
+      });
+    };
+
+    tryRequest(0);
+  };
+
+  var jsonp = function jsonp(domains, path, config, callback) {
+    if (isObject(config.getLib)) {
+      config._extend(config.getLib);
+
+      callback(config);
+      return;
+    }
+
+    if (config.offline) {
+      callback(config._get_fallback_config());
+      return;
+    }
+
+    var cb = "geetest_" + random();
+
+    window[cb] = function (data) {
+      if (data.status === 'success') {
+        callback(data.data);
+      } else if (!data.status) {
+        callback(data);
+      } else {
+        callback(config._get_fallback_config());
+      }
+
+      window[cb] = undefined;
+
+      try {
+        delete window[cb];
+      } catch (e) {}
+    };
+
+    load(config.protocol, domains, path, {
+      gt: config.gt,
+      callback: cb
+    }, function (err) {
+      if (err) {
+        callback(config._get_fallback_config());
+      }
+    });
+  };
+
+  var throwError = function throwError(errorType, config) {
+    var errors = {
+      networkError: '网络错误'
+    };
+
+    if (typeof config.onError === 'function') {
+      config.onError(errors[errorType]);
+    } else {
+      throw new Error(errors[errorType]);
+    }
+  };
+
+  var detect = function detect() {
+    return !!window.Geetest;
+  };
+
+  if (detect()) {
+    status.slide = "loaded";
+  }
+
+  var initGeetest = function initGeetest(userConfig, callback) {
+    var config = new Config(userConfig);
+
+    if (userConfig.https) {
+      config.protocol = 'https://';
+    } else if (!userConfig.protocol) {
+      config.protocol = window.location.protocol + '//';
+    }
+
+    jsonp([config.api_server || config.apiserver], config.type_path, config, function (newConfig) {
+      var type = newConfig.type;
+
+      var init = function init() {
+        config._extend(newConfig);
+
+        callback(new window.Geetest(config));
+      };
+
+      callbacks[type] = callbacks[type] || [];
+      var s = status[type] || 'init';
+
+      if (s === 'init') {
+        status[type] = 'loading';
+        callbacks[type].push(init);
+        load(config.protocol, newConfig.static_servers || newConfig.domains, newConfig[type] || newConfig.path, null, function (err) {
+          if (err) {
+            status[type] = 'fail';
+            throwError('networkError', config);
+          } else {
+            status[type] = 'loaded';
+            var cbs = callbacks[type];
+
+            for (var i = 0, len = cbs.length; i < len; i = i + 1) {
+              var cb = cbs[i];
+
+              if (isFunction(cb)) {
+                cb();
+              }
+            }
+
+            callbacks[type] = [];
+          }
+        });
+      } else if (s === "loaded") {
+        init();
+      } else if (s === "fail") {
+        throwError('networkError', config);
+      } else if (s === "loading") {
+        callbacks[type].push(init);
+      }
+    });
+  };
+
+  window.initGeetest = initGeetest;
+  return initGeetest;
+});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 

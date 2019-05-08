@@ -8,6 +8,9 @@ import App from './components/App'
 import axios from "axios"
 import './components/validate/validate'
 
+// 全局引入geetest
+import './geetest/gt'
+
 Vue.use(VueRouter);
 
 Vue.prototype.$axios = axios;

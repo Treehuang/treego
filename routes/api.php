@@ -13,11 +13,22 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+$api = app('Dingo\Api\Routing\Router');
 
-Route::post('/login', function (Request $request) {
-    sleep(3);
-    return response()->json(['data' => $request->all()]);
+$api->version('v1', [
+
+    'namespace' => 'App\Http\Controllers\Api'
+
+], function($api) {
+
+    // 极验-获取流水标识
+    $api->get('/auth/geetest', 'Auth\GeetestController@getGeetest');
+
+    // 登录
+    $api->post('/login', 'Auth\LoginController@login');
+
+    // 注册
+    $api->post('/register', 'Auth\RegisterController@register');
+
+    $api->get('/test', 'Test\TestController@test');
 });
