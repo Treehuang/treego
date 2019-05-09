@@ -1797,6 +1797,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _validate_GeetTest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validate/GeetTest */ "./resources/js/components/validate/GeetTest.vue");
 //
 //
 //
@@ -1849,36 +1850,61 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    GeetTest: _validate_GeetTest__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       account: '',
       password: '',
-      isloading: false
+      noGeet: false,
+      isloading: false,
+      message: '请完成验证操作',
+      geetestObj: null,
+      captchaObj: null
     };
   },
   methods: {
     login: function login() {
       var _this = this;
 
-      var formData = {
-        account: this.account,
-        password: this.password
-      }; // 校验所有,只要有一个校验失败，就返回false
+      this.noGeet = !this.geetestObj; // 校验所有,只要有一个校验失败，就返回false
 
       this.$validator.validateAll().then(function (result) {
-        if (result) {
+        if (result && !_this.noGeet) {
+          var formData = Object.assign(_this.geetestObj, {
+            account: _this.account,
+            password: _this.password
+          });
           _this.isloading = true;
           axios.post('/api/login', formData).then(function (response) {
             // TO DO
             _this.$router.push({
               name: 'home'
             });
+          })["catch"](function (error) {
+            _this.isloading = false;
+            _this.message = '验证模块异常,请重新验证';
+            _this.noGeet = true;
+            _this.geetestObj = null;
+
+            _this.captchaObj.reset();
           });
-        } else {
-          return;
         }
       });
+    },
+    // 极验子组件传递数据
+    getGeetTestObj: function getGeetTestObj(data) {
+      this.noGeet = false;
+      this.geetestObj = data[0];
+      this.captchaObj = data[1];
     }
   }
 });
@@ -1953,7 +1979,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       phone: '',
       noGeet: false,
-      geetestObj: null
+      message: '请完成验证操作',
+      geetestObj: null,
+      captchaObj: null
     };
   },
   methods: {
@@ -1964,16 +1992,21 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$validator.validateAll().then(function (result) {
         if (result && !_this.noGeet) {
-          var formData = {
-            phone: _this.phone,
-            geetest_seccode: _this.geetestObj.geetest_seccode,
-            geetest_validate: _this.geetestObj.geetest_validate,
-            geetest_challenge: _this.geetestObj.geetest_challenge
-          };
-          console.log(formData);
+          var formData = Object.assign(_this.geetestObj, {
+            phone: _this.phone
+          });
 
           _this.$axios.post('/api/register', formData).then(function (response) {
-            console.log(response.data);
+            _this.$router.push({
+              name: 'home'
+            });
+          })["catch"](function (error) {
+            console.log(error);
+            _this.message = '验证模块异常,请重新验证';
+            _this.noGeet = true;
+            _this.geetestObj = null;
+
+            _this.captchaObj.reset();
           });
         }
       });
@@ -1981,7 +2014,8 @@ __webpack_require__.r(__webpack_exports__);
     // 极验子组件传递数据
     getGeetTestObj: function getGeetTestObj(data) {
       this.noGeet = false;
-      this.geetestObj = data;
+      this.geetestObj = data[0];
+      this.captchaObj = data[1];
     }
   }
 });
@@ -2150,6 +2184,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GeetTest',
+  props: ['message'],
   data: function data() {
     return {
       geetestObj: {}
@@ -2172,14 +2207,16 @@ __webpack_require__.r(__webpack_exports__);
           // 宕机情况下使用，表示验证是 3.0 还是 2.0，3.0 的 sdk 该字段为 true
           new_captcha: true
         }, function (captchaObj) {
-          captchaObj.appendTo('#geetest');
+          // 解决单页快速点击两个页面后出现两个验证码在同一个页面的bug
+          var geetest = '#' + _this.message;
+          captchaObj.appendTo(geetest);
           captchaObj.onReady(function () {
             $("#wait")[0].className = "hide";
           });
           captchaObj.onSuccess(function () {
             var result = captchaObj.getValidate();
 
-            _this.$emit("getGeet", result);
+            _this.$emit("getGeet", [result, captchaObj]);
           });
         });
       })["catch"](function (err) {// to do
@@ -6647,7 +6684,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.check[data-v-4221c3ad] {\n    color: #636b6f;\n    padding-left: 1.3rem;\n}\n.login[data-v-4221c3ad]{\n    color: #ffffff;\n    border-color: #33cccc;\n    background-color: #33cdcd;\n    box-shadow: -4px 7px 20px 2px rgba(53, 212, 212, 0.2);\n}\n.login[data-v-4221c3ad]:hover{\n    background-color: #34d7d7;\n}\n.sign[data-v-4221c3ad] {\n    clear: both;\n    padding-top: 130px;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-4221c3ad] {\n    min-width: 1100px;\n}\n.fa-sign-in-alt[data-v-4221c3ad] {\n    margin-left: 2px;\n}\n.check[data-v-4221c3ad] {\n    color: #636b6f;\n    padding-left: 1.3rem;\n}\n.login[data-v-4221c3ad]{\n    color: #ffffff;\n    border-color: #33cccc;\n    background-color: #33cdcd;\n    box-shadow: -4px 7px 20px 2px rgba(53, 212, 212, 0.2);\n}\n.login[data-v-4221c3ad]:hover{\n    background-color: #34d7d7;\n}\n.sign[data-v-4221c3ad] {\n    clear: both;\n    padding-top: 130px;\n}\n", ""]);
 
 // exports
 
@@ -6666,7 +6703,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.container[data-v-d4f9cbe2] {\n    min-width: 1100px;\n}\n.github[data-v-d4f9cbe2]{\n    color: #606060;\n    box-shadow: none;\n    border-color: #ced4da;\n}\n.github[data-v-d4f9cbe2]:hover{\n    color: #32c6c6;\n    border-color: #32c6c6;\n    background-color: rgba(200, 255, 193, 0);\n}\n.register[data-v-d4f9cbe2]{\n    color: #ffffff;\n    border-color: #33cccc;\n    background-color: #33cdcd;\n    box-shadow: -4px 7px 20px 2px rgba(53, 212, 212, 0.2);\n}\n.register[data-v-d4f9cbe2]:hover{\n    background-color: #34d7d7;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-d4f9cbe2] {\n    min-width: 1100px;\n}\n.github[data-v-d4f9cbe2]{\n    color: #606060;\n    box-shadow: none;\n    border-color: #ced4da;\n}\n.github[data-v-d4f9cbe2]:hover{\n    color: #32c6c6;\n    border-color: #32c6c6;\n    background-color: rgba(200, 255, 193, 0);\n}\n.register[data-v-d4f9cbe2]{\n    color: #ffffff;\n    border-color: #33cccc;\n    background-color: #33cdcd;\n    box-shadow: -4px 7px 20px 2px rgba(53, 212, 212, 0.2);\n}\n.register[data-v-d4f9cbe2]:hover{\n    background-color: #34d7d7;\n}\n.sign[data-v-d4f9cbe2] {\n    clear: both;\n    padding-top: 168px;\n}\n", ""]);
 
 // exports
 
@@ -49510,6 +49547,24 @@ var render = function() {
                 : _vm._e()
             ]),
             _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("geet-test", {
+                  attrs: { message: "login_geetest" },
+                  on: { getGeet: _vm.getGeetTestObj }
+                }),
+                _vm._v(" "),
+                _vm.noGeet
+                  ? _c("span", { staticClass: "message" }, [
+                      _vm._v(_vm._s(_vm.message))
+                    ])
+                  : _vm._e()
+              ],
+              1
+            ),
+            _vm._v(" "),
             _vm._m(1),
             _vm._v(" "),
             _c("div", { staticClass: "fa-pull-right" }, [
@@ -49686,11 +49741,14 @@ var render = function() {
               "div",
               { staticClass: "form-group" },
               [
-                _c("geet-test", { on: { getGeet: _vm.getGeetTestObj } }),
+                _c("geet-test", {
+                  attrs: { message: "register_geetest" },
+                  on: { getGeet: _vm.getGeetTestObj }
+                }),
                 _vm._v(" "),
                 _vm.noGeet
-                  ? _c("span", { staticClass: "error" }, [
-                      _vm._v("请完成验证操作")
+                  ? _c("span", { staticClass: "message" }, [
+                      _vm._v(_vm._s(_vm.message))
                     ])
                   : _vm._e()
               ],
@@ -49762,7 +49820,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
+    return _c("div", { staticClass: "row sign" }, [
       _c("div", { staticClass: "col-md-12 text-center" }, [
         _c("p", [_c("small", [_vm._v("© Inspiration comes from life!")])])
       ])
@@ -50066,28 +50124,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { attrs: { id: _vm.message } }),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { attrs: { id: "geetest" } }),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "show sk-three-bounce", attrs: { id: "wait" } },
-        [
-          _c("div", { staticClass: "sk-bounce-1 sk-child" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "sk-bounce-2 sk-child" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "sk-bounce-3 sk-child" })
-        ]
-      )
-    ])
+    return _c(
+      "div",
+      { staticClass: "loading sk-three-bounce", attrs: { id: "wait" } },
+      [
+        _c("div", { staticClass: "sk-bounce-1 sk-child" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "sk-bounce-2 sk-child" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "sk-bounce-3 sk-child" })
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -64930,7 +64988,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _components_validate_validate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/validate/validate */ "./resources/js/components/validate/validate.js");
+/* harmony import */ var _veevalidate_validate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./veevalidate/validate */ "./resources/js/veevalidate/validate.js");
 /* harmony import */ var _geetest_gt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./geetest/gt */ "./resources/js/geetest/gt.js");
 /* harmony import */ var _geetest_gt__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_geetest_gt__WEBPACK_IMPORTED_MODULE_5__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
@@ -64939,6 +64997,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
+ // 全局引入数据验证
 
  // 全局引入geetest
 
@@ -65616,80 +65675,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/validate/validate.js":
-/*!******************************************************!*\
-  !*** ./resources/js/components/validate/validate.js ***!
-  \******************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
-
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_1__["default"], {
-  events: 'change|blur|input'
-});
-vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('account', {
-  getMessage: function getMessage(field) {
-    return '请输入正确的手机号或邮箱';
-  },
-  validate: function validate(value) {
-    return /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(value) || /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
-  }
-});
-vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('password', {
-  getMessage: function getMessage(field) {
-    return '请输入6-16位密码,区分大小写';
-  },
-  validate: function validate(value) {
-    return /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value);
-  }
-});
-vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('phone', {
-  getMessage: function getMessage(field) {
-    return '请输入正确的手机号';
-  },
-  validate: function validate(value) {
-    return /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(value);
-  }
-});
-var dictionary = {
-  en: {
-    custom: {
-      account: {
-        required: function required() {
-          return '请输入正确的手机号或邮箱';
-        }
-      },
-      password: {
-        required: function required() {
-          return '请输入6-16位密码,区分大小写';
-        }
-      },
-      phone: {
-        required: function required() {
-          return '手机号不能为空';
-        }
-      }
-    }
-  },
-  cn: {
-    messages: {
-      required: function required() {
-        return '';
-      }
-    }
-  }
-}; // 自定义validate error 信息
-
-vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize(dictionary);
-
-/***/ }),
-
 /***/ "./resources/js/geetest/gt.js":
 /*!************************************!*\
   !*** ./resources/js/geetest/gt.js ***!
@@ -66056,6 +66041,80 @@ var routes = [{
   mode: 'history',
   routes: routes
 }));
+
+/***/ }),
+
+/***/ "./resources/js/veevalidate/validate.js":
+/*!**********************************************!*\
+  !*** ./resources/js/veevalidate/validate.js ***!
+  \**********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  events: 'change|blur|input'
+});
+vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('account', {
+  getMessage: function getMessage(field) {
+    return '请输入正确的手机号或邮箱';
+  },
+  validate: function validate(value) {
+    return /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(value) || /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
+  }
+});
+vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('password', {
+  getMessage: function getMessage(field) {
+    return '请输入6-16位密码,区分大小写';
+  },
+  validate: function validate(value) {
+    return /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value);
+  }
+});
+vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('phone', {
+  getMessage: function getMessage(field) {
+    return '请输入正确的手机号';
+  },
+  validate: function validate(value) {
+    return /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(value);
+  }
+});
+var dictionary = {
+  en: {
+    custom: {
+      account: {
+        required: function required() {
+          return '请输入正确的手机号或邮箱';
+        }
+      },
+      password: {
+        required: function required() {
+          return '请输入6-16位密码,区分大小写';
+        }
+      },
+      phone: {
+        required: function required() {
+          return '手机号不能为空';
+        }
+      }
+    }
+  },
+  cn: {
+    messages: {
+      required: function required() {
+        return '';
+      }
+    }
+  }
+}; // 自定义validate error 信息
+
+vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize(dictionary);
 
 /***/ }),
 

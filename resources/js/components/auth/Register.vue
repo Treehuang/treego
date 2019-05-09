@@ -17,8 +17,8 @@
                     </div>
 
                     <div class="form-group">
-                        <geet-test @getGeet="getGeetTestObj"></geet-test>
-                        <span class="error" v-if="noGeet">请完成验证操作</span>
+                        <geet-test @getGeet="getGeetTestObj" message="register_geetest"></geet-test>
+                        <span class="message" v-if="noGeet">{{ message }}</span>
                     </div>
                     <!-- github登录 -->
                     <div class="form-group">
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row sign">
             <div class="col-md-12 text-center"><p><small>&copy; Inspiration comes from life!</small></p></div>
         </div>
     </div>
@@ -53,14 +53,16 @@
 
     export default {
         components: {
-          GeetTest
+            GeetTest
         },
 
         data() {
             return {
                 phone: '',
                 noGeet: false,
+                message: '请完成验证操作',
                 geetestObj: null,
+                captchaObj: null,
             }
         },
 
@@ -71,15 +73,16 @@
                 this.$validator.validateAll().then((result) => {
                     if(result && !this.noGeet) {
 
-                        let formData = {
-                            phone: this.phone,
-                            geetest_seccode: this.geetestObj.geetest_seccode,
-                            geetest_validate: this.geetestObj.geetest_validate,
-                            geetest_challenge: this.geetestObj.geetest_challenge
-                        };
-                        console.log(formData);
+                        let formData = Object.assign(this.geetestObj, {phone : this.phone})
+
                         this.$axios.post('/api/register', formData).then(response => {
-                            console.log(response.data);
+                            this.$router.push({name:'home'});
+                        }).catch(error => {
+                            console.log(error);
+                            this.message = '验证模块异常,请重新验证';
+                            this.noGeet = true;
+                            this.geetestObj = null;
+                            this.captchaObj.reset();
                         });
                     }
                 });
@@ -88,7 +91,8 @@
             // 极验子组件传递数据
             getGeetTestObj: function(data) {
                 this.noGeet = false;
-                this.geetestObj = data;
+                this.geetestObj = data[0];
+                this.captchaObj = data[1];
             }
         }
     }
@@ -120,5 +124,10 @@
 
     .register:hover{
         background-color: #34d7d7;
+    }
+
+    .sign {
+        clear: both;
+        padding-top: 168px;
     }
 </style>

@@ -13,6 +13,6 @@ class RegisterController extends Controller
 
     public function register(GeetRequest $request)
     {
-
+        return $this->response->array(['data' => $request->all()]);
     }
 }

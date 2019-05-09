@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div id="geetest"></div>
+        <div :id="message"></div>
         <!-- loading -->
-        <div id="wait" class="show sk-three-bounce">
+        <div id="wait" class="loading sk-three-bounce">
             <div class="sk-bounce-1 sk-child"></div>
             <div class="sk-bounce-2 sk-child"></div>
             <div class="sk-bounce-3 sk-child"></div>
@@ -15,6 +15,8 @@
 
     export default {
         name: 'GeetTest',
+
+        props: ['message'],
 
         data() {
             return {
@@ -40,20 +42,22 @@
                         new_captcha: true
 
                     }, (captchaObj) => {
-                        captchaObj.appendTo('#geetest');
+                        // 解决单页快速点击两个页面后出现两个验证码在同一个页面的bug
+                        let geetest = '#' + this.message;
+                        captchaObj.appendTo(geetest);
                         captchaObj.onReady(function () {
                             $("#wait")[0].className = "hide";
                         });
 
                         captchaObj.onSuccess(() => {
                             let result = captchaObj.getValidate();
-                            this.$emit("getGeet", result);
+                            this.$emit("getGeet", [result, captchaObj]);
                         });
                     })
                 }).catch(err => {
                     // to do
                 });
-            }
+            },
         }
     }
 

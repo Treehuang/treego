@@ -20,6 +20,11 @@
                         <span class="invalid-feedback" v-if="errors.has('password')">{{ errors.first('password') }}</span>
                     </div>
 
+                    <div class="form-group">
+                        <geet-test @getGeet="getGeetTestObj" message="login_geetest"></geet-test>
+                        <span class="message" v-if="noGeet">{{ message }}</span>
+                    </div>
+
                     <div class="fa-pull-left check">
                         <input class="form-check-input" type="checkbox" value="check" id="check">
                         <label class="form-check-label" for="check">
@@ -51,41 +56,72 @@
 </template>
 
 <script>
+
+    import  GeetTest from '../validate/GeetTest'
+
     export default {
+        components: {
+            GeetTest
+        },
+
         data() {
             return {
                 account : '',
                 password: '',
+                noGeet: false,
                 isloading: false,
+                message: '请完成验证操作',
+                geetestObj: null,
+                captchaObj: null,
             }
         },
 
         methods: {
 
             login() {
-                let formData = {
-                    account:  this.account,
-                    password: this.password
-                };
+
+                this.noGeet = !this.geetestObj;
 
                 // 校验所有,只要有一个校验失败，就返回false
                 this.$validator.validateAll().then((result) => {
-                    if(result) {
+                    if(result && !this.noGeet) {
+
+                        let formData = Object.assign(this.geetestObj, {account: this.account, password: this.password});
+
                         this.isloading = true;
                         axios.post('/api/login', formData).then(response => {
                             // TO DO
                             this.$router.push({name:'home'});
-                        })
-                    }else {
-                        return;
+
+                        }).catch(error => {
+                            this.isloading = false;
+                            this.message = '验证模块异常,请重新验证';
+                            this.noGeet = true;
+                            this.geetestObj = null;
+                            this.captchaObj.reset();
+                        });
                     }
                 });
+            },
+
+            // 极验子组件传递数据
+            getGeetTestObj: function(data) {
+                this.noGeet = false;
+                this.geetestObj = data[0];
+                this.captchaObj = data[1];
             }
         },
     }
 </script>
 
 <style scoped>
+    .container {
+        min-width: 1100px;
+    }
+
+    .fa-sign-in-alt {
+        margin-left: 2px;
+    }
 
     .check {
         color: #636b6f;

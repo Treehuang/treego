@@ -16496,7 +16496,7 @@ p {
   color: #636b6f;
 }
 
-.show {
+.loading {
   border: solid 1px #ced4da;
   border-radius: 2px;
   background-color: #f8f8f8;
@@ -16566,8 +16566,10 @@ p {
   animation: sk-circle-bounce-delay 1.2s infinite ease-in-out both;
 }
 
-.error {
+.message {
   color: #d36b75;
   font-size: 80%;
+  display: block;
+  margin-top: 0.25rem;
 }
 

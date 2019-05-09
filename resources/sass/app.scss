@@ -73,7 +73,7 @@ p {
 }
 
 // 极验loading
-.show {
+.loading {
   border: solid 1px #ced4da;
   border-radius: 2px;
   background-color: #f8f8f8
@@ -140,7 +140,9 @@ p {
 }
 
 // 极验没有验证时的提示样式
-.error {
+.message {
   color: #d36b75;
   font-size: 80%;
+  display: block;
+  margin-top: 0.25rem;
 }
