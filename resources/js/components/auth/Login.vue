@@ -120,7 +120,11 @@
     }
 
     .fa-sign-in-alt {
-        margin-left: 2px;
+        margin-left: 1.5px;
+    }
+
+    .btn {
+        min-width: 91px;
     }
 
     .check {

@@ -6684,7 +6684,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.container[data-v-4221c3ad] {\n    min-width: 1100px;\n}\n.fa-sign-in-alt[data-v-4221c3ad] {\n    margin-left: 2px;\n}\n.check[data-v-4221c3ad] {\n    color: #636b6f;\n    padding-left: 1.3rem;\n}\n.login[data-v-4221c3ad]{\n    color: #ffffff;\n    border-color: #33cccc;\n    background-color: #33cdcd;\n    box-shadow: -4px 7px 20px 2px rgba(53, 212, 212, 0.2);\n}\n.login[data-v-4221c3ad]:hover{\n    background-color: #34d7d7;\n}\n.sign[data-v-4221c3ad] {\n    clear: both;\n    padding-top: 130px;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-4221c3ad] {\n    min-width: 1100px;\n}\n.fa-sign-in-alt[data-v-4221c3ad] {\n    margin-left: 1.5px;\n}\n.btn[data-v-4221c3ad] {\n    min-width: 91px;\n}\n.check[data-v-4221c3ad] {\n    color: #636b6f;\n    padding-left: 1.3rem;\n}\n.login[data-v-4221c3ad]{\n    color: #ffffff;\n    border-color: #33cccc;\n    background-color: #33cdcd;\n    box-shadow: -4px 7px 20px 2px rgba(53, 212, 212, 0.2);\n}\n.login[data-v-4221c3ad]:hover{\n    background-color: #34d7d7;\n}\n.sign[data-v-4221c3ad] {\n    clear: both;\n    padding-top: 130px;\n}\n", ""]);
 
 // exports
 
