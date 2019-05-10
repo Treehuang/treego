@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
+use Illuminate\Http\Request;
 use Dingo\Api\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Dingo\Api\Exception\ValidationHttpException;
 
 class GeetRequest extends FormRequest
 {
@@ -24,8 +27,17 @@ class GeetRequest extends FormRequest
     public function rules()
     {
         return [
-            'geetest_challenge' => 'geetest',
+            'geetest_challenge' => 'required|geetest',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        if ($this->container['request'] instanceof Request) {
+            throw new ValidationHttpException($validator->errors(), null, [], $code = 250);
+        }
+
+        parent::failedValidation($validator);
     }
 
     public function messages()
