@@ -2001,7 +2001,7 @@ __webpack_require__.r(__webpack_exports__);
               name: 'home'
             });
           })["catch"](function (error) {
-            console.log(error.response);
+            console.log(error);
             _this.message = '验证模块异常,请重新验证';
             _this.noGeet = true;
             _this.geetestObj = null;
