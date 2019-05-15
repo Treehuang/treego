@@ -18,7 +18,7 @@ class GeetRequest extends FormRequest
         if(static::getPathInfo() == '/api/signup') {
             return [
                 'phone' => $this->getPhoneRule(),
-                //'geetest_challenge' => 'required|geetest',
+                'geetest_challenge' => 'required|geetest',
             ];
         }else if(static::getPathInfo() == '/api/smscode'){
             return [

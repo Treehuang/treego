@@ -30,7 +30,7 @@
 
         methods: {
             getGeetest() {
-                this.$axios.get('/api/auth/geetest').then(response => {
+                this.$axios.get('/api/geetest').then(response => {
 
                     initGeetest({
                         // 以下配置参数来自服务端 SDK，这是第一次验证，也就是获取到了后端的这个三个数据

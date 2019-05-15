@@ -22,7 +22,7 @@ $api->version('v1', [
 ], function($api) {
 
     // 极验-获取流水标识
-    $api->get('/auth/geetest', 'Auth\GeetestController@getGeetest');
+    $api->get('/geetest', 'Auth\GeetestController@getGeetest');
 
     // 登录
     $api->post('/login', 'Auth\LoginController@login');
