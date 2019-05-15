@@ -15,6 +15,11 @@ let routes = [
         path: '/register',
         name: 'register',
         components: require('./components/auth/Register')
+    },
+    {
+        path: '/verify',
+        name: 'verify',
+        components: require('./components/auth/Verify')
     }
 ];
 

@@ -27,8 +27,14 @@ $api->version('v1', [
     // 登录
     $api->post('/login', 'Auth\LoginController@login');
 
-    // 注册
+    // 注册-验证极验和发送短信验证码
+    $api->post('/signup', 'Auth\RegisterController@smsCode');
+
+    // 完成注册
     $api->post('/register', 'Auth\RegisterController@register');
+
+    // 发送短信验证码
+    $api->post('/smscode', 'Auth\RegisterController@smsCode');
 
     $api->get('/test', 'Test\TestController@test');
 });

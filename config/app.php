@@ -176,6 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 	
 	    Germey\Geetest\GeetestServiceProvider::class,
+
+        App\Providers\EasySmsServiceProvider::class,
     ],
 
     /*
