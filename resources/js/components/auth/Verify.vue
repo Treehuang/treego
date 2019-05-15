@@ -97,6 +97,7 @@
 
                  let formData = {phone: this.phone};
                  this.$axios.post('/api/smscode', formData).then(response => {
+                     sessionStorage.setItem("verify_key", response.data.verify_key);
                      console.log(response.config);
                  }).catch(error => {
 
@@ -106,7 +107,19 @@
             verify() {
                 this.$validator.validateAll().then((result) => {
                     if(result) {
-                        console.log('success');
+
+                        let formData = {
+                            smscode: this.smscode,
+                            username: this.username,
+                            password: this.password,
+                            verify_key: sessionStorage.getItem('verify_key'),
+                        }
+
+                        this.$axios.post('/api/register', formData).then(response => {
+                            console.log(response.data);
+                        }).catch(error => {
+                            console.log(error.response);
+                        })
                     }
                 });
             }

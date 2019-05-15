@@ -5,7 +5,6 @@ namespace App\Http\Requests\Api;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use Dingo\Api\Exception\ValidationHttpException;
-use Illuminate\Validation\ValidationException;
 
 class GeetRequest extends FormRequest
 {
@@ -19,7 +18,7 @@ class GeetRequest extends FormRequest
         if(static::getPathInfo() == '/api/signup') {
             return [
                 'phone' => $this->getPhoneRule(),
-                'geetest_challenge' => 'required|geetest',
+                //'geetest_challenge' => 'required|geetest',
             ];
         }else if(static::getPathInfo() == '/api/smscode'){
             return [
@@ -27,11 +26,17 @@ class GeetRequest extends FormRequest
             ];
         }else {
             return [
-                'phone' => $this->getPhoneRule(),
+                'smscode'  => [
+                    'bail',
+                    'required',
+                    'regex: /^[0-9]{6}$/',
+                    'smsexist',         // 在服务容器中注册的Validator extend 扩展的规则
+                    'smserror',
+                ],
                 'username' => [
                     'bail',
                     'required',
-                    "regex: /^[1][0-9]{1}-[\x{4e00}-\x{9fa5}]{2,4}-[\x{4e00}-\x{9fa5}]{2,4}$/u",
+                    'regex: /^[1][0-9]{1}-[\x{4e00}-\x{9fa5}]{2,4}-[\x{4e00}-\x{9fa5}]{2,4}$/u',
                 ],
                 'password' => [
                     'bail',
@@ -73,6 +78,9 @@ class GeetRequest extends FormRequest
             'username.regex' => '用户名格式错误',
             'password.required' => '密码不能为空',
             'password.regex' => '密码格式错误',
+            'smscode.regex' => '验证码格式错误',
+            'smscode.smsexist' => '验证码已经失效',
+            'smscode.smserror' => '验证码错误',
         ];
     }
 }

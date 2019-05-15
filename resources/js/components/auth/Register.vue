@@ -85,7 +85,9 @@
 
                         this.$axios.post('/api/signup', formData).then(response => {
                             sessionStorage.setItem("phone", this.phone);
+                            sessionStorage.setItem("verify_key", response.data.verify_key);
                             this.$router.push({name:'verify'});
+                            //console.log(response.data);
                         }).catch(error => {
                             console.log(error.response);
                             if(error.response.data.errors.geetest_challenge){

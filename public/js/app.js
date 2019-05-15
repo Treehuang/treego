@@ -2005,10 +2005,12 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.$axios.post('/api/signup', formData).then(function (response) {
             sessionStorage.setItem("phone", _this.phone);
+            sessionStorage.setItem("verify_key", response.data.verify_key);
 
             _this.$router.push({
               name: 'verify'
-            });
+            }); //console.log(response.data);
+
           })["catch"](function (error) {
             console.log(error.response);
 
@@ -2146,13 +2148,27 @@ __webpack_require__.r(__webpack_exports__);
         phone: this.phone
       };
       this.$axios.post('/api/smscode', formData).then(function (response) {
+        sessionStorage.setItem("verify_key", response.data.verify_key);
         console.log(response.config);
       })["catch"](function (error) {});
     },
     verify: function verify() {
+      var _this2 = this;
+
       this.$validator.validateAll().then(function (result) {
         if (result) {
-          console.log('success');
+          var formData = {
+            smscode: _this2.smscode,
+            username: _this2.username,
+            password: _this2.password,
+            verify_key: sessionStorage.getItem('verify_key')
+          };
+
+          _this2.$axios.post('/api/register', formData).then(function (response) {
+            console.log(response.data);
+          })["catch"](function (error) {
+            console.log(error.response);
+          });
         }
       });
     }
