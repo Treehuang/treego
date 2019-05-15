@@ -2003,7 +2003,7 @@ __webpack_require__.r(__webpack_exports__);
             phone: _this.phone
           });
 
-          _this.$axios.post('/api/signup', formData).then(function (response) {
+          _this.$api.auth.signup(formData).then(function (response) {
             sessionStorage.setItem("phone", _this.phone);
             sessionStorage.setItem("verify_key", response.data.verify_key);
 
@@ -2147,7 +2147,7 @@ __webpack_require__.r(__webpack_exports__);
       var formData = {
         phone: this.phone
       };
-      this.$axios.post('/api/smscode', formData).then(function (response) {
+      this.$api.auth.smscode(formData).then(function (response) {
         sessionStorage.setItem("verify_key", response.data.verify_key);
         console.log(response.config);
       })["catch"](function (error) {});
@@ -2164,7 +2164,7 @@ __webpack_require__.r(__webpack_exports__);
             verify_key: sessionStorage.getItem('verify_key')
           };
 
-          _this2.$axios.post('/api/register', formData).then(function (response) {
+          _this2.$api.auth.register(formData).then(function (response) {
             console.log(response.data);
           })["catch"](function (error) {
             console.log(error.response);
@@ -65418,6 +65418,67 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/api/auth.js":
+/*!**********************************!*\
+  !*** ./resources/js/api/auth.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base */ "./resources/js/api/base.js");
+
+var auth = {
+  signup: function signup(formData) {
+    return axios.post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/signup"), formData);
+  },
+  // 注册
+  register: function register(formData) {
+    return axios.post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/register"), formData);
+  },
+  // 发送验证码
+  smscode: function smscode(formData) {
+    return axios.post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/smscode"), formData);
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (auth);
+
+/***/ }),
+
+/***/ "./resources/js/api/base.js":
+/*!**********************************!*\
+  !*** ./resources/js/api/base.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var base = {
+  prefix: '/api'
+};
+/* harmony default export */ __webpack_exports__["default"] = (base);
+
+/***/ }),
+
+/***/ "./resources/js/api/index.js":
+/*!***********************************!*\
+  !*** ./resources/js/api/index.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth */ "./resources/js/api/auth.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  auth: _auth__WEBPACK_IMPORTED_MODULE_0__["default"]
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -65432,12 +65493,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _veevalidate_validate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./veevalidate/validate */ "./resources/js/veevalidate/validate.js");
-/* harmony import */ var _geetest_gt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./geetest/gt */ "./resources/js/geetest/gt.js");
-/* harmony import */ var _geetest_gt__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_geetest_gt__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./api */ "./resources/js/api/index.js");
+/* harmony import */ var _veevalidate_validate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./veevalidate/validate */ "./resources/js/veevalidate/validate.js");
+/* harmony import */ var _geetest_gt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./geetest/gt */ "./resources/js/geetest/gt.js");
+/* harmony import */ var _geetest_gt__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_geetest_gt__WEBPACK_IMPORTED_MODULE_6__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
 
 
 
@@ -65447,6 +65510,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
+Vue.prototype.$api = _api__WEBPACK_IMPORTED_MODULE_4__["default"]; // 将api挂载到vue的原型上
+
 Vue.prototype.$axios = axios__WEBPACK_IMPORTED_MODULE_3___default.a;
 Vue.component('app', _components_App__WEBPACK_IMPORTED_MODULE_2__["default"]);
 new Vue({

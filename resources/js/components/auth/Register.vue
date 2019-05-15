@@ -83,7 +83,7 @@
 
                         let formData = Object.assign(this.geetestObj, {phone : this.phone})
 
-                        this.$axios.post('/api/signup', formData).then(response => {
+                        this.$api.auth.signup(formData).then(response => {
                             sessionStorage.setItem("phone", this.phone);
                             sessionStorage.setItem("verify_key", response.data.verify_key);
                             this.$router.push({name:'verify'});

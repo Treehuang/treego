@@ -96,7 +96,7 @@
                 this.timeKeep();
 
                  let formData = {phone: this.phone};
-                 this.$axios.post('/api/smscode', formData).then(response => {
+                 this.$api.auth.smscode(formData).then(response => {
                      sessionStorage.setItem("verify_key", response.data.verify_key);
                      console.log(response.config);
                  }).catch(error => {
@@ -115,7 +115,7 @@
                             verify_key: sessionStorage.getItem('verify_key'),
                         }
 
-                        this.$axios.post('/api/register', formData).then(response => {
+                        this.$api.auth.register(formData).then(response => {
                             console.log(response.data);
                         }).catch(error => {
                             console.log(error.response);
