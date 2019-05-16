@@ -7,6 +7,7 @@ import router from './routes'
 import App from './components/App'
 import axios from "axios"
 import api from './api';
+import store from './store';		//引入store
 
 // 全局引入数据验证
 import './veevalidate/validate'
@@ -23,5 +24,6 @@ Vue.component('app', App);
 
 new Vue({
     el: '#app',
-    router
+    router,
+    store,
 });

@@ -115,11 +115,11 @@
                             verify_key: sessionStorage.getItem('verify_key'),
                         }
 
-                        this.$api.auth.register(formData).then(response => {
+                        this.$store.dispatch('certification/register', formData).then(response => {
                             console.log(response.data);
                         }).catch(error => {
-                            console.log(error.response);
-                        })
+                            console.log(error.response.data);
+                        });
                     }
                 });
             }

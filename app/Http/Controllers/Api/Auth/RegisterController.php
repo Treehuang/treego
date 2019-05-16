@@ -33,22 +33,20 @@ class RegisterController extends Controller
         $code = 123456;
 
         $key = 'verificationCode_' . str_random(15);
-        $expirdAt = now()->addMinutes(2);
+        $expirsIn = now()->addMinutes(2);
 
-        \Cache::put($key, ['phone' => $phone, 'code' => $code], $expirdAt);
+        \Cache::put($key, ['phone' => $phone, 'code' => $code], $expirsIn);
 
         return $this->response->array([
             'verify_key' => $key,
-            'expired_at' => $expirdAt->toDateTimeString()
+            'expires_in' => $expirsIn->toDateTimeString()
         ])->setStatusCode(201);     // 201 Created - 对创建新资源的 POST 操作进行响应
     }
 
     public function register(GeetRequest $request)
     {
-        $verifyData = \Cache::get($request->verify_key);
-
         // 将信息存入数据库
-        $user = $this->create(array_merge($request->all(), $verifyData));
+        $this->create(array_merge($request->all(), \Cache::get($request->verify_key)));
 
         // 删除缓存的短信验证码
         \Cache::forget($request->verify_key);
