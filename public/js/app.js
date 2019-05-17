@@ -2023,7 +2023,7 @@ __webpack_require__.r(__webpack_exports__);
             }
 
             if (error.response.data.errors.phone) {
-              _this.phone_message = error.response.data.errors.phone[0];
+              _this.phone_message = error.response.data.errors.phone;
 
               _this.captchaObj.reset();
             }

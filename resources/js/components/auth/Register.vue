@@ -97,7 +97,7 @@
                                 this.captchaObj.reset();
                             }
                             if(error.response.data.errors.phone){
-                                this.phone_message = error.response.data.errors.phone[0];
+                                this.phone_message = error.response.data.errors.phone;
                                 this.captchaObj.reset();
                             }
                         });

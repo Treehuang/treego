@@ -36,5 +36,12 @@ $api->version('v1', [
     // 发送短信验证码
     $api->post('/smscode', 'Auth\RegisterController@smsCode');
 
-    $api->get('/test', 'Test\TestController@test');
+    $api->post('/testlogin', 'Test\TestController@login');
+    $api->get('/test', 'Test\TestController@refresh');
+    // 需要进行身份认证的API
+    $api->group(['middleware' => 'jwt'], function($api){
+
+        $api->get('/me', 'Test\TestController@me');
+
+    });
 });

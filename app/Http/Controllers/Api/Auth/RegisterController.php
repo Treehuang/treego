@@ -37,10 +37,12 @@ class RegisterController extends Controller
 
         \Cache::put($key, ['phone' => $phone, 'code' => $code], $expirsIn);
 
-        return $this->response->array([
-            'verify_key' => $key,
-            'expires_in' => $expirsIn->toDateTimeString()
-        ])->setStatusCode(201);     // 201 Created - 对创建新资源的 POST 操作进行响应
+        return response()->json([
+            'data' => [
+                'verify_key' => $key,
+                'expires_in' => $expirsIn->toDateTimeString()
+            ]
+        ], 201);    // 201 Created - 对创建新资源的 POST 操作进行响应
     }
 
     public function register(GeetRequest $request)
