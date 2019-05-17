@@ -26,6 +26,7 @@
                     <div class="form-group" style="position: relative;">
                         <input v-validate="'required|smscode'" v-model="smscode" type="text" name="smscode" :class="[{'is-invalid' : errors.has('smscode')}, 'form-control', 'sms_code']" placeholder="请输入短信验证码">
                         <span class="invalid-feedback" v-if="errors.has('smscode')">{{ errors.first('smscode') }}</span>
+                        <span class="message" v-if="!errors.has('smscode')">{{ smserror }}</span>
                         <div style="position: absolute; right: 0; top: 0">
                             <input type="button" :class="[{'disabled': isOvertime}, 'btn', 'send_sms']" @click="sendSms" :value="word">
                         </div>
@@ -53,7 +54,14 @@
                 smscode: '',
                 username: '',
                 password: '',
+                smserror: '',
                 isOvertime: false,
+            }
+        },
+
+        watch: {
+            smscode() {
+                this.smserror = '';
             }
         },
 
@@ -118,7 +126,10 @@
                         this.$store.dispatch('certification/register', formData).then(response => {
                             console.log(response.data);
                         }).catch(error => {
-                            console.log(error.response.data);
+                            if(error.response.data.errors.smscode) {
+                                this.smserror = error.response.data.errors.smscode;
+                            }
+                            console.log(error.response.data.errors);
                         });
                     }
                 });

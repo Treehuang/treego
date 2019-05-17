@@ -38,22 +38,22 @@ class RegisterController extends Controller
         \Cache::put($key, ['phone' => $phone, 'code' => $code], $expirsIn);
 
         return response()->json([
-            'data' => [
-                'verify_key' => $key,
-                'expires_in' => $expirsIn->toDateTimeString()
-            ]
+            'verify_key' => $key,
+            'expires_in' => $expirsIn->toDateTimeString()
         ], 201);    // 201 Created - 对创建新资源的 POST 操作进行响应
     }
 
     public function register(GeetRequest $request)
     {
         // 将信息存入数据库
-        $this->create(array_merge($request->all(), \Cache::get($request->verify_key)));
+        $user = $this->create(array_merge($request->all(), \Cache::get($request->verify_key)));
+
+        $token = auth('api')->login($user);
 
         // 删除缓存的短信验证码
         \Cache::forget($request->verify_key);
 
-        return $this->response->created();
+        return $this->respondWithToken($token);
     }
 
     /**
@@ -69,5 +69,17 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * @param $token
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' =>  'Bearer '. $token,
+            'expires_in'   =>  \Auth::guard('api')->factory()->getTTL() * 60
+        ], 200);
     }
 }

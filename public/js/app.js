@@ -2096,6 +2096,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2104,8 +2105,14 @@ __webpack_require__.r(__webpack_exports__);
       smscode: '',
       username: '',
       password: '',
+      smserror: '',
       isOvertime: false
     };
+  },
+  watch: {
+    smscode: function smscode() {
+      this.smserror = '';
+    }
   },
   created: function created() {
     this.phone = sessionStorage.getItem('phone');
@@ -2167,7 +2174,11 @@ __webpack_require__.r(__webpack_exports__);
           _this2.$store.dispatch('certification/register', formData).then(function (response) {
             console.log(response.data);
           })["catch"](function (error) {
-            console.log(error.response.data);
+            if (error.response.data.errors.smscode) {
+              _this2.smserror = error.response.data.errors.smscode;
+            }
+
+            console.log(error.response.data.errors);
           });
         }
       });
@@ -50343,6 +50354,12 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
+                !_vm.errors.has("smscode")
+                  ? _c("span", { staticClass: "message" }, [
+                      _vm._v(_vm._s(_vm.smserror))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c(
                   "div",
                   {
@@ -67862,7 +67879,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = {
   is_auth: false,
-  expires_in: null,
   access_token: null
 };
 var getters = {
@@ -67871,19 +67887,15 @@ var getters = {
   },
   getAccessToken: function getAccessToken(state) {
     return state.access_token;
-  },
-  getExpiresTime: function getExpiresTime(state) {
-    return state.expires_in;
   }
 };
 var mutations = {
   setAuthUser: function setAuthUser(state, data) {
-    state.is_auth = true; //state.expires_in = data.expires_in;
-    //state.access_token = data.access_token;
-  },
-  refreshToken: function refreshToken(state, data) {
-    state.expires_in = data.expires_in;
+    state.is_auth = true;
     state.access_token = data.access_token;
+  },
+  refreshToken: function refreshToken(state, access_token) {
+    state.access_token = access_token;
   }
 };
 var actions = {
@@ -67892,7 +67904,7 @@ var actions = {
     var commit = _ref.commit;
     return new Promise(function (resolve, reject) {
       return _api__WEBPACK_IMPORTED_MODULE_0__["default"].auth.register(formData).then(function (response) {
-        commit('setAuthUser');
+        commit('setAuthUser', response.data);
         resolve(response);
       })["catch"](function (error) {
         reject(error);
@@ -67900,20 +67912,17 @@ var actions = {
     });
   },
   // 刷新token
-  refreshToken: function refreshToken(_ref2) {
-    var _this = this;
-
+  refreshToken: function refreshToken(_ref2, access_token) {
     var commit = _ref2.commit;
     return new Promise(function (resolve, reject) {
-      _this.$api.auth.refreshToken().then(function (response) {
-        commit('refreshToken', response.data);
-        resolve();
-      });
+      commit('refreshToken', access_token);
     });
   },
   setAuthUser: function setAuthUser(_ref3) {
     var commit = _ref3.commit;
-    commit('setAuthUser');
+    return new Promise(function (resolve, reject) {
+      commit('setAuthUser');
+    });
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

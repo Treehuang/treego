@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Test;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -9,11 +10,10 @@ use Illuminate\Support\Facades\Auth;
 class TestController extends Controller
 {
     public function login() {
-        $credentials = request(['phone', 'password']);
 
-        if (! $token = auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+        $user = User::first();
+
+        $token = auth('api')->login($user);
 
         return $this->respondWithToken($token);
     }
