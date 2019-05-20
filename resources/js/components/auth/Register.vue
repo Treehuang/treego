@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn register">Sign Up <i :class="[isloading ? 'spinner-border spinner-border-sm' : 'fas fa-sign-in-alt']"></i></button>
+                        <button type="submit" class="btn register" :disabled="isDisable">Sign Up <i :class="[isloading ? 'spinner-border spinner-border-sm' : 'fas fa-sign-in-alt']"></i></button>
                     </div>
 
                 </form>
@@ -62,6 +62,7 @@
                 phone: '',
                 noGeet: false,
                 isloading: false,
+                isDisable: false,
                 geet_message: '请完成验证操作',
                 phone_message: '',
                 geetestObj: null,
@@ -84,6 +85,7 @@
 
                         let formData = Object.assign(this.geetestObj, {phone : this.phone})
 
+                        this.isDisable = true;
                         this.isloading = true;
 
                         this.$api.auth.signup(formData).then(response => {
@@ -94,6 +96,7 @@
                         }).catch(error => {
                             console.log(error.response);
                             if(error.response.data.errors.geetest_challenge){
+                                this.isDisable = false;
                                 this.isloading = false;
                                 this.geet_message = '验证模块异常,请重新验证';
                                 this.noGeet = true;
@@ -101,6 +104,7 @@
                                 this.captchaObj.reset();
                             }
                             if(error.response.data.errors.phone){
+                                this.isDisable = false;
                                 this.isloading = false;
                                 this.phone_message = error.response.data.errors.phone;
                                 this.captchaObj.reset();

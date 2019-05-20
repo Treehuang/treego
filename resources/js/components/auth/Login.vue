@@ -42,7 +42,7 @@
                     <div class="form-group">
                         <!-- 登录按钮 -->
                         <div class="form-group">
-                            <button type="submit" class="btn login"><span>Sign In <i :class="[isloading ? 'spinner-border spinner-border-sm' : 'fas fa-sign-in-alt']"></i></span></button>
+                            <button type="submit" class="btn login" :disabled="isDisable"><span>Sign In <i :class="[isloading ? 'spinner-border spinner-border-sm' : 'fas fa-sign-in-alt']"></i></span></button>
                         </div>
                     </div>
                 </form>
@@ -71,6 +71,7 @@
                 password: '',
                 noGeet: false,
                 isloading: false,
+                isDisable: false,
                 account_error: '',
                 message: '请完成验证操作',
                 geetestObj: null,
@@ -96,7 +97,9 @@
 
                         let formData = Object.assign(this.geetestObj, {account: this.account, password: this.password});
 
+                        this.isDisable = true;
                         this.isloading = true;
+
                         this.$store.dispatch('certification/login', formData).then(response => {
                             // TO DO
                             this.$router.push({name:'home'});
@@ -104,6 +107,7 @@
                         }).catch(error => {
                             console.log(error.response.data);
                             if(error.response.data.errors.geetest_challenge) {
+                                this.isDisable = false;
                                 this.isloading = false;
                                 this.message = '验证模块异常,请重新验证';
                                 this.noGeet = true;
@@ -112,6 +116,7 @@
                             }
 
                             if(error.response.data.errors.account){
+                                this.isDisable = false;
                                 this.isloading = false;
                                 this.account_error = error.response.data.errors.account;
                                 this.captchaObj.reset();

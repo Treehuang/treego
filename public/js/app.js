@@ -1867,6 +1867,7 @@ __webpack_require__.r(__webpack_exports__);
       password: '',
       noGeet: false,
       isloading: false,
+      isDisable: false,
       account_error: '',
       message: '请完成验证操作',
       geetestObj: null,
@@ -1890,6 +1891,7 @@ __webpack_require__.r(__webpack_exports__);
             account: _this.account,
             password: _this.password
           });
+          _this.isDisable = true;
           _this.isloading = true;
 
           _this.$store.dispatch('certification/login', formData).then(function (response) {
@@ -1901,6 +1903,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(error.response.data);
 
             if (error.response.data.errors.geetest_challenge) {
+              _this.isDisable = false;
               _this.isloading = false;
               _this.message = '验证模块异常,请重新验证';
               _this.noGeet = true;
@@ -1910,6 +1913,7 @@ __webpack_require__.r(__webpack_exports__);
             }
 
             if (error.response.data.errors.account) {
+              _this.isDisable = false;
               _this.isloading = false;
               _this.account_error = error.response.data.errors.account;
 
@@ -2000,6 +2004,7 @@ __webpack_require__.r(__webpack_exports__);
       phone: '',
       noGeet: false,
       isloading: false,
+      isDisable: false,
       geet_message: '请完成验证操作',
       phone_message: '',
       geetestObj: null,
@@ -2022,6 +2027,7 @@ __webpack_require__.r(__webpack_exports__);
           var formData = Object.assign(_this.geetestObj, {
             phone: _this.phone
           });
+          _this.isDisable = true;
           _this.isloading = true;
 
           _this.$api.auth.signup(formData).then(function (response) {
@@ -2036,6 +2042,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(error.response);
 
             if (error.response.data.errors.geetest_challenge) {
+              _this.isDisable = false;
               _this.isloading = false;
               _this.geet_message = '验证模块异常,请重新验证';
               _this.noGeet = true;
@@ -2045,6 +2052,7 @@ __webpack_require__.r(__webpack_exports__);
             }
 
             if (error.response.data.errors.phone) {
+              _this.isDisable = false;
               _this.isloading = false;
               _this.phone_message = error.response.data.errors.phone;
 
@@ -49992,7 +50000,10 @@ var render = function() {
               _c("div", { staticClass: "form-group" }, [
                 _c(
                   "button",
-                  { staticClass: "btn login", attrs: { type: "submit" } },
+                  {
+                    staticClass: "btn login",
+                    attrs: { type: "submit", disabled: _vm.isDisable }
+                  },
                   [
                     _c("span", [
                       _vm._v("Sign In "),
@@ -50182,7 +50193,10 @@ var render = function() {
             _c("div", { staticClass: "form-group" }, [
               _c(
                 "button",
-                { staticClass: "btn register", attrs: { type: "submit" } },
+                {
+                  staticClass: "btn register",
+                  attrs: { type: "submit", disabled: _vm.isDisable }
+                },
                 [
                   _vm._v("Sign Up "),
                   _c("i", {
