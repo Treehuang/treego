@@ -13,6 +13,7 @@
                     <div class="form-group">
                         <input v-validate="'required|account'" v-model="account" type="text" :class="[{'is-invalid' : errors.has('account')}, 'form-control']" name="account" placeholder="手机号/邮箱">
                         <span class="invalid-feedback" v-if="errors.has('account')">{{ errors.first('account') }}</span>
+                        <span class="message" v-if="!errors.has('account')">{{ account_error }}</span>
                     </div>
 
                     <div class="form-group">
@@ -70,9 +71,16 @@
                 password: '',
                 noGeet: false,
                 isloading: false,
+                account_error: '',
                 message: '请完成验证操作',
                 geetestObj: null,
                 captchaObj: null,
+            }
+        },
+
+        watch: {
+            account() {
+                this.account_error = '';
             }
         },
 
@@ -89,16 +97,25 @@
                         let formData = Object.assign(this.geetestObj, {account: this.account, password: this.password});
 
                         this.isloading = true;
-                        axios.post('/api/login', formData).then(response => {
+                        this.$store.dispatch('certification/login', formData).then(response => {
                             // TO DO
                             this.$router.push({name:'home'});
 
                         }).catch(error => {
-                            this.isloading = false;
-                            this.message = '验证模块异常,请重新验证';
-                            this.noGeet = true;
-                            this.geetestObj = null;
-                            this.captchaObj.reset();
+                            console.log(error.response.data);
+                            if(error.response.data.errors.geetest_challenge) {
+                                this.isloading = false;
+                                this.message = '验证模块异常,请重新验证';
+                                this.noGeet = true;
+                                this.geetestObj = null;
+                                this.captchaObj.reset();
+                            }
+
+                            if(error.response.data.errors.account){
+                                this.isloading = false;
+                                this.account_error = error.response.data.errors.account;
+                                this.captchaObj.reset();
+                            }
                         });
                     }
                 });

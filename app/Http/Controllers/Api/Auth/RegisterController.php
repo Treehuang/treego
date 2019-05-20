@@ -4,18 +4,14 @@ namespace App\Http\Controllers\Api\Auth;
 
 use \Cache;
 use App\Models\User;
-use App\Http\Requests\Api\GeetRequest;
+use App\Http\Requests\Api\RegisterRequest;
 use App\Http\Controllers\Api\Controller;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
 use Overtrue\EasySms\EasySms;
 
 class RegisterController extends Controller
 {
-    use RegistersUsers;
-
     // 发送短信
-    public function smsCode(GeetRequest $request, EasySms $easySms)
+    public function smsCode(RegisterRequest $request, EasySms $easySms)
     {
         $phone = $request->phone;
 
@@ -43,7 +39,7 @@ class RegisterController extends Controller
         ], 201);    // 201 Created - 对创建新资源的 POST 操作进行响应
     }
 
-    public function register(GeetRequest $request)
+    public function register(RegisterRequest $request)
     {
         // 将信息存入数据库
         $user = $this->create(array_merge($request->all(), \Cache::get($request->verify_key)));
@@ -67,7 +63,7 @@ class RegisterController extends Controller
         return User::create([
             'phone' => $data['phone'],
             'username' => $data['username'],
-            'password' => Hash::make($data['password']),
+            'password' => bcrypt($data['password']),
         ]);
     }
 

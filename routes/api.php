@@ -27,6 +27,9 @@ $api->version('v1', [
     // 登录
     $api->post('/login', 'Auth\LoginController@login');
 
+    // 退出登录
+    $api->delete('/logout', 'Auth\LoginController@logout');
+
     // 注册-验证极验和发送短信验证码
     $api->post('/signup', 'Auth\RegisterController@smsCode');
 

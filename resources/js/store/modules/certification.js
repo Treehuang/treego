@@ -25,6 +25,11 @@ const mutations = {
 
     refreshToken(state, access_token) {
         state.access_token = access_token;
+    },
+
+    resetAuthUser(state) {
+        state.is_auth = false;
+        state.access_token = null;
     }
 };
 
@@ -49,9 +54,24 @@ const actions = {
         });
     },
 
-    setAuthUser({commit}) {
-        return new Promise(function (resolve, reject) {
-            commit('setAuthUser');
+    login({commit}, formData) {
+        return new Promise((resolve, reject) => {
+            return api.auth.login(formData).then(response => {
+                commit('setAuthUser', response.data);
+                resolve(response);
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
+
+    logout({commit}) {
+        return new Promise((resolve, reject) => {
+            return api.auth.logout().then(response => {
+                commit('resetAuthUser');
+            }).catch(error => {
+                reject(error);
+            });
         });
     }
 };

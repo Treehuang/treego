@@ -1855,6 +1855,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1866,10 +1867,16 @@ __webpack_require__.r(__webpack_exports__);
       password: '',
       noGeet: false,
       isloading: false,
+      account_error: '',
       message: '请完成验证操作',
       geetestObj: null,
       captchaObj: null
     };
+  },
+  watch: {
+    account: function account() {
+      this.account_error = '';
+    }
   },
   methods: {
     login: function login() {
@@ -1884,18 +1891,30 @@ __webpack_require__.r(__webpack_exports__);
             password: _this.password
           });
           _this.isloading = true;
-          axios.post('/api/login', formData).then(function (response) {
+
+          _this.$store.dispatch('certification/login', formData).then(function (response) {
             // TO DO
             _this.$router.push({
               name: 'home'
             });
           })["catch"](function (error) {
-            _this.isloading = false;
-            _this.message = '验证模块异常,请重新验证';
-            _this.noGeet = true;
-            _this.geetestObj = null;
+            console.log(error.response.data);
 
-            _this.captchaObj.reset();
+            if (error.response.data.errors.geetest_challenge) {
+              _this.isloading = false;
+              _this.message = '验证模块异常,请重新验证';
+              _this.noGeet = true;
+              _this.geetestObj = null;
+
+              _this.captchaObj.reset();
+            }
+
+            if (error.response.data.errors.account) {
+              _this.isloading = false;
+              _this.account_error = error.response.data.errors.account;
+
+              _this.captchaObj.reset();
+            }
           });
         }
       });
@@ -1980,6 +1999,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       phone: '',
       noGeet: false,
+      isloading: false,
       geet_message: '请完成验证操作',
       phone_message: '',
       geetestObj: null,
@@ -2002,6 +2022,7 @@ __webpack_require__.r(__webpack_exports__);
           var formData = Object.assign(_this.geetestObj, {
             phone: _this.phone
           });
+          _this.isloading = true;
 
           _this.$api.auth.signup(formData).then(function (response) {
             sessionStorage.setItem("phone", _this.phone);
@@ -2015,6 +2036,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(error.response);
 
             if (error.response.data.errors.geetest_challenge) {
+              _this.isloading = false;
               _this.geet_message = '验证模块异常,请重新验证';
               _this.noGeet = true;
               _this.geetestObj = null;
@@ -2023,6 +2045,7 @@ __webpack_require__.r(__webpack_exports__);
             }
 
             if (error.response.data.errors.phone) {
+              _this.isloading = false;
               _this.phone_message = error.response.data.errors.phone;
 
               _this.captchaObj.reset();
@@ -2197,6 +2220,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2204,8 +2232,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'TheEntry'
+  name: 'TheEntry',
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('certification', {
+    isAuth: 'isAuth'
+  })),
+  methods: {
+    logout: function logout() {
+      var _this = this;
+
+      this.$store.dispatch('certification/logout').then(function (response) {
+        _this.$router.push({
+          name: 'home'
+        });
+      })["catch"](function (error) {});
+    },
+    test: function test() {
+      this.$api.auth.test().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {});
+    }
+  }
 });
 
 /***/ }),
@@ -6869,7 +6932,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.container[data-v-d4f9cbe2] {\n    min-width: 1100px;\n}\n.github[data-v-d4f9cbe2]{\n    color: #606060;\n    box-shadow: none;\n    border-color: #ced4da;\n}\n.github[data-v-d4f9cbe2]:hover{\n    color: #32c6c6;\n    border-color: #32c6c6;\n    background-color: rgba(200, 255, 193, 0);\n}\n.register[data-v-d4f9cbe2]{\n    color: #ffffff;\n    border-color: #33cccc;\n    background-color: #33cdcd;\n    box-shadow: -4px 7px 20px 2px rgba(53, 212, 212, 0.2);\n}\n.register[data-v-d4f9cbe2]:hover{\n    background-color: #34d7d7;\n}\n.sign[data-v-d4f9cbe2] {\n    clear: both;\n    padding-top: 168px;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-d4f9cbe2] {\n    min-width: 1100px;\n}\n.fa-sign-in-alt[data-v-d4f9cbe2] {\n    margin-left: 1.5px;\n}\n.github[data-v-d4f9cbe2]{\n    color: #606060;\n    box-shadow: none;\n    border-color: #ced4da;\n}\n.github[data-v-d4f9cbe2]:hover{\n    color: #32c6c6;\n    border-color: #32c6c6;\n    background-color: rgba(200, 255, 193, 0);\n}\n.register[data-v-d4f9cbe2]{\n    min-width: 96px;\n    color: #ffffff;\n    border-color: #33cccc;\n    background-color: #33cdcd;\n    box-shadow: -4px 7px 20px 2px rgba(53, 212, 212, 0.2);\n}\n.register[data-v-d4f9cbe2]:hover{\n    background-color: #34d7d7;\n}\n.sign[data-v-d4f9cbe2] {\n    clear: both;\n    padding-top: 168px;\n}\n", ""]);
 
 // exports
 
@@ -6907,7 +6970,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.fa-user-plus[data-v-18de244a] {\n    font-size: 12px;\n}\n.fa-sign-in-alt[data-v-18de244a] {\n    font-size: 14px;\n    margin-right: 1px;\n}\n", ""]);
+exports.push([module.i, "\n.fa-user-plus[data-v-18de244a] {\n    font-size: 12px;\n}\n.fa-sign-in-alt[data-v-18de244a] {\n    font-size: 14px;\n}\n.dropdown-toggle[data-v-18de244a] {\n    width: 93px;\n    cursor:pointer;\n}\n.dropdown-menu-right[data-v-18de244a] {\n    padding: 0;\n    min-width:100%;\n    margin-top: 0.4px;\n    text-align: center;\n}\n.fa-user[data-v-18de244a] {\n    margin-right: 4px;\n    color: rgba(13,13,13,0.62);\n}\n.fa-user-cog[data-v-18de244a] {\n    color: rgba(13,13,13,0.62);\n}\n.fa-paper-plane[data-v-18de244a] {\n    margin-right: 5px;\n    color: rgba(13,13,13,0.62);\n}\nspan[data-v-18de244a] {\n    font-size: 15px;\n}\n\n/*悬停下拉菜单延迟*/\nli:hover .dropdown-menu[data-v-18de244a] {display: block; -webkit-animation:ttt-data-v-18de244a 1s 1 forwards; animation:ttt-data-v-18de244a 1s 1 forwards;}\n.li .dropdown-menu[data-v-18de244a]{\n    opacity:0\n}\n@-webkit-keyframes ttt-data-v-18de244a {\n0% {\n        opacity: 0;\n}\n1% { /*这里表示3s的66%也就是大约2秒的时候*/\n        opacity: 0;\n}\n50% {\n        opacity: 1;\n}\n}\n@keyframes ttt-data-v-18de244a {\n0% {\n        opacity: 0;\n}\n1% { /*这里表示3s的66%也就是大约2秒的时候*/\n        opacity: 0;\n}\n50% {\n        opacity: 1;\n}\n}\n", ""]);
 
 // exports
 
@@ -49835,6 +49898,12 @@ var render = function() {
                 ? _c("span", { staticClass: "invalid-feedback" }, [
                     _vm._v(_vm._s(_vm.errors.first("account")))
                   ])
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.errors.has("account")
+                ? _c("span", { staticClass: "message" }, [
+                    _vm._v(_vm._s(_vm.account_error))
+                  ])
                 : _vm._e()
             ]),
             _vm._v(" "),
@@ -50110,13 +50179,28 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(2)
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "button",
+                { staticClass: "btn register", attrs: { type: "submit" } },
+                [
+                  _vm._v("Sign Up "),
+                  _c("i", {
+                    class: [
+                      _vm.isloading
+                        ? "spinner-border spinner-border-sm"
+                        : "fas fa-sign-in-alt"
+                    ]
+                  })
+                ]
+              )
+            ])
           ]
         )
       ])
     ]),
     _vm._v(" "),
-    _vm._m(3)
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
@@ -50142,17 +50226,6 @@ var staticRenderFns = [
           staticClass: "btn btn-block github",
           attrs: { value: "GitHub登录", type: "button" }
         })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("button", { staticClass: "btn register", attrs: { type: "submit" } }, [
-        _vm._v("Sign Up "),
-        _c("i", { staticClass: "fas fa-sign-in-alt" })
       ])
     ])
   },
@@ -50428,33 +50501,127 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("ul", { staticClass: "navbar-nav navbar-right" }, [
-    _c(
-      "li",
-      { staticClass: "nav-item" },
-      [
+  return !_vm.isAuth
+    ? _c("ul", { staticClass: "navbar-nav navbar-right" }, [
         _c(
-          "router-link",
-          { staticClass: "nav-link", attrs: { to: "/login" } },
-          [_c("i", { staticClass: "fas fa-sign-in-alt" }), _vm._v(" 登录")]
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "li",
-      { staticClass: "nav-item" },
-      [
+          "li",
+          { staticClass: "nav-item" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/login" } },
+              [_c("i", { staticClass: "fas fa-sign-in-alt" }), _vm._v(" 登录")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
         _c(
-          "router-link",
-          { staticClass: "nav-link", attrs: { to: "/register" } },
-          [_c("i", { staticClass: "fas fa-user-plus" }), _vm._v(" 注册")]
+          "li",
+          { staticClass: "nav-item" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/register" } },
+              [_c("i", { staticClass: "fas fa-user-plus" }), _vm._v(" 注册")]
+            )
+          ],
+          1
         )
-      ],
-      1
-    )
-  ])
+      ])
+    : _vm.isAuth
+    ? _c("ul", { staticClass: "navbar-nav navbar-right" }, [
+        _c(
+          "li",
+          { staticClass: "nav-item dropdown" },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "nav-link dropdown-toggle",
+                attrs: {
+                  tag: "a",
+                  to: "",
+                  id: "navbarDropdown",
+                  role: "button",
+                  "data-toggle": "dropdown",
+                  "aria-haspopup": "true",
+                  "aria-expanded": "false"
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "rounded-circle",
+                  attrs: {
+                    src:
+                      "https://img.mukewang.com/5bac8e1e0001705a06400640-200-200.jpg",
+                    width: "30px",
+                    height: "30px"
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "dropdown-menu dropdown-menu-right",
+                attrs: { "aria-labelledby": "navbarDropdown" }
+              },
+              [
+                _c(
+                  "router-link",
+                  { staticClass: "dropdown-item", attrs: { tag: "a", to: "" } },
+                  [
+                    _c("i", { staticClass: "fas fa-user" }),
+                    _vm._v("   "),
+                    _c("span", [_vm._v("个人中心")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "dropdown-item",
+                    attrs: { tag: "a", to: "" },
+                    nativeOn: {
+                      click: function($event) {
+                        return _vm.test($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-user-cog" }),
+                    _vm._v("   "),
+                    _c("span", [_vm._v("个人设置")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "dropdown-item",
+                    attrs: { tag: "a", to: "" },
+                    nativeOn: {
+                      click: function($event) {
+                        return _vm.logout($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-paper-plane" }),
+                    _vm._v("   "),
+                    _c("span", [_vm._v("安全退出")])
+                  ]
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -66617,15 +66784,26 @@ __webpack_require__.r(__webpack_exports__);
 
 var auth = {
   signup: function signup(formData) {
-    return _axios_http__WEBPACK_IMPORTED_MODULE_1__["default"].post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/signup"), formData);
+    return axios.post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/signup"), formData);
   },
   // 注册
   register: function register(formData) {
-    return _axios_http__WEBPACK_IMPORTED_MODULE_1__["default"].post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/register"), formData);
+    return axios.post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/register"), formData);
   },
   // 发送验证码
   smscode: function smscode(formData) {
-    return _axios_http__WEBPACK_IMPORTED_MODULE_1__["default"].post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/smscode"), formData);
+    return axios.post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/smscode"), formData);
+  },
+  // 登录
+  login: function login(formData) {
+    return axios.post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/login"), formData);
+  },
+  // 退出登录
+  logout: function logout() {
+    return _axios_http__WEBPACK_IMPORTED_MODULE_1__["default"]["delete"]("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/logout"));
+  },
+  test: function test() {
+    return _axios_http__WEBPACK_IMPORTED_MODULE_1__["default"].get("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/me"));
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (auth);
@@ -66773,6 +66951,7 @@ instance.interceptors.response.use(function (response) {
 }, function (error) {
   switch (error.response.status) {
     case 401:
+      _store_index__WEBPACK_IMPORTED_MODULE_2__["default"].commit('certification/resetAuthUser');
       toLogin();
       break;
 
@@ -67974,6 +68153,10 @@ var mutations = {
   },
   refreshToken: function refreshToken(state, access_token) {
     state.access_token = access_token;
+  },
+  resetAuthUser: function resetAuthUser(state) {
+    state.is_auth = false;
+    state.access_token = null;
   }
 };
 var actions = {
@@ -67996,10 +68179,25 @@ var actions = {
       commit('refreshToken', access_token);
     });
   },
-  setAuthUser: function setAuthUser(_ref3) {
+  login: function login(_ref3, formData) {
     var commit = _ref3.commit;
     return new Promise(function (resolve, reject) {
-      commit('setAuthUser');
+      return _api__WEBPACK_IMPORTED_MODULE_0__["default"].auth.login(formData).then(function (response) {
+        commit('setAuthUser', response.data);
+        resolve(response);
+      })["catch"](function (error) {
+        reject(error);
+      });
+    });
+  },
+  logout: function logout(_ref4) {
+    var commit = _ref4.commit;
+    return new Promise(function (resolve, reject) {
+      return _api__WEBPACK_IMPORTED_MODULE_0__["default"].auth.logout().then(function (response) {
+        commit('resetAuthUser');
+      })["catch"](function (error) {
+        reject(error);
+      });
     });
   }
 };

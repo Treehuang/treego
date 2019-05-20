@@ -53,6 +53,7 @@ instance.interceptors.response.use(response => {
     error => {
         switch(error.response.status) {
             case 401:
+                store.commit('certification/resetAuthUser');
                 toLogin();
                 break;
 

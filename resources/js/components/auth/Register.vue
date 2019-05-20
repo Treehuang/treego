@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn register">Sign Up <i class="fas fa-sign-in-alt"></i></button>
+                        <button type="submit" class="btn register">Sign Up <i :class="[isloading ? 'spinner-border spinner-border-sm' : 'fas fa-sign-in-alt']"></i></button>
                     </div>
 
                 </form>
@@ -61,6 +61,7 @@
             return {
                 phone: '',
                 noGeet: false,
+                isloading: false,
                 geet_message: '请完成验证操作',
                 phone_message: '',
                 geetestObj: null,
@@ -83,6 +84,8 @@
 
                         let formData = Object.assign(this.geetestObj, {phone : this.phone})
 
+                        this.isloading = true;
+
                         this.$api.auth.signup(formData).then(response => {
                             sessionStorage.setItem("phone", this.phone);
                             sessionStorage.setItem("verify_key", response.data.verify_key);
@@ -91,12 +94,14 @@
                         }).catch(error => {
                             console.log(error.response);
                             if(error.response.data.errors.geetest_challenge){
+                                this.isloading = false;
                                 this.geet_message = '验证模块异常,请重新验证';
                                 this.noGeet = true;
                                 this.geetestObj = null;
                                 this.captchaObj.reset();
                             }
                             if(error.response.data.errors.phone){
+                                this.isloading = false;
                                 this.phone_message = error.response.data.errors.phone;
                                 this.captchaObj.reset();
                             }
@@ -120,6 +125,10 @@
         min-width: 1100px;
     }
 
+    .fa-sign-in-alt {
+        margin-left: 1.5px;
+    }
+
     .github{
         color: #606060;
         box-shadow: none;
@@ -133,6 +142,7 @@
     }
 
     .register{
+        min-width: 96px;
         color: #ffffff;
         border-color: #33cccc;
         background-color: #33cdcd;
