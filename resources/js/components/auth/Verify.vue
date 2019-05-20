@@ -124,12 +124,11 @@
                         }
 
                         this.$store.dispatch('certification/register', formData).then(response => {
-                            console.log(response.data);
+                            this.$router.push({name: 'home'});
                         }).catch(error => {
                             if(error.response.data.errors.smscode) {
                                 this.smserror = error.response.data.errors.smscode;
                             }
-                            console.log(error.response.data.errors);
                         });
                     }
                 });

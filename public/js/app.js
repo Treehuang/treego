@@ -2172,13 +2172,13 @@ __webpack_require__.r(__webpack_exports__);
           };
 
           _this2.$store.dispatch('certification/register', formData).then(function (response) {
-            console.log(response.data);
+            _this2.$router.push({
+              name: 'home'
+            });
           })["catch"](function (error) {
             if (error.response.data.errors.smscode) {
               _this2.smserror = error.response.data.errors.smscode;
             }
-
-            console.log(error.response.data.errors);
           });
         }
       });
@@ -66612,18 +66612,20 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base */ "./resources/js/api/base.js");
+/* harmony import */ var _axios_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../axios/http */ "./resources/js/axios/http.js");
+
 
 var auth = {
   signup: function signup(formData) {
-    return axios.post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/signup"), formData);
+    return _axios_http__WEBPACK_IMPORTED_MODULE_1__["default"].post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/signup"), formData);
   },
   // 注册
   register: function register(formData) {
-    return axios.post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/register"), formData);
+    return _axios_http__WEBPACK_IMPORTED_MODULE_1__["default"].post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/register"), formData);
   },
   // 发送验证码
   smscode: function smscode(formData) {
-    return axios.post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/smscode"), formData);
+    return _axios_http__WEBPACK_IMPORTED_MODULE_1__["default"].post("".concat(_base__WEBPACK_IMPORTED_MODULE_0__["default"].prefix, "/smscode"), formData);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (auth);
@@ -66706,6 +66708,81 @@ new Vue({
   router: _routes__WEBPACK_IMPORTED_MODULE_1__["default"],
   store: _store__WEBPACK_IMPORTED_MODULE_5__["default"]
 });
+
+/***/ }),
+
+/***/ "./resources/js/axios/http.js":
+/*!************************************!*\
+  !*** ./resources/js/axios/http.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../routes */ "./resources/js/routes.js");
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/index */ "./resources/js/store/index.js");
+/*
+ * axios封装
+ * 请求拦截、响应拦截、错误统一处理
+ */
+
+
+ // 创建axios实例
+
+var instance = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
+  timeout: 1000 * 12
+}); // 设置post请求头
+
+instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+/**
+ * 跳转登录页
+ * 携带当前页面路由，以期在登录页面完成登录后返回当前页面
+ */
+
+var toLogin = function toLogin() {
+  _routes__WEBPACK_IMPORTED_MODULE_1__["default"].replace({
+    path: '/login',
+    query: {
+      redirect: _routes__WEBPACK_IMPORTED_MODULE_1__["default"].currentRoute.fullPath
+    }
+  });
+};
+/*
+ * 请求拦截器
+ */
+
+
+instance.interceptors.request.use(function (config) {
+  config.headers.authorization = _store_index__WEBPACK_IMPORTED_MODULE_2__["default"].state.certification.access_token;
+  return config;
+}, function (error) {
+  // 请求等待重发
+  return Promise.reject(error);
+});
+instance.interceptors.response.use(function (response) {
+  var access_token = response.headers.authorization;
+
+  if (access_token) {
+    _store_index__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('certification/refreshToken', access_token);
+  }
+
+  return response;
+}, function (error) {
+  switch (error.response.status) {
+    case 401:
+      toLogin();
+      break;
+
+    case 500:
+      break;
+  }
+
+  return Promise.reject(error);
+});
+/* harmony default export */ __webpack_exports__["default"] = (instance);
 
 /***/ }),
 
@@ -67825,10 +67902,11 @@ var routes = [{
   name: 'verify',
   components: __webpack_require__(/*! ./components/auth/Verify */ "./resources/js/components/auth/Verify.vue")
 }];
-/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',
   routes: routes
-}));
+});
+/* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
 
