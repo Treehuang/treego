@@ -14,6 +14,7 @@
                     <div class="form-group">
                         <input v-validate="'required|username'" v-model="username" :class="[{ 'is-invalid' : errors.has('username') }, 'form-control']" type="text" name="username" placeholder="14-电气-黄树斌 (级数-专业-姓名)">
                         <span class="invalid-feedback" v-if="errors.has('username')">{{ errors.first('username') }}</span>
+                        <span class="message" v-if="!errors.has('username')">{{ usererror }}</span>
                     </div>
 
                     <!-- 密码 -->
@@ -55,6 +56,7 @@
                 username: '',
                 password: '',
                 smserror: '',
+                usererror: '',
                 isOvertime: false,
             }
         },
@@ -62,6 +64,10 @@
         watch: {
             smscode() {
                 this.smserror = '';
+            },
+
+            username() {
+                this.usererror = '';
             }
         },
 
@@ -106,9 +112,13 @@
                  let formData = {phone: this.phone};
                  this.$api.auth.smscode(formData).then(response => {
                      sessionStorage.setItem("verify_key", response.data.verify_key);
-                     console.log(response.config);
                  }).catch(error => {
-
+                     if(error.response.status == 500){
+                         this.$swal.fire({
+                             type: 'error',
+                             text: '哎呀！网络连接出错了...'
+                         });
+                     }
                  });
             },
 
@@ -128,6 +138,9 @@
                         }).catch(error => {
                             if(error.response.data.errors.smscode) {
                                 this.smserror = error.response.data.errors.smscode;
+                            }
+                            if(error.response.data.errors.username) {
+                                this.usererror = error.response.data.errors.username;
                             }
                         });
                     }

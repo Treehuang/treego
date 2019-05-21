@@ -95,6 +95,20 @@
                             //console.log(response.data);
                         }).catch(error => {
                             console.log(error.response);
+                            if(error.response.status == 500){
+                                this.$swal.fire({
+                                    type: 'error',
+                                    text: '哎呀！网络连接出错了...'
+                                }).then(result => {
+                                    if(result.value){
+                                        this.isDisable = false;
+                                        this.isloading = false;
+                                        this.captchaObj.reset();
+                                    }
+                                });
+
+                                return;
+                            }
                             if(error.response.data.errors.geetest_challenge){
                                 this.isDisable = false;
                                 this.isloading = false;

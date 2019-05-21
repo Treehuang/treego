@@ -2041,6 +2041,22 @@ __webpack_require__.r(__webpack_exports__);
           })["catch"](function (error) {
             console.log(error.response);
 
+            if (error.response.status == 500) {
+              _this.$swal.fire({
+                type: 'error',
+                text: '哎呀！网络连接出错了...'
+              }).then(function (result) {
+                if (result.value) {
+                  _this.isDisable = false;
+                  _this.isloading = false;
+
+                  _this.captchaObj.reset();
+                }
+              });
+
+              return;
+            }
+
             if (error.response.data.errors.geetest_challenge) {
               _this.isDisable = false;
               _this.isloading = false;
@@ -2128,6 +2144,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2137,12 +2154,16 @@ __webpack_require__.r(__webpack_exports__);
       username: '',
       password: '',
       smserror: '',
+      usererror: '',
       isOvertime: false
     };
   },
   watch: {
     smscode: function smscode() {
       this.smserror = '';
+    },
+    username: function username() {
+      this.usererror = '';
     }
   },
   created: function created() {
@@ -2177,6 +2198,8 @@ __webpack_require__.r(__webpack_exports__);
       }, 1000);
     },
     sendSms: function sendSms() {
+      var _this2 = this;
+
       if (this.isOvertime) {
         return false;
       }
@@ -2187,28 +2210,38 @@ __webpack_require__.r(__webpack_exports__);
       };
       this.$api.auth.smscode(formData).then(function (response) {
         sessionStorage.setItem("verify_key", response.data.verify_key);
-        console.log(response.config);
-      })["catch"](function (error) {});
+      })["catch"](function (error) {
+        if (error.response.status == 500) {
+          _this2.$swal.fire({
+            type: 'error',
+            text: '哎呀！网络连接出错了...'
+          });
+        }
+      });
     },
     verify: function verify() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$validator.validateAll().then(function (result) {
         if (result) {
           var formData = {
-            smscode: _this2.smscode,
-            username: _this2.username,
-            password: _this2.password,
+            smscode: _this3.smscode,
+            username: _this3.username,
+            password: _this3.password,
             verify_key: sessionStorage.getItem('verify_key')
           };
 
-          _this2.$store.dispatch('certification/register', formData).then(function (response) {
-            _this2.$router.push({
+          _this3.$store.dispatch('certification/register', formData).then(function (response) {
+            _this3.$router.push({
               name: 'home'
             });
           })["catch"](function (error) {
             if (error.response.data.errors.smscode) {
-              _this2.smserror = error.response.data.errors.smscode;
+              _this3.smserror = error.response.data.errors.smscode;
+            }
+
+            if (error.response.data.errors.username) {
+              _this3.usererror = error.response.data.errors.username;
             }
           });
         }
@@ -53140,6 +53173,12 @@ var render = function() {
               _vm.errors.has("username")
                 ? _c("span", { staticClass: "invalid-feedback" }, [
                     _vm._v(_vm._s(_vm.errors.first("username")))
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.errors.has("username")
+                ? _c("span", { staticClass: "message" }, [
+                    _vm._v(_vm._s(_vm.usererror))
                   ])
                 : _vm._e()
             ]),

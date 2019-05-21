@@ -36,6 +36,7 @@ class RegisterRequest extends FormRequest
                 'username' => [
                     'bail',
                     'required',
+                    'unique:users',
                     'regex: /^[1][0-9]{1}-[\x{4e00}-\x{9fa5}]{2,4}-[\x{4e00}-\x{9fa5}]{2,4}$/u',
                 ],
                 'password' => [
@@ -76,6 +77,7 @@ class RegisterRequest extends FormRequest
             'phone.required' => '手机号码不能为空',
             'username.required' => '用户名不能为空',
             'username.regex' => '用户名格式错误',
+            'username.unique' => '该用户名已存在',
             'password.required' => '密码不能为空',
             'password.regex' => '密码格式错误',
             'smscode.regex' => '验证码格式错误',
