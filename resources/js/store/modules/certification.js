@@ -18,6 +18,10 @@ const getters = {
 
 const mutations = {
 
+    setIsAuth(state) {
+        state.is_auth = true;
+    },
+
     setAuthUser(state, data) {
         state.is_auth = true;
         state.access_token = data.access_token;
@@ -69,6 +73,18 @@ const actions = {
         return new Promise((resolve, reject) => {
             return api.auth.logout().then(response => {
                 commit('resetAuthUser');
+                resolve(response);
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
+
+    tryLogin({commit}) {
+        return new Promise((resolve, reject) => {
+            return api.auth.tryLogin().then(response => {
+                commit('setIsAuth');
+                resolve(response);
             }).catch(error => {
                 reject(error);
             });

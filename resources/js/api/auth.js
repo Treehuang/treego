@@ -26,6 +26,11 @@ const auth = {
         return instance.delete(`${base.prefix}/logout`);
     },
 
+    // 尝试登录
+    tryLogin () {
+        return instance.post(`${base.prefix}/trylogin`);
+    },
+
     test() {
         return instance.get(`${base.prefix}/me`);
     }

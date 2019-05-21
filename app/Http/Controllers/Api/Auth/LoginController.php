@@ -37,4 +37,8 @@ class LoginController extends Controller
 
         return $this->response->noContent();
     }
+
+    public function tryLogin() {
+        return $this->response->noContent();
+    }
 }

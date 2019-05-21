@@ -6,6 +6,7 @@
 import axios from 'axios';
 import router from '../routes';
 import store from '../store/index';
+import swal from 'sweetalert2';
 
 // 创建axios实例
 let instance = axios.create({timeout : 1000 * 12});
@@ -58,6 +59,10 @@ instance.interceptors.response.use(response => {
                 break;
 
             case 500:
+                swal.fire({
+                    type: 'error',
+                    text: '哎呀！网络连接出错了...'
+                }).then();
                 break;
         }
 

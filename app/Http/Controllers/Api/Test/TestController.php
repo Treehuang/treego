@@ -30,7 +30,7 @@ class TestController extends Controller
 
     public function me(Request $request){
         //return response()->json(auth('api')->user());
-        return $this->response()->array(['data' => 1]);
+        return response()->json(['data' => 1], 500);
     }
 
     public function refresh(Request $request){

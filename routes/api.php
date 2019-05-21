@@ -40,9 +40,11 @@ $api->version('v1', [
     $api->post('/smscode', 'Auth\RegisterController@smsCode');
 
     $api->post('/testlogin', 'Test\TestController@login');
-    $api->get('/test', 'Test\TestController@refresh');
+
     // 需要进行身份认证的API
     $api->group(['middleware' => 'jwt'], function($api){
+        // 尝试登录
+        $api->post('/trylogin', 'Auth\LoginController@tryLogin');
 
         $api->get('/me', 'Test\TestController@me');
 

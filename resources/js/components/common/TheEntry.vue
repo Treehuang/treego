@@ -28,16 +28,34 @@
 
         computed: {
             ...mapGetters('certification', {
+                token : 'getAccessToken',
                 isAuth: 'isAuth'
             })
         },
 
+        mounted() {
+            if(this.token != null) {
+                this.$store.dispatch('certification/tryLogin').then(() => {});
+            }
+        },
+
         methods: {
             logout() {
-                this.$store.dispatch('certification/logout').then(response => {
-                    this.$router.push({name:'home'});
-                }).catch(error => {
-
+                this.$swal.fire({
+                    text: "您确定要退出登录吗？",
+                    type: 'warning',
+                    width: '400px',
+                    showCancelButton: true,
+                    confirmButtonColor: '#83d1f5',
+                    cancelButtonColor: '#c1c1c1',
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                }).then((result) => {
+                    if (result.value) {
+                        this.$store.dispatch('certification/logout').then(() => {
+                            this.$router.push({name:'home'});
+                        });
+                    }
                 });
             },
 
