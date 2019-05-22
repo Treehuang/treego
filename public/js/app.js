@@ -1900,7 +1900,41 @@ __webpack_require__.r(__webpack_exports__);
               name: 'home'
             });
           })["catch"](function (error) {
-            console.log(error.response.data);
+            if (error.response.status == 429) {
+              _this.$swal.fire({
+                'type': 'warning',
+                'text': '哎呀！您今天的登录次数已经耗光啦☹'
+              }).then(function (result) {
+                if (result.value) {
+                  _this.isDisable = false;
+                  _this.isloading = false;
+                  _this.geetestObj = null;
+
+                  _this.captchaObj.reset();
+                }
+              });
+
+              return;
+            } // 检测还剩多少次登录的机会
+
+
+            if (error.response.headers['x-ratelimit-remaining'] <= 3) {
+              console.log(error.response);
+
+              if (error.response.headers['x-ratelimit-remaining'] == 0) {
+                _this.$swal.fire({
+                  'type': 'warning',
+                  'text': '哎呀！您今天的登录次数已经耗光啦☹'
+                }).then();
+              } else {
+                _this.$swal.fire({
+                  'type': 'warning',
+                  'text': '您今天还有' + error.response.headers['x-ratelimit-remaining'] + '次登录机会'
+                }).then();
+              }
+            }
+
+            console.log(error.response.data.errors.geetest_challenge);
 
             if (error.response.data.errors.geetest_challenge) {
               _this.isDisable = false;
@@ -1915,6 +1949,7 @@ __webpack_require__.r(__webpack_exports__);
             if (error.response.data.errors.account) {
               _this.isDisable = false;
               _this.isloading = false;
+              _this.geetestObj = null;
               _this.account_error = error.response.data.errors.account;
 
               _this.captchaObj.reset();
@@ -2041,6 +2076,23 @@ __webpack_require__.r(__webpack_exports__);
           })["catch"](function (error) {
             console.log(error.response);
 
+            if (error.response.status == 429) {
+              _this.$swal.fire({
+                'type': 'warning',
+                'text': '您操作太频繁了，请稍等1分钟再操作~'
+              }).then(function (result) {
+                if (result.value) {
+                  _this.isDisable = false;
+                  _this.isloading = false;
+                  _this.geetestObj = null;
+
+                  _this.captchaObj.reset();
+                }
+              });
+
+              return;
+            }
+
             if (error.response.status == 500) {
               _this.$swal.fire({
                 type: 'error',
@@ -2049,6 +2101,7 @@ __webpack_require__.r(__webpack_exports__);
                 if (result.value) {
                   _this.isDisable = false;
                   _this.isloading = false;
+                  _this.geetestObj = null;
 
                   _this.captchaObj.reset();
                 }
@@ -2070,6 +2123,7 @@ __webpack_require__.r(__webpack_exports__);
             if (error.response.data.errors.phone) {
               _this.isDisable = false;
               _this.isloading = false;
+              _this.geetestObj = null;
               _this.phone_message = error.response.data.errors.phone;
 
               _this.captchaObj.reset();
@@ -70063,6 +70117,13 @@ instance.interceptors.response.use(function (response) {
     case 401:
       _store_index__WEBPACK_IMPORTED_MODULE_2__["default"].commit('certification/resetAuthUser');
       toLogin();
+      break;
+
+    case 429:
+      sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
+        type: 'warning',
+        text: '您操作太频繁了，请稍后~'
+      }).then();
       break;
 
     case 500:

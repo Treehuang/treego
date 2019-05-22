@@ -105,7 +105,39 @@
                             this.$router.push({name:'home'});
 
                         }).catch(error => {
-                            console.log(error.response.data);
+
+                            if(error.response.status == 429) {
+                                this.$swal.fire({
+                                    'type': 'warning',
+                                    'text': '哎呀！您今天的登录次数已经耗光啦☹'
+                                }).then((result) => {
+                                    if(result.value) {
+                                        this.isDisable = false;
+                                        this.isloading = false;
+                                        this.geetestObj = null;
+                                        this.captchaObj.reset();
+                                    }
+                                });
+
+                                return;
+                            }
+
+                            // 检测还剩多少次登录的机会
+                            if(error.response.headers['x-ratelimit-remaining'] <= 3) {
+                                console.log(error.response);
+                                if (error.response.headers['x-ratelimit-remaining'] == 0) {
+                                    this.$swal.fire({
+                                        'type': 'warning',
+                                        'text': '哎呀！您今天的登录次数已经耗光啦☹',
+                                    }).then();
+                                }else {
+                                    this.$swal.fire({
+                                        'type': 'warning',
+                                        'text': '您今天还有' + error.response.headers['x-ratelimit-remaining'] + '次登录机会',
+                                    }).then();
+                                }
+                            }
+                            console.log(error.response.data.errors.geetest_challenge);
                             if(error.response.data.errors.geetest_challenge) {
                                 this.isDisable = false;
                                 this.isloading = false;
@@ -118,6 +150,7 @@
                             if(error.response.data.errors.account){
                                 this.isDisable = false;
                                 this.isloading = false;
+                                this.geetestObj = null;
                                 this.account_error = error.response.data.errors.account;
                                 this.captchaObj.reset();
                             }

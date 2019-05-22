@@ -95,6 +95,22 @@
                             //console.log(response.data);
                         }).catch(error => {
                             console.log(error.response);
+                            if(error.response.status == 429) {
+                                this.$swal.fire({
+                                    'type': 'warning',
+                                    'text': '您操作太频繁了，请稍等1分钟再操作~'
+                                }).then((result) => {
+                                    if(result.value) {
+                                        this.isDisable = false;
+                                        this.isloading = false;
+                                        this.geetestObj = null;
+                                        this.captchaObj.reset();
+                                    }
+                                });
+
+                                return;
+                            }
+
                             if(error.response.status == 500){
                                 this.$swal.fire({
                                     type: 'error',
@@ -103,6 +119,7 @@
                                     if(result.value){
                                         this.isDisable = false;
                                         this.isloading = false;
+                                        this.geetestObj = null;
                                         this.captchaObj.reset();
                                     }
                                 });
@@ -120,6 +137,7 @@
                             if(error.response.data.errors.phone){
                                 this.isDisable = false;
                                 this.isloading = false;
+                                this.geetestObj = null;
                                 this.phone_message = error.response.data.errors.phone;
                                 this.captchaObj.reset();
                             }

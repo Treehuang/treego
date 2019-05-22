@@ -58,6 +58,13 @@ instance.interceptors.response.use(response => {
                 toLogin();
                 break;
 
+            case 429:
+                swal.fire({
+                    type: 'warning',
+                    text: '您操作太频繁了，请稍后~'
+                }).then();
+                break;
+
             case 500:
                 swal.fire({
                     type: 'error',

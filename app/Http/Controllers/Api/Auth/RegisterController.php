@@ -31,7 +31,7 @@ class RegisterController extends Controller
         $key = 'verificationCode_' . str_random(15);
         $expirsIn = now()->addMinutes(2);
 
-        \Cache::put($key, ['phone' => $phone, 'code' => $code], $expirsIn);
+        Cache::put($key, ['phone' => $phone, 'code' => $code], $expirsIn);
 
         return response()->json([
             'verify_key' => $key,
@@ -42,12 +42,12 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request)
     {
         // 将信息存入数据库
-        $user = $this->create(array_merge($request->all(), \Cache::get($request->verify_key)));
+        $user = $this->create(array_merge($request->all(), Cache::get($request->verify_key)));
 
         $token = auth('api')->login($user);
 
         // 删除缓存的短信验证码
-        \Cache::forget($request->verify_key);
+        Cache::forget($request->verify_key);
 
         return $this->respondWithToken($token);
     }

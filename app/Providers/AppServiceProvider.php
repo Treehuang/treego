@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use \Cache;
 use Dingo\Api\Facade\API;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -21,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
    	    }
 
-   	    // 捕获验证异
+   	    // 捕获数据验证异常
    	    API::error(function (\Dingo\Api\Exception\ValidationHttpException $exception) {
    	        $errors =$exception->getErrors()->getMessages();
    	        foreach ($errors as $key => $value) {
@@ -30,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
    	        return response()->json(['errors' => $errors], 422);
    	    });
 
-        // 捕获认证异常
+        // 捕获未通过认证的异常
         API::error(function (\Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception) {
             return response()->json(['errors' => $exception->getMessage()], 401);
         });
@@ -46,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Request $request)
     {
         Validator::extend('smsexist', function () use ($request) {
-            $verifyData = \Cache::get($request->verify_key);
+            $verifyData = Cache::get($request->verify_key);
             if (!$verifyData){
                 return false;
             }
@@ -54,7 +55,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Validator::extend('smserror', function () use ($request){
-            $verifyData = \Cache::get($request->verify_key);
+            $verifyData = Cache::get($request->verify_key);
             if (!hash_equals((string)$verifyData['code'], (string)$request->smscode)) {
                 return false;
             }
