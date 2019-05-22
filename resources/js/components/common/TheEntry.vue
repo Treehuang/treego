@@ -5,68 +5,26 @@
         </ul>
 
         <ul v-else-if="isAuth" class="navbar-nav navbar-right">
-            <li class="nav-item dropdown">
-                <router-link tag="a" to="" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="https://img.mukewang.com/5bac8e1e0001705a06400640-200-200.jpg" class="rounded-circle" width="30px" height="30px">
-                </router-link>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <router-link class="dropdown-item" tag="a" to=""><i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;<span>个人中心</span></router-link>
-                    <router-link class="dropdown-item" tag="a" to="" @click.native="test"><i class="fas fa-user-cog"></i>&nbsp;&nbsp;&nbsp;<span>个人设置</span></router-link>
-                    <router-link class="dropdown-item" tag="a" to="" @click.native="logout">
-                        <i class="fas fa-paper-plane"></i>&nbsp;&nbsp;&nbsp;<span>安全退出</span>
-                    </router-link>
-                </div>
-            </li>
+            <the-avatar></the-avatar>
         </ul>
 </template>
 
 <script>
     import {mapGetters} from 'vuex';
+    import TheAvatar from './TheAvatar';
 
     export default {
         name: 'TheEntry',
 
+        components: {
+            TheAvatar,
+        },
+
         computed: {
             ...mapGetters('certification', {
-                token : 'getAccessToken',
                 isAuth: 'isAuth'
             })
         },
-
-        mounted() {
-            if(this.token != null) {
-                this.$store.dispatch('certification/tryLogin').then(() => {});
-            }
-        },
-
-        methods: {
-            logout() {
-                this.$swal.fire({
-                    text: "您确定要退出登录吗？",
-                    type: 'warning',
-                    width: '400px',
-                    showCancelButton: true,
-                    confirmButtonColor: '#83d1f5',
-                    cancelButtonColor: '#c1c1c1',
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                }).then((result) => {
-                    if (result.value) {
-                        this.$store.dispatch('certification/logout').then(() => {
-                            this.$router.push({name:'home'});
-                        });
-                    }
-                });
-            },
-
-            test() {
-                this.$api.auth.test().then(response => {
-                    console.log(response.data);
-                }).catch(error => {
-
-                });
-            }
-        }
     }
 </script>
 
@@ -80,52 +38,4 @@
         font-size: 14px;
     }
 
-    .dropdown-toggle {
-        width: 93px;
-        cursor:pointer;
-    }
-
-    .dropdown-menu-right {
-        padding: 0;
-        min-width:100%;
-        margin-top: 0.4px;
-        text-align: center;
-    }
-
-    .fa-user {
-        margin-right: 4px;
-        color: rgba(13,13,13,0.62);
-    }
-
-    .fa-user-cog {
-        color: rgba(13,13,13,0.62);
-    }
-
-    .fa-paper-plane {
-        margin-right: 5px;
-        color: rgba(13,13,13,0.62);
-    }
-
-    span {
-        font-size: 15px;
-    }
-
-    /*悬停下拉菜单延迟*/
-    li:hover .dropdown-menu {display: block; animation:ttt 1s 1 forwards;}
-
-    .li .dropdown-menu{
-        opacity:0
-    }
-
-    @keyframes ttt {
-        0% {
-            opacity: 0;
-        }
-        1% { /*这里表示3s的66%也就是大约2秒的时候*/
-            opacity: 0;
-        }
-        50% {
-            opacity: 1;
-        }
-    }
 </style>
