@@ -11,16 +11,24 @@ use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
 {
-    public function login() {
+    public function login(Request $request) {
 
-        $test = Cache::has('expires');
-
-        $expires = (strtotime(date('Y-m-d', strtotime('+1 day')))-time())/60;
-        if (!Cache::has('expires')) {
-            Cache::put('expires', $expires, now()->addMinutes(1));
-        }
-
-        return response()->json(['存在expires' => $test, 'data' => Cache::get('expires')]);
+//        $test = Cache::has('expires');
+//
+//        $expires = (strtotime(date('Y-m-d', strtotime('+1 day')))-time())/60;
+//        if (!Cache::has('expires')) {
+//            Cache::put('expires', $expires, now()->addMinutes(1));
+//        }
+        //$data = Cache::has('192.168.1.112');
+//        for($i=0; $i<100; $i++){
+//            Cache::forget('192.168.1.112');
+//        }
+        //Cache::put('d', 'test', 1);
+        //Cache::forget('1921681112');
+        $key = $request->account;
+        $data = Cache::get('15626114758');
+        //$data = number_format((strtotime(date('Y-m-d', strtotime('+1 day')))-time())/60, 15);
+        return response()->json(['key' => $data]);
 
 //        $user = User::first();
 //

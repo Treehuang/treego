@@ -1919,8 +1919,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
             if (error.response.headers['x-ratelimit-remaining'] <= 3) {
-              console.log(error.response);
-
               if (error.response.headers['x-ratelimit-remaining'] == 0) {
                 _this.$swal.fire({
                   'type': 'warning',
@@ -1933,8 +1931,6 @@ __webpack_require__.r(__webpack_exports__);
                 }).then();
               }
             }
-
-            console.log(error.response.data.errors.geetest_challenge);
 
             if (error.response.data.errors.geetest_challenge) {
               _this.isDisable = false;

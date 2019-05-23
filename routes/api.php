@@ -30,7 +30,7 @@ $api->version('v1', [
     // 极验-获取流水标识
     $api->get('/geetest', 'Auth\GeetestController@getGeetest');
 
-    $api->group(['middleware' => 'api.throttle', 'limit' => 6, 'expires' => 2], function ($api) {
+    $api->group(['middleware' => 'api.throttle', 'limit' => 6, 'expires' => loginExpiresTime(\Request::instance())], function ($api) {
         // 登录
         $api->post('/login', 'Auth\LoginController@login');
     });
@@ -41,12 +41,10 @@ $api->version('v1', [
     });
 
     // 1分钟只能调一次
-    $api->group(['middleware' => 'api.throttle', 'limit' => 100, 'expires' => 1], function ($api) {
+    $api->group(['middleware' => 'api.throttle', 'limit' => 1, 'expires' => 1], function ($api) {
         // 发送短信验证码
         $api->post('/smscode', 'Auth\RegisterController@smsCode');
     });
-
-    $api->post('/testlogin', 'Test\TestController@login');
 
     // 一分钟只能调60次
     $api->group(['middleware' => 'api.throttle', 'limit' => 60, 'expires' => 1], function ($api) {
@@ -56,7 +54,11 @@ $api->version('v1', [
             // 尝试登录
             $api->post('/trylogin', 'Auth\LoginController@tryLogin');
 
+            // 测试
             $api->get('/me', 'Test\TestController@me');
         });
     });
+
+    // 测试
+    $api->post('/testlogin', 'Test\TestController@login');
 });

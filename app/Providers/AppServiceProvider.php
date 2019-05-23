@@ -54,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
             return true;
         });
 
-        Validator::extend('smserror', function () use ($request){
+        Validator::extend('smserror', function () use ($request) {
             $verifyData = Cache::get($request->verify_key);
             if (!hash_equals((string)$verifyData['code'], (string)$request->smscode)) {
                 return false;

@@ -124,7 +124,7 @@
 
                             // 检测还剩多少次登录的机会
                             if(error.response.headers['x-ratelimit-remaining'] <= 3) {
-                                console.log(error.response);
+
                                 if (error.response.headers['x-ratelimit-remaining'] == 0) {
                                     this.$swal.fire({
                                         'type': 'warning',
@@ -137,7 +137,7 @@
                                     }).then();
                                 }
                             }
-                            console.log(error.response.data.errors.geetest_challenge);
+
                             if(error.response.data.errors.geetest_challenge) {
                                 this.isDisable = false;
                                 this.isloading = false;
