@@ -58,7 +58,7 @@
 
 <script>
 
-    import  GeetTest from '../validate/GeetTest'
+    import GeetTest from '../validate/GeetTest'
 
     export default {
         components: {

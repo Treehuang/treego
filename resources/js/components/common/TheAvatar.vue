@@ -2,7 +2,7 @@
     <li class="nav-item dropdown">
 
         <router-link tag="a" to="" @click.native="isDown=false" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown">
-            <img src="https://img.mukewang.com/5bac8e1e0001705a06400640-200-200.jpg" @mouseover="showDown" class="rounded-circle rounded-circle-puls" width="30px" height="30px">
+            <img src="https://img.mukewang.com/5bac8e1e0001705a06400640-200-200.jpg" @mouseover="isDown=true" class="rounded-circle rounded-circle-puls" width="30px" height="30px">
         </router-link>
 
         <div v-if="isDown" class="dropdown-menu dropdown-menu-right">
@@ -21,7 +21,7 @@
 
             <div style="margin-bottom: 1px">
                 <router-link class="btn center" tag="a" to="" @click.native="test"><i class="far fa-credit-card"></i>&nbsp;<span>卡券中心</span></router-link>
-                <router-link class="btn set" tag="a" to="" @click.native="test"><i class="fas fa-cog"></i>&nbsp;<span>个人设置</span></router-link>
+                <router-link class="btn set" tag="a" to="/user/setbindsns" @click.native="isDown=false"><i class="fas fa-cog"></i>&nbsp;<span>个人设置</span></router-link>
             </div>
 
             <div style="margin-bottom: 10px">
@@ -88,10 +88,6 @@
                 });
             },
 
-            showDown() {
-                this.isDown = true;
-            },
-
             test() {
                 this.$api.auth.test().then(response => {
                     console.log(response.data);
@@ -105,6 +101,7 @@
 
 <style scoped>
     .dropdown-toggle {
+        width: 46px;
         cursor:pointer;
     }
 
@@ -156,6 +153,7 @@
     }
 
     .rounded-circle-puls {
+        margin-right: 30px;
         border: solid #b3b3b4 2px
     }
 

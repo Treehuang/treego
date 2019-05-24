@@ -20,6 +20,21 @@ let routes = [
         path: '/verify',
         name: 'verify',
         components: require('./components/auth/Verify')
+    },
+    {
+        path: '/user/setbindsns',
+        name: 'setbindsns',
+        components: require('./components/setting/SetBindsns')
+    },
+    {
+        path: '/user/setprofile',
+        name: 'setprofile',
+        components: require('./components/setting/SetProfile')
+    },
+    {
+        path: '/user/certificat',
+        name: 'certificat',
+        components: require('./components/setting/CertiFicat')
     }
 ];
 

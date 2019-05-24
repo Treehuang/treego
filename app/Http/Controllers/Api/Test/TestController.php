@@ -6,12 +6,19 @@ use \Cache;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use App\Http\Controllers\Api\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
 {
     public function login(Request $request) {
+
+        Auth::guard('api')->invalidate();;
+
+
+        return response(['data' => 'success']);
 
 //        $test = Cache::has('expires');
 //
@@ -28,7 +35,7 @@ class TestController extends Controller
         $key = $request->account;
         $data = Cache::get('15626114758');
         //$data = number_format((strtotime(date('Y-m-d', strtotime('+1 day')))-time())/60, 15);
-        return response()->json(['key' => $data]);
+        //return response()->json(['key' => $data]);
 
 //        $user = User::first();
 //

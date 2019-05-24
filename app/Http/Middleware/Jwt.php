@@ -8,6 +8,7 @@ use Dingo\Api\Routing\Helpers;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Jwt extends BaseMiddleware
@@ -27,6 +28,10 @@ class Jwt extends BaseMiddleware
             }
 
             throw new UnauthorizedHttpException('jwt-auth', '未登录');
+
+        } catch (TokenInvalidException $exception) {
+            //token 放到黑名单列表了
+            throw new UnauthorizedHttpException('jwt-auth', $exception->getMessage());
 
         } catch (TokenExpiredException $exception) {
 
