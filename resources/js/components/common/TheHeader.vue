@@ -47,11 +47,12 @@
         border-color: #e7e7e7;
         background-color: #fff;
         box-shadow: 0 1px 11px 2px rgba(42, 42, 42, 0.1);
-        border-top: 4px solid #00c8d2;
+        border-top: 4px solid #5ab7c3;
         border-bottom: 1px solid #e8e8e8;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         margin-top: 0;
         padding-top: 2px;
         padding-bottom: 1px;
+        height: 49px;
     }
 </style>

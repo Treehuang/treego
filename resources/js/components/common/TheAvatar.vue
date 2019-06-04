@@ -119,7 +119,7 @@
         padding-left: 20px;
         border: 0;
         border-radius: 0;
-        margin-top: 0.4px;
+        margin-top: 0;
         box-shadow: 2px 2px 30px -2px rgba(96, 96, 96, 0.2);
     }
 
