@@ -1,6 +1,12 @@
 import api from '../../api'
 
 const state = {
+    id: null,
+    sex: null,
+    email: null,
+    phone: null,
+    avatar: null,
+    username: null,
     is_auth: false,
     access_token: null,
 };
@@ -18,23 +24,39 @@ const getters = {
 
 const mutations = {
 
-    setIsAuth(state) {
+    setAuthUser(state, data) {
+        state.id = data.id;
+        state.sex = data.sex;
         state.is_auth = true;
+        state.email = data.email;
+        state.phone = data.phone;
+        state.avatar = data.avatar;
+        state.username = data.username;
+        state.access_token = data.meta.access_token;
     },
 
-    setAuthUser(state, data) {
-        state.is_auth = true;
-        state.access_token = data.access_token;
+    resetAuthUser(state) {
+        state.id = null;
+        state.sex = null;
+        state.is_auth = false;
+        state.email = null;
+        state.phone = null;
+        state.avatar = null;
+        state.username = null;
+        state.access_token = null;
     },
 
     refreshToken(state, access_token) {
         state.access_token = access_token;
     },
 
-    resetAuthUser(state) {
-        state.is_auth = false;
-        state.access_token = null;
-    }
+    updateUser(state, data) {
+        state.sex = data.sex;
+        state.email = data.email;
+        state.phone = data.phone
+        state.avatar = data.avatar;
+        state.username = data.username;
+    },
 };
 
 const actions = {
@@ -42,7 +64,7 @@ const actions = {
     // 注册
     register({commit}, formData) {
         return new Promise((resolve, reject) => {
-            return api.auth.register(formData).then(response => {
+            api.auth.register(formData).then(response => {
                 commit('setAuthUser', response.data);
                 resolve(response);
             }).catch(error => {
@@ -60,7 +82,7 @@ const actions = {
 
     login({commit}, formData) {
         return new Promise((resolve, reject) => {
-            return api.auth.login(formData).then(response => {
+            api.auth.login(formData).then(response => {
                 commit('setAuthUser', response.data);
                 resolve(response);
             }).catch(error => {
@@ -71,7 +93,7 @@ const actions = {
 
     logout({commit}) {
         return new Promise((resolve, reject) => {
-            return api.auth.logout().then(response => {
+            api.auth.logout().then(response => {
                 commit('resetAuthUser');
                 resolve(response);
             }).catch(error => {
@@ -82,14 +104,24 @@ const actions = {
 
     tryLogin({commit}) {
         return new Promise((resolve, reject) => {
-            return api.auth.tryLogin().then(response => {
-                commit('setIsAuth');
+            api.auth.tryLogin().then(response => {
                 resolve(response);
             }).catch(error => {
                 reject(error);
             });
         });
-    }
+    },
+
+    updateUser({commit}, formData) {
+        return new Promise((resolve, reject) => {
+            api.auth.update(formData).then(response => {
+                commit('updateUser', response.data);
+                resolve(response);
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
 };
 
 export default {

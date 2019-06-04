@@ -15,16 +15,16 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
-        if(static::getPathInfo() == '/api/signup') {
+        if (static::getPathInfo() == '/api/signup') {
             return [
                 'phone' => $this->getPhoneRule(),
                 'geetest_challenge' => 'required|geetest',
             ];
-        }else if(static::getPathInfo() == '/api/smscode'){
+        }else if (static::getPathInfo() == '/api/smscode') {
             return [
                 'phone' => $this->getPhoneRule(),
             ];
-        }else {
+        } else {
             return [
                 'smscode'  => [
                     'bail',

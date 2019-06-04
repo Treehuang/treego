@@ -6,6 +6,8 @@ use \Cache;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Naux\Mail\SendCloudTemplate;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use App\Http\Controllers\Api\Controller;
@@ -14,34 +16,21 @@ use Illuminate\Support\Facades\Auth;
 class TestController extends Controller
 {
     public function login(Request $request) {
+        $user = User::find(2);
 
-        Auth::guard('api')->invalidate();;
-
-
-        return response(['data' => 'success']);
-
-//        $test = Cache::has('expires');
+        $bind_data = ['emailCode' => 123456];
+        $template = new SendCloudTemplate('email_code', $bind_data);
+        Mail::raw($template, function ($message) use ($user) {
+            $message->from('treehuang@163.com', 'treeGo');
+            $message->to($user->email)->cc('treehuang@163.com');
+        });
+//        try {
 //
-//        $expires = (strtotime(date('Y-m-d', strtotime('+1 day')))-time())/60;
-//        if (!Cache::has('expires')) {
-//            Cache::put('expires', $expires, now()->addMinutes(1));
+//        }catch (\Exception $exception) {
+//            return $this->response->errorInternal('邮件发送异常');
 //        }
-        //$data = Cache::has('192.168.1.112');
-//        for($i=0; $i<100; $i++){
-//            Cache::forget('192.168.1.112');
-//        }
-        //Cache::put('d', 'test', 1);
-        //Cache::forget('1921681112');
-        $key = $request->account;
-        $data = Cache::get('15626114758');
-        //$data = number_format((strtotime(date('Y-m-d', strtotime('+1 day')))-time())/60, 15);
-        //return response()->json(['key' => $data]);
 
-//        $user = User::first();
-//
-//        $token = auth('api')->login($user);
-//
-//        return $this->respondWithToken($token);
+        return response()->json(['data' => 123]);
     }
 
     protected function respondWithToken($token)
@@ -55,8 +44,7 @@ class TestController extends Controller
     }
 
     public function me(Request $request){
-        //return response()->json(auth('api')->user());
-        return response()->json(['data' => 1], 200);
+        return response()->json(['user' => Auth::guard('api')->user()]);
     }
 
     public function refresh(Request $request){

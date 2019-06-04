@@ -2,18 +2,18 @@
     <li class="nav-item dropdown">
 
         <router-link tag="a" to="" @click.native="isDown=false" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown">
-            <img src="https://img.mukewang.com/5bac8e1e0001705a06400640-200-200.jpg" @mouseover="isDown=true" class="rounded-circle rounded-circle-puls" width="30px" height="30px">
+            <img :src="avatar" @mouseover="isDown=true" class="rounded-circle rounded-circle-puls" width="30px" height="30px"/>
         </router-link>
 
         <div v-if="isDown" class="dropdown-menu dropdown-menu-right">
             <div>
                 <router-link tag="a" to="">
-                    <img src="https://img.mukewang.com/5bac8e1e0001705a06400640-200-200.jpg" class="rounded-circle rounded-img" width="70px" height="70px">
+                    <img :src="avatar" class="rounded-circle rounded-img" width="70px" height="70px"/>
                 </router-link>
             </div>
 
             <div style="margin-top: 10px">
-                <h6>14-电气-黄树斌</h6>
+                <h6>{{ username }}</h6>
                 <h6 class="prompt">经验 1050 积分 80</h6>
             </div>
 
@@ -45,26 +45,28 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
+    import { mapState } from 'vuex';
 
     export default {
         name: 'TheAvatar',
 
         computed: {
-            ...mapGetters('certification', {
-                token : 'getAccessToken',
+            ...mapState({
+                token : state => state.certification.token,
+                avatar: state => state.certification.avatar,
+                username: state => state.certification.username,
             })
         },
 
-        mounted() {
-            if(this.token != null) {
+        created() {
+            if(this.token !== '') {
                 this.$store.dispatch('certification/tryLogin').then(() => {});
             }
         },
 
         data() {
             return {
-                isDown: true
+                isDown: true,
             }
         },
 
@@ -74,7 +76,10 @@
                     text: "您确定要退出登录吗？",
                     type: 'warning',
                     width: '400px',
+                    focusConfirm: false,
+                    reverseButtons: true,
                     showCancelButton: true,
+                    allowOutsideClick: false,
                     confirmButtonColor: '#83d1f5',
                     cancelButtonColor: '#c1c1c1',
                     confirmButtonText: '确定',
@@ -154,11 +159,11 @@
 
     .rounded-circle-puls {
         margin-right: 30px;
-        border: solid #b3b3b4 2px
+        border: solid #a6b7bf 2px
     }
 
     .rounded-circle-puls:hover {
-        border: solid #d1d1d2 2px;
+        border: solid #c1d2d7 2px;
     }
 
     .dropdown-toggle::after {

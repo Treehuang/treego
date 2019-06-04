@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use Auth;
 use \Cache;
 use App\Models\User;
+use App\Transformers\UserTranformer;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Http\Controllers\Api\Controller;
 use Overtrue\EasySms\EasySms;
@@ -49,7 +51,11 @@ class RegisterController extends Controller
         // 删除缓存的短信验证码
         Cache::forget($request->verify_key);
 
-        return $this->respondWithToken($token);
+        return $this->response->item(User::find($user->id), new UserTranformer())
+            ->setMeta([
+                'access_token' =>  'Bearer '. $token,
+                'expires_in'   =>  Auth::guard('api')->factory()->getTTL() * 60,
+            ])->setStatusCode(201);
     }
 
     /**
@@ -60,22 +66,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $random = rand(1, 30);
+        $avatar = 'http://192.168.5.105/images/change/' . $random . '.jpg';
+
         return User::create([
             'phone' => $data['phone'],
+            'avatar' => $avatar,
             'username' => $data['username'],
             'password' => bcrypt($data['password']),
         ]);
-    }
-
-    /**
-     * @param $token
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' =>  'Bearer '. $token,
-            'expires_in'   =>  \Auth::guard('api')->factory()->getTTL() * 60
-        ], 200);
     }
 }

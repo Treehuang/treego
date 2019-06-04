@@ -131,7 +131,7 @@
                             username: this.username,
                             password: this.password,
                             verify_key: sessionStorage.getItem('verify_key'),
-                        }
+                        };
 
                         this.$store.dispatch('certification/register', formData).then(response => {
                             this.$router.push({name: 'home'});

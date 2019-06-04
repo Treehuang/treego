@@ -2,12 +2,7 @@
     <div class="sidebar">
         <div class="card-body">
 
-            <div class="avator">
-                <img src="https://img.mukewang.com/5bac8e1e0001705a06400640-200-200.jpg" class="rounded-circle" width="100px" height="100px">
-                <div class="update">
-                    <span style="color: #ffffff; font-size: 12px;">更 换 头 像</span>
-                </div>
-            </div>
+            <update-avatar></update-avatar>
 
             <div class="username">
                 <span style="color: #aaacb1">{{ username }}</span>
@@ -47,14 +42,30 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex';
+    import UpdateAvatar from './UpdateAvatar';
+
     export default {
         name: 'SideBar',
 
+        components: {
+            UpdateAvatar,
+        },
+
+        computed: {
+            ...mapState({
+                sex : state => state.certification.sex,
+                username: state => state.certification.username,
+            })
+        },
+
         data() {
             return {
-                sex: 'm',
-                username: '14-电气-黄树斌',
             }
+        },
+
+        methods: {
+
         }
     }
 </script>
@@ -75,36 +86,6 @@
         text-align: center;
         position: relative;
         padding: 0;
-    }
-
-    .rounded-circle {
-        margin-top: 20px;
-        border: solid #d9dde1 4px;
-    }
-
-    .rounded-circle:hover+.update {
-        display: block;
-    }
-
-    .avator {
-        cursor: pointer;
-        text-align: center;
-    }
-
-    .update:hover {
-        display: block;
-    }
-
-    .update {
-        border-radius: 0 0 50px 50px;
-        width: 86px;
-        height: 22px;
-        background-color: rgba(0,0,0,.5);
-        position: absolute;
-        top: 83px;
-        left: 65px;
-        cursor: pointer;
-        display: none;
     }
 
     .username {

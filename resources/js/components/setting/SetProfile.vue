@@ -31,30 +31,37 @@
 
                     <hr>
 
-                    <div>
+                    <div class="itembox">
                         <label class="username" for="username">昵称</label>
-                        <input type="text" class="form-control" name="username" id="username" v-model="username">
+                        <input v-validate="'required|nickname'" type="text" :class="[{ 'is-invalid' : errors.has('nickname') }, 'form-control']" name="nickname" id="username" v-model="nickname">
+                        <span  class="invalid-feedback error-message" v-if="errors.has('nickname')">{{ errors.first('nickname') }}</span>
+                        <span class="message error-message" v-if="!errors.has('nickname')">{{ usererror }}</span>
                     </div>
 
                     <hr>
 
-                    <div>
+                    <div class="itembox">
                         <label class="collage" for="college">学院</label>
-                        <input type="text" class="form-control" name="college" id="college" v-model="collage">
+                        <input v-validate="'college'" type="text" :class="[{ 'is-invalid' : errors.has('college') }, 'form-control']" name="college" id="college" v-model="college">
+                        <span  class="invalid-feedback error-message" v-if="errors.has('college')">{{ errors.first('college') }}</span>
                     </div>
 
                     <hr>
 
                     <div>
                         <label class="campus" for="campus">校区</label>
-                        <input type="text" class="form-control" name="campus" id="campus" v-model="campus">
+                        <select class="form-control" name="campus" id="campus" v-model="campus">
+                            <option value="b">大学城</option>
+                            <option value="g">桂花岗</option>
+                        </select>
                     </div>
 
                     <hr>
 
-                    <div>
+                    <div class="itembox">
                         <label class="introduction" for="introduction">签名</label>
-                        <textarea name="introduction" id="introduction" class="form-control" rows="3">{{ introduction }}</textarea>
+                        <textarea v-validate="'introduction'" :class="[{ 'is-invalid' : errors.has('introduction') }, 'form-control']" name="introduction" id="introduction" rows="3" v-model="introduction"></textarea>
+                        <span class="invalid-feedback error-message" v-if="errors.has('introduction')">{{ errors.first('introduction') }}</span>
                     </div>
 
                     <hr>
@@ -74,19 +81,61 @@
     export default {
         components: {SideBar},
 
+        created() {
+            // 向后端请求数据
+            this.$api.auth.me().then(response => {
+                this.sex = response.data.sex;
+                this.campus = response.data.campus;
+                this.college = response.data.college;
+                this.nickname = response.data.username;
+                this.introduction = response.data.introduction;
+            })
+        },
+
+        watch: {
+            nickname() {
+                this.usererror = '';
+            }
+        },
+
         data() {
             return {
-                sex: 'm',
-                campus: '大学城',
-                collage: '机械与电气工程学院',
-                username: '14-电气-黄树斌',
-                introduction: '勤学如春起之苗，不见其增，日有所长！',
+                sex: '',
+                campus: '',
+                college: '',
+                nickname: '',
+                usererror: '',
+                introduction: '',
             }
         },
 
         methods: {
             save() {
-                console.log(this.sex);
+                this.$validator.validateAll().then((result) => {
+                    if(result) {
+
+                        let formData = {
+                            sex: this.sex,
+                            campus: this.campus,
+                            college: this.college,
+                            nickname: this.nickname,
+                            introduction: this.introduction,
+                        };
+
+                        this.$store.dispatch('certification/updateUser', formData).then(() => {
+                            this.$swal.fire({
+                                type: 'success',
+                                text: '修改个人信息成功！'
+                            }).then(() => {
+                                this.$router.push({name: 'setprofile'});
+                            });
+                        }).catch(error => {
+                            if(error.response.data.errors.nickname) {
+                                this.usererror = error.response.data.errors.nickname;
+                            }
+                        });
+                    }
+                });
             }
         }
     }
@@ -120,7 +169,7 @@
     }
 
     .form-control {
-        width: 198px; box-shadow: none
+        width: 198px; box-shadow: none;
     }
 
     .secondary {
@@ -129,5 +178,13 @@
 
     .secondary:hover {
         color: #5ca9b7; border-color: #5da9b6; background-color: rgba(200, 255, 193, 0);
+    }
+
+    .itembox {
+        position: relative;
+    }
+
+    .error-message {
+        position: absolute; top: 6px; left: 390px;
     }
 </style>
