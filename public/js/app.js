@@ -1921,13 +1921,21 @@ __webpack_require__.r(__webpack_exports__);
             if (error.response.headers['x-ratelimit-remaining'] <= 3) {
               if (error.response.headers['x-ratelimit-remaining'] == 0) {
                 _this.$swal.fire({
-                  'type': 'warning',
-                  'text': '哎呀！您今天的登录次数已经耗光啦☹'
+                  type: 'warning',
+                  title: '哎呀！您今天的登录次数已经耗光啦☹',
+                  toast: true,
+                  position: 'top',
+                  showConfirmButton: false,
+                  timer: 3000
                 }).then();
               } else {
                 _this.$swal.fire({
-                  'type': 'warning',
-                  'text': '您今天还有' + error.response.headers['x-ratelimit-remaining'] + '次登录机会'
+                  type: 'warning',
+                  title: '您今天还有' + error.response.headers['x-ratelimit-remaining'] + '次登录机会',
+                  toast: true,
+                  position: 'top',
+                  showConfirmButton: false,
+                  timer: 3000
                 }).then();
               }
             }
@@ -2484,7 +2492,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'TheFooter'
+  name: 'TheFooter',
+  methods: {
+    contact: function contact() {
+      this.$swal.fire({
+        text: '添加记得备注~',
+        imageUrl: 'http://192.168.5.105/images/my/me.jpg',
+        width: '360px',
+        padding: '10px',
+        imageWidth: 300,
+        imageHeight: 300,
+        imageAlt: 'tree\'s weichat',
+        animation: false,
+        allowOutsideClick: false
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2718,14 +2741,15 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     uploadAvatar: function uploadAvatar(e) {
-      var _this2 = this;
-
       // 判断浏览器是否支持FileReader
       if (!window.FileReader) {
         this.$swal.fire({
           type: 'warning',
-          text: '很抱歉，您的浏览器不支持图片上传功能',
-          confirmButtonText: '确认'
+          title: '很抱歉，您的浏览器不支持图片上传功能',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 3000
         }).then();
       } // 获取图片对象
 
@@ -2739,33 +2763,37 @@ __webpack_require__.r(__webpack_exports__);
 
 
       if (!/^image/.test(this.file.type)) {
+        // 清除路径,使得上传同一文件可以触发change
+        e.srcElement.value = "";
+        this.noUpload = true;
+        this.style = 'btn btn-danger';
+        this.message = '上传失败';
         this.$swal.fire({
           type: 'warning',
-          text: '请上传格式为png,jpeg,jpg的图片',
-          confirmButtonText: '确认'
-        }).then(function () {
-          // 清除路径,使得上传同一文件可以触发change
-          e.srcElement.value = "";
-          _this2.noUpload = true;
-          _this2.style = 'btn btn-danger';
-          _this2.message = '上传失败';
-        });
+          toast: true,
+          position: 'top',
+          title: '请上传格式为png，jpeg，jpg的图片',
+          showConfirmButton: false,
+          timer: 2500
+        }).then();
         return false;
       } // 判断图片是否超过5m
 
 
       if (this.file.size / 1024 > 2049) {
+        // 清除路径,使得上传同一文件可以触发change
+        e.srcElement.value = "";
+        this.noUpload = true;
+        this.style = 'btn btn-danger';
+        this.message = '上传失败';
         this.$swal.fire({
           type: 'warning',
-          text: '请上传大小不超过2M的图片',
-          confirmButtonText: '确认'
-        }).then(function () {
-          // 清除路径,使得上传同一文件可以触发change
-          e.srcElement.value = "";
-          _this2.noUpload = true;
-          _this2.style = 'btn btn-danger';
-          _this2.message = '上传失败';
-        });
+          title: '请上传大小不超过2M的图片',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 2500
+        }).then();
         return false;
       }
 
@@ -2776,7 +2804,8 @@ __webpack_require__.r(__webpack_exports__);
     hand: function hand() {
       this.$swal.fire({
         html: '<div style="color:#45555d;">' + '<p style="float: left">' + '• 您的一卡通证件；' + '</p>' + '<div class="clearfix"></div>' + '<p style="float: left">' + '• 同乡会负责人的签名认证；' + '</p>' + '<div class="clearfix"></div>' + '<p style="float: left">' + '• 您的录取通知书，不必提供身份证信息；' + '</p>' + '<div class="clearfix"></div>' + '</div>',
-        confirmButtonText: '确认'
+        // confirmButtonText: '确认',
+        showConfirmButton: false
       }).then();
     }
   }
@@ -2982,7 +3011,11 @@ __webpack_require__.r(__webpack_exports__);
           _this2.$store.dispatch('certification/updateUser', formData).then(function () {
             _this2.$swal.fire({
               type: 'success',
-              text: '修改个人信息成功！'
+              title: '修改成功',
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 2000
             }).then(function () {
               _this2.$router.push({
                 name: 'setprofile'
@@ -3198,17 +3231,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.uavatar = this.host + '/images/change/' + random + '.jpg';
     },
     uploadAvatar: function uploadAvatar(e) {
-      var _this = this;
-
       // 判断浏览器是否支持FileReader
       if (!window.FileReader) {
+        // 关闭模态框
+        $("#updateAvatar").modal('hide'); // 提示
+
         this.$swal.fire({
           type: 'warning',
-          text: '很抱歉，您的浏览器不支持图片上传功能',
-          confirmButtonText: '确认'
-        }).then(function () {
-          $("#updateAvatar").modal('hide');
-        });
+          title: '很抱歉，您的浏览器不支持图片上传功能',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 3000
+        }).then();
       } // 获取图片对象
 
 
@@ -3221,31 +3256,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
       if (!/^image/.test(this.file.type)) {
+        // 标记无法上传
+        this.uploadSign = false; // 清除路径,使得上传同一文件可以触发change
+
+        e.srcElement.value = "";
         this.$swal.fire({
           type: 'warning',
-          text: '请上传格式为png,jpeg,jpg的图片',
-          confirmButtonText: '确认'
-        }).then(function () {
-          // 标记无法上传
-          _this.uploadSign = false; // 清除路径,使得上传同一文件可以触发change
-
-          e.srcElement.value = "";
-        });
+          toast: true,
+          position: 'top',
+          title: '请上传格式为png，jpeg，jpg的图片',
+          showConfirmButton: false,
+          timer: 2500
+        }).then();
         return false;
       } // 判断图片是否超过5m
 
 
       if (this.file.size / 1024 > 2049) {
+        // 标记无法上传
+        this.uploadSign = false; // 清除路径,使得上传同一文件可以触发change
+
+        e.srcElement.value = "";
         this.$swal.fire({
           type: 'warning',
-          text: '请上传大小不超过2M的图片',
-          confirmButtonText: '确认'
-        }).then(function () {
-          // 标记无法上传
-          _this.uploadSign = false; // 清除路径,使得上传同一文件可以触发change
-
-          e.srcElement.value = "";
-        });
+          title: '请上传大小不超过2M的图片',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 2500
+        }).then();
         return false;
       }
 
@@ -3267,7 +3306,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       e.srcElement.value = "";
     },
     updateAvatar: function updateAvatar() {
-      var _this2 = this;
+      var _this = this;
 
       // 更新服务器的图像(上传图像，不是换一换)
       if (/^data:image/.test(this.uavatar)) {
@@ -3280,25 +3319,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
 
         this.$api.auth.uploadAvatar(formData).then(function (response) {
-          response.data.avatar = _this2.host + response.data.avatar;
+          response.data.avatar = _this.host + response.data.avatar;
 
-          _this2.$store.commit('certification/updateUser', response.data);
+          _this.$store.commit('certification/updateUser', response.data);
 
           $("#updateAvatar").modal('hide');
+          _this.uploadSign = true;
 
-          _this2.$swal.fire({
+          _this.$swal.fire({
             type: 'success',
-            text: '头像修改成功！',
-            confirmButtonText: '确认'
-          }).then(function () {
-            _this2.uploadSign = true;
-          });
+            title: '头像修改成功',
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 2000
+          }).then();
         })["catch"](function (error) {
           if (error.response.data.errors.avatar) {
-            _this2.$swal.fire({
+            _this.$swal.fire({
               type: 'warning',
-              text: error.response.data.errors.avatar,
-              confirmButtonText: '确认'
+              title: error.response.data.errors.avatar,
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 2500
             }).then();
           }
         });
@@ -3308,14 +3352,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           avatar: this.uavatar
         };
         this.$api.auth.changeAvatar(_formData).then(function (response) {
-          _this2.$store.commit('certification/updateUser', response.data);
+          _this.$store.commit('certification/updateUser', response.data);
 
           $("#updateAvatar").modal('hide');
 
-          _this2.$swal.fire({
+          _this.$swal.fire({
             type: 'success',
-            text: '头像修改成功！',
-            confirmButtonText: '确认'
+            title: '头像修改成功',
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 2000
           }).then();
         })["catch"]();
       }
@@ -3469,21 +3516,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
 
         if (result.value[2] !== 'false') {
+          // 刷新页面
+          _this.$router.push({
+            name: 'setbindsns'
+          });
+
           _this.$swal.fire({
             type: 'success',
-            text: '绑定成功!',
-            confirmButtonText: '确定'
-          }).then(function () {
-            // 绑定成功，不管点确定还是关闭，都刷新页面
-            _this.$router.push({
-              name: 'setbindsns'
-            });
-          });
+            title: '绑定成功',
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 2000
+          }).then();
         } else {
           _this.$swal.fire({
             type: 'error',
-            text: '哎呀，网络问题，绑定失败~',
-            confirmButtonText: '确定'
+            title: '哎呀，网络问题，绑定失败~',
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000
           });
         }
       });
@@ -3569,29 +3622,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
 
             if (result.value[2] !== 'false') {
+              // 刷新页面
+              _this2.$router.push({
+                name: 'setbindsns'
+              });
+
               _this2.$swal.fire({
                 type: 'success',
-                text: '解绑成功！',
-                confirmButtonText: '确定'
-              }).then(function () {
-                // 解绑成功，不管点确定还是关闭，都刷新页面
-                _this2.$router.push({
-                  name: 'setbindsns'
-                });
-              });
+                title: '解绑成功',
+                toast: true,
+                position: 'top',
+                showConfirmButton: false,
+                timer: 2000
+              }).then();
             } else {
               _this2.$swal.fire({
                 type: 'error',
-                text: '哎呀，网络问题，解绑失败~',
-                confirmButtonText: '确定'
+                title: '哎呀，网络问题，解绑失败~',
+                toast: true,
+                position: 'top',
+                showConfirmButton: false,
+                timer: 3000
               });
             }
           });
         } else {
           _this2.$swal.fire({
             type: 'warning',
-            text: 'sorry, 您未绑定手机,无法解绑该邮箱~',
-            confirmButtonText: '确定'
+            title: 'sorry， 您未绑定手机，无法解绑该邮箱~',
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000
           });
         }
       });
@@ -3668,13 +3730,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UpdatePassword',
   data: function data() {
     return {
       oldPass: '',
-      newPass: ''
+      newPass: '',
+      pass_error: ''
     };
+  },
+  watch: {
+    oldPass: function oldPass() {
+      this.pass_error = '';
+    }
   },
   methods: {
     updatePass: function updatePass() {
@@ -3689,24 +3758,27 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.$api.auth.updatePassword(formData).then(function () {
             // 关闭模态框
+            $("#updatePass").modal('hide');
+
             _this.$swal.fire({
               type: 'success',
-              text: '修改密码成功！'
-            }).then(function () {
-              $("#updatePass").modal('hide');
-            });
+              title: '修改密码成功',
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 2000
+            }).then();
           })["catch"](function (error) {
             if (error.response.data.errors.password) {
-              _this.$swal.fire({
-                type: 'warning',
-                text: error.response.data.errors.password,
-                confirmButtonText: '确认'
-              }).then();
+              _this.pass_error = error.response.data.errors.password;
             } else {
               _this.$swal.fire({
-                type: 'warning',
-                text: '哎呀，网络错误，修改失败~',
-                confirmButtonText: '确认'
+                type: 'error',
+                title: '哎呀，网络错误，修改失败~',
+                toast: true,
+                position: 'top',
+                showConfirmButton: false,
+                timer: 3000
               }).then();
             }
           });
@@ -3852,29 +3924,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
 
             if (result.value[2] !== 'false') {
+              // 刷新页面
+              _this.$router.push({
+                name: 'setbindsns'
+              });
+
               _this.$swal.fire({
                 type: 'success',
-                text: '解绑成功！',
-                confirmButtonText: '确定'
-              }).then(function () {
-                // 解绑成功，不管点确定还是关闭，都刷新页面
-                _this.$router.push({
-                  name: 'setbindsns'
-                });
-              });
+                title: '解绑成功',
+                toast: true,
+                position: 'top',
+                showConfirmButton: false,
+                timer: 2000
+              }).then();
             } else {
               _this.$swal.fire({
                 type: 'error',
-                text: '哎呀，网络问题，解绑失败~',
-                confirmButtonText: '确定'
+                title: '哎呀，网络问题，解绑失败~',
+                toast: true,
+                position: 'top',
+                showConfirmButton: false,
+                timer: 3000
               });
             }
           });
         } else {
           _this.$swal.fire({
             type: 'warning',
-            text: 'sorry, 您未绑定邮箱,无法解绑该手机号~',
-            confirmButtonText: '确定'
+            title: 'sorry， 您未绑定邮箱，无法解绑该手机号~',
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000
           });
         }
       });
@@ -3961,21 +4042,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
 
         if (result.value[2] !== 'false') {
+          // 绑定成功,刷新页面
+          _this2.$router.push({
+            name: 'setbindsns'
+          });
+
           _this2.$swal.fire({
             type: 'success',
-            text: '绑定成功!',
-            confirmButtonText: '确定'
-          }).then(function () {
-            // 绑定成功，不管点确定还是关闭，都刷新页面
-            _this2.$router.push({
-              name: 'setbindsns'
-            });
-          });
+            title: '绑定成功',
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 2000
+          }).then();
         } else {
           _this2.$swal.fire({
             type: 'error',
-            text: '哎呀，网络问题，绑定失败~',
-            confirmButtonText: '确定'
+            title: '哎呀，网络问题，绑定失败~',
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000
           });
         }
       });
@@ -8604,7 +8691,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\na[data-v-61510f1a] {\n    color: inherit;\n    text-decoration: none;\n}\na[data-v-61510f1a]:hover {\n    color: #ffffff;\n}\n.footer[data-v-61510f1a] {\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    /* Set the fixed height of the footer here */\n    height: 60px;\n    background-color: #1b1c1d;\n}\np[data-v-61510f1a] {\n    margin: 19px 0;\n    color: #c1c1c1;\n}\n.container[data-v-61510f1a] {\n    padding-left: 15px;\n    padding-right: 15px;\n}\n", ""]);
+exports.push([module.i, "\na[data-v-61510f1a] {\n    color: inherit;\n    text-decoration: none;\n}\na[data-v-61510f1a]:hover {\n    color: #ffffff;\n}\n.footer[data-v-61510f1a] {\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    /* Set the fixed height of the footer here */\n    height: 60px;\n    background-color: #1b1c1d;\n}\np[data-v-61510f1a] {\n    margin: 19px 0;\n    color: #c1c1c1;\n}\n.container[data-v-61510f1a] {\n    padding-left: 15px;\n    padding-right: 15px;\n}\n.contact[data-v-61510f1a]:hover {\n    color: #ffffff;\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -8737,7 +8824,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.rounded-circle[data-v-668aed68] {\n    margin-top: 20px;\n    border: solid #d9dde1 4px;\n}\n.rounded-circle:hover+.update[data-v-668aed68] {\n    display: block;\n}\n.avator[data-v-668aed68] {\n    cursor: pointer;\n    text-align: center;\n}\n.update[data-v-668aed68]:hover {\n    display: block;\n}\n.update[data-v-668aed68] {\n    border-radius: 0 0 50px 50px;\n    width: 86px;\n    height: 22px;\n    background-color: rgba(0, 0, 0, 0.64);\n    position: absolute;\n    top: 83px;\n    left: 65px;\n    cursor: pointer;\n    display: none;\n}\n.modal-content[data-v-668aed68] {\n    width: 85%;\n}\n.modal-body[data-v-668aed68] {\n    border-radius: 5px;\n    padding-bottom: 0;\n    background-color: #f2f4f6;\n}\n.updateAvatar[data-v-668aed68] {\n    color: #3388d2;\n}\n.updateAvatar[data-v-668aed68]:hover {\n    color: #37a1f2;\n}\n.file[data-v-668aed68] {\n    display: inline-block;\n    position: absolute;\n    left: 0;\n    opacity: 0;\n    cursor: pointer;\n    width: 56px;\n    height: 20px;\n    font-size: 0;\n}\n.btn-primary[data-v-668aed68] {\n    font-size: 16px;\n}\n.light[data-v-668aed68] {\n    color: #ffffff;\n    font-size: 16px;\n    background-color: #aaaaaa;\n}\n.light[data-v-668aed68]:hover {\n    background-color: #a0a0a0;\n}\n", ""]);
+exports.push([module.i, "\n.rounded-circle[data-v-668aed68] {\n    margin-top: 20px;\n    border: solid #d9dde1 4px;\n}\n.rounded-circle:hover+.update[data-v-668aed68] {\n    display: block;\n}\n.avator[data-v-668aed68] {\n    cursor: pointer;\n    text-align: center;\n}\n.update[data-v-668aed68]:hover {\n    display: block;\n}\n.update[data-v-668aed68] {\n    border-radius: 0 0 50px 50px;\n    width: 86px;\n    height: 22px;\n    background-color: rgba(0, 0, 0, 0.64);\n    position: absolute;\n    top: 83px;\n    left: 65px;\n    cursor: pointer;\n    display: none;\n}\n.modal-content[data-v-668aed68] {\n    width: 85%;\n    margin-left: 38px;\n}\n.modal-body[data-v-668aed68] {\n    border-radius: 5px;\n    padding-bottom: 0;\n    background-color: #f2f4f6;\n}\n.updateAvatar[data-v-668aed68] {\n    color: #3388d2;\n}\n.updateAvatar[data-v-668aed68]:hover {\n    color: #37a1f2;\n}\n.file[data-v-668aed68] {\n    display: inline-block;\n    position: absolute;\n    left: 0;\n    opacity: 0;\n    cursor: pointer;\n    width: 56px;\n    height: 20px;\n    font-size: 0;\n}\n.btn-primary[data-v-668aed68] {\n    font-size: 16px;\n}\n.light[data-v-668aed68] {\n    color: #ffffff;\n    font-size: 16px;\n    background-color: #aaaaaa;\n}\n.light[data-v-668aed68]:hover {\n    background-color: #a0a0a0;\n}\n", ""]);
 
 // exports
 
@@ -8775,7 +8862,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.fa-shield-alt[data-v-1f5c06ce] {\n    float: left; margin-left: 20px; margin-right: 20px; font-size: 27px; color: #4c94a0\n}\n.password[data-v-1f5c06ce] {\n    float: left; margin-right: 419px\n}\n.info[data-v-1f5c06ce] {\n    margin-bottom: 2px;\n}\n.prompt[data-v-1f5c06ce] {\n    color: #acb0b4;\n}\n.secondary[data-v-1f5c06ce] {\n    width: 70px; font-size: 15px; border-radius: 20px; margin-top: 8px; margin-bottom: 8px; color: #6c757d; border-color: #6c757d; box-shadow: none;\n}\n.secondary[data-v-1f5c06ce]:hover {\n    color: #5ca9b7; border-color: #5da9b6; background-color: rgba(200, 255, 193, 0);\n}\n.match[data-v-1f5c06ce] {\n    font-size: 17px;\n}\n.form-control[data-v-1f5c06ce] {\n    width: 65%;\n    margin-top: 10px;\n}\n.label[data-v-1f5c06ce] {\n    float: left; font-size: 15px; margin-right: 30px; margin-top: 6px; margin-left: 20px; color: #636b6f;\n}\n.btn-primary[data-v-1f5c06ce] {\n    font-size: 16px;\n}\n.light[data-v-1f5c06ce] {\n    color: #ffffff;\n    font-size: 16px;\n    background-color: #aaaaaa;\n}\n.light[data-v-1f5c06ce]:hover {\n    background-color: #a0a0a0;\n}\n.modal-body[data-v-1f5c06ce] {\n    padding-bottom: 0;\n}\n.invalid-feedback[data-v-1f5c06ce] {\n    margin-left: 125px;\n}\n", ""]);
+exports.push([module.i, "\n.fa-shield-alt[data-v-1f5c06ce] {\n    float: left; margin-left: 20px; margin-right: 20px; font-size: 27px; color: #4c94a0\n}\n.password[data-v-1f5c06ce] {\n    float: left; margin-right: 419px\n}\n.info[data-v-1f5c06ce] {\n    margin-bottom: 2px;\n}\n.prompt[data-v-1f5c06ce] {\n    color: #acb0b4;\n}\n.secondary[data-v-1f5c06ce] {\n    width: 70px; font-size: 15px; border-radius: 20px; margin-top: 8px; margin-bottom: 8px; color: #6c757d; border-color: #6c757d; box-shadow: none;\n}\n.secondary[data-v-1f5c06ce]:hover {\n    color: #5ca9b7; border-color: #5da9b6; background-color: rgba(200, 255, 193, 0);\n}\n.match[data-v-1f5c06ce] {\n    font-size: 17px;\n}\n.form-control[data-v-1f5c06ce] {\n    width: 65%;\n    margin-top: 10px;\n}\n.label[data-v-1f5c06ce] {\n    float: left; font-size: 15px; margin-right: 30px; margin-top: 6px; margin-left: 20px; color: #636b6f;\n}\n.btn-primary[data-v-1f5c06ce] {\n    font-size: 16px;\n}\n.light[data-v-1f5c06ce] {\n    color: #ffffff;\n    font-size: 16px;\n    background-color: #aaaaaa;\n}\n.light[data-v-1f5c06ce]:hover {\n    background-color: #a0a0a0;\n}\n.modal-body[data-v-1f5c06ce] {\n    padding-bottom: 0;\n}\n.invalid-feedback[data-v-1f5c06ce], .pass_error[data-v-1f5c06ce] {\n    margin-left: 125px;\n}\n", ""]);
 
 // exports
 
@@ -55639,37 +55726,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("footer", { staticClass: "footer" }, [
+    _c("div", { staticClass: "container" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "p",
+        { staticClass: "float-right contact", on: { click: _vm.contact } },
+        [_vm._v("联系我")]
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("footer", { staticClass: "footer" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("p", { staticClass: "float-left" }, [
-          _vm._v("\n            由 "),
-          _c(
-            "a",
-            {
-              attrs: { href: "https://github.com/Treehuang", target: "_blank" }
-            },
-            [_vm._v("tree")]
-          ),
-          _vm._v(" 设计和编码\n        ")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "float-right" }, [
-          _c(
-            "a",
-            {
-              attrs: { href: "https://github.com/Treehuang", target: "_blank" }
-            },
-            [_vm._v("联系我")]
-          )
-        ])
-      ])
+    return _c("p", { staticClass: "float-left" }, [
+      _vm._v("\n            由 "),
+      _c(
+        "a",
+        { attrs: { href: "https://github.com/Treehuang", target: "_blank" } },
+        [_vm._v("tree")]
+      ),
+      _vm._v(" 设计和编码\n        ")
     ])
   }
 ]
@@ -56872,7 +56953,7 @@ var render = function() {
                     "margin-top": "10px",
                     "margin-bottom": "20px"
                   },
-                  attrs: { src: _vm.uavatar, width: "180px", height: "180px" }
+                  attrs: { src: _vm.uavatar, width: "200px", height: "200px" }
                 }),
                 _vm._v(" "),
                 _c("div", { staticClass: "clearfix" }),
@@ -57157,6 +57238,12 @@ var render = function() {
                         _vm.errors.has("oldpassword")
                           ? _c("span", { staticClass: "invalid-feedback" }, [
                               _vm._v(_vm._s(_vm.errors.first("oldpassword")))
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.errors.has("oldpassword")
+                          ? _c("span", { staticClass: "message pass_error" }, [
+                              _vm._v(_vm._s(_vm.pass_error))
                             ])
                           : _vm._e()
                       ]),
@@ -73556,14 +73643,22 @@ instance.interceptors.response.use(function (response) {
     case 429:
       sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
         type: 'warning',
-        text: '您操作太频繁了，请稍后~'
+        title: '您操作太频繁了，请稍后~',
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2500
       }).then();
       break;
 
     case 500:
       sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
         type: 'error',
-        text: '哎呀！网络连接出错了...'
+        title: '哎呀！网络连接出错了...',
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000
       }).then();
       break;
   }

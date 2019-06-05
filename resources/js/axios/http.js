@@ -61,14 +61,22 @@ instance.interceptors.response.use(response => {
             case 429:
                 swal.fire({
                     type: 'warning',
-                    text: '您操作太频繁了，请稍后~'
+                    title: '您操作太频繁了，请稍后~',
+                    toast: true,
+                    position: 'top',
+                    showConfirmButton: false,
+                    timer: 2500,
                 }).then();
                 break;
 
             case 500:
                 swal.fire({
                     type: 'error',
-                    text: '哎呀！网络连接出错了...'
+                    title: '哎呀！网络连接出错了...',
+                    toast: true,
+                    position: 'top',
+                    showConfirmButton: false,
+                    timer: 3000,
                 }).then();
                 break;
         }

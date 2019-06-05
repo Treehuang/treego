@@ -127,13 +127,21 @@
 
                                 if (error.response.headers['x-ratelimit-remaining'] == 0) {
                                     this.$swal.fire({
-                                        'type': 'warning',
-                                        'text': '哎呀！您今天的登录次数已经耗光啦☹',
+                                        type: 'warning',
+                                        title: '哎呀！您今天的登录次数已经耗光啦☹',
+                                        toast: true,
+                                        position: 'top',
+                                        showConfirmButton: false,
+                                        timer: 3000,
                                     }).then();
                                 }else {
                                     this.$swal.fire({
-                                        'type': 'warning',
-                                        'text': '您今天还有' + error.response.headers['x-ratelimit-remaining'] + '次登录机会',
+                                        type: 'warning',
+                                        title: '您今天还有' + error.response.headers['x-ratelimit-remaining'] + '次登录机会',
+                                        toast: true,
+                                        position: 'top',
+                                        showConfirmButton: false,
+                                        timer: 3000,
                                     }).then();
                                 }
                             }

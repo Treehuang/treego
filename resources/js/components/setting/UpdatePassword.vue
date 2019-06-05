@@ -26,6 +26,7 @@
                                     <label for="old" class="label">输入原密码</label>
                                     <input v-validate="'required|oldpassword'" :class="[{'is-invalid' : errors.has('oldpassword')}, 'form-control']" v-model="oldPass" name="oldpassword" id="old" type="password" placeholder="6-16位包含字母数字的密码">
                                     <span class="invalid-feedback" v-if="errors.has('oldpassword')">{{ errors.first('oldpassword') }}</span>
+                                    <span class="message pass_error" v-if="!errors.has('oldpassword')">{{ pass_error }}</span>
                                 </div>
 
                                 <div>
@@ -64,6 +65,13 @@
             return {
                 oldPass: '',
                 newPass: '',
+                pass_error: '',
+            }
+        },
+
+        watch: {
+            oldPass() {
+                this.pass_error = '';
             }
         },
 
@@ -74,24 +82,28 @@
                         let formData = { oldPassword: this.oldPass, newPassword: this.newPass };
                         this.$api.auth.updatePassword(formData).then(() => {
                             // 关闭模态框
+                            $("#updatePass").modal('hide');
+
                             this.$swal.fire({
                                 type: 'success',
-                                text: '修改密码成功！'
-                            }).then(() => {
-                                $("#updatePass").modal('hide');
-                            });
+                                title: '修改密码成功',
+                                toast: true,
+                                position: 'top',
+                                showConfirmButton: false,
+                                timer: 2000,
+                            }).then();
+
                         }).catch(error => {
                             if (error.response.data.errors.password) {
-                                this.$swal.fire({
-                                    type: 'warning',
-                                    text: error.response.data.errors.password,
-                                    confirmButtonText: '确认',
-                                }).then();
+                                this.pass_error = error.response.data.errors.password
                             } else {
                                 this.$swal.fire({
-                                    type: 'warning',
-                                    text: '哎呀，网络错误，修改失败~',
-                                    confirmButtonText: '确认',
+                                    type: 'error',
+                                    title: '哎呀，网络错误，修改失败~',
+                                    toast: true,
+                                    position: 'top',
+                                    showConfirmButton: false,
+                                    timer: 3000,
                                 }).then();
                             }
                         })
@@ -158,7 +170,7 @@
         padding-bottom: 0;
     }
 
-    .invalid-feedback {
+    .invalid-feedback, .pass_error {
         margin-left: 125px;
     }
 </style>

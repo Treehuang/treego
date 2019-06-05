@@ -140,8 +140,11 @@
                 if (!window.FileReader) {
                     this.$swal.fire({
                         type: 'warning',
-                        text: '很抱歉，您的浏览器不支持图片上传功能',
-                        confirmButtonText: '确认',
+                        title: '很抱歉，您的浏览器不支持图片上传功能',
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 3000,
                     }).then();
                 }
 
@@ -156,36 +159,44 @@
 
                 // 判断上传的是不是image
                 if (!/^image/.test(this.file.type)) {
+
+                    // 清除路径,使得上传同一文件可以触发change
+                    e.srcElement.value = "" ;
+
+                    this.noUpload = true;
+                    this.style = 'btn btn-danger';
+                    this.message = '上传失败';
+
                     this.$swal.fire({
                         type: 'warning',
-                        text: '请上传格式为png,jpeg,jpg的图片',
-                        confirmButtonText: '确认',
-                    }).then(() => {
-                        // 清除路径,使得上传同一文件可以触发change
-                        e.srcElement.value = "" ;
-
-                        this.noUpload = true;
-                        this.style = 'btn btn-danger';
-                        this.message = '上传失败';
-                    });
+                        toast: true,
+                        position: 'top',
+                        title: '请上传格式为png，jpeg，jpg的图片',
+                        showConfirmButton: false,
+                        timer: 2500,
+                    }).then();
 
                     return false;
                 }
 
                 // 判断图片是否超过5m
                 if (this.file.size / 1024 > 2049) {
+
+                    // 清除路径,使得上传同一文件可以触发change
+                    e.srcElement.value = "" ;
+
+                    this.noUpload = true;
+                    this.style = 'btn btn-danger';
+                    this.message = '上传失败';
+
                     this.$swal.fire({
                         type: 'warning',
-                        text: '请上传大小不超过2M的图片',
-                        confirmButtonText: '确认',
-                    }).then(() => {
-                        // 清除路径,使得上传同一文件可以触发change
-                        e.srcElement.value = "" ;
-
-                        this.noUpload = true;
-                        this.style = 'btn btn-danger';
-                        this.message = '上传失败';
-                    });
+                        title: '请上传大小不超过2M的图片',
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 2500,
+                    }).then();
 
                     return false;
                 }
@@ -212,7 +223,8 @@
                         '</p>' +
                         '<div class="clearfix"></div>' +
                     '</div>',
-                    confirmButtonText: '确认',
+                    // confirmButtonText: '确认',
+                    showConfirmButton: false,
                 }).then();
             }
         }

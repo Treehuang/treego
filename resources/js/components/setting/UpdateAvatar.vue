@@ -14,7 +14,7 @@
 
                         <div class="clearfix"></div>
 
-                        <img :src="uavatar" class="rounded-circle" width="180px" height="180px" style="margin-top: 10px; margin-bottom: 20px">
+                        <img :src="uavatar" class="rounded-circle" width="200px" height="200px" style="margin-top: 10px; margin-bottom: 20px">
 
                         <div class="clearfix"></div>
 
@@ -75,13 +75,18 @@
             uploadAvatar(e) {
                 // 判断浏览器是否支持FileReader
                 if (!window.FileReader) {
+                    // 关闭模态框
+                    $("#updateAvatar").modal('hide');
+
+                    // 提示
                     this.$swal.fire({
                         type: 'warning',
-                        text: '很抱歉，您的浏览器不支持图片上传功能',
-                        confirmButtonText: '确认',
-                    }).then(() => {
-                        $("#updateAvatar").modal('hide');
-                    });
+                        title: '很抱歉，您的浏览器不支持图片上传功能',
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 3000,
+                    }).then();
                 }
 
                 // 获取图片对象
@@ -95,34 +100,41 @@
 
                 // 判断上传的是不是image
                 if (!/^image/.test(this.file.type)) {
+
+                    // 标记无法上传
+                    this.uploadSign = false;
+
+                    // 清除路径,使得上传同一文件可以触发change
+                    e.srcElement.value = "" ;
+
                     this.$swal.fire({
                         type: 'warning',
-                        text: '请上传格式为png,jpeg,jpg的图片',
-                        confirmButtonText: '确认',
-                    }).then(() => {
-                        // 标记无法上传
-                        this.uploadSign = false;
-
-                        // 清除路径,使得上传同一文件可以触发change
-                        e.srcElement.value = "" ;
-                    });
+                        toast: true,
+                        position: 'top',
+                        title: '请上传格式为png，jpeg，jpg的图片',
+                        showConfirmButton: false,
+                        timer: 2500,
+                    }).then();
 
                     return false;
                 }
 
                 // 判断图片是否超过5m
                 if (this.file.size / 1024 > 2049) {
+                    // 标记无法上传
+                    this.uploadSign = false;
+
+                    // 清除路径,使得上传同一文件可以触发change
+                    e.srcElement.value = "" ;
+
                     this.$swal.fire({
                         type: 'warning',
-                        text: '请上传大小不超过2M的图片',
-                        confirmButtonText: '确认',
-                    }).then(() => {
-                        // 标记无法上传
-                        this.uploadSign = false;
-
-                        // 清除路径,使得上传同一文件可以触发change
-                        e.srcElement.value = "" ;
-                    });
+                        title: '请上传大小不超过2M的图片',
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 2500,
+                    }).then();
 
                     return false;
                 }
@@ -166,20 +178,26 @@
 
                         $("#updateAvatar").modal('hide');
 
+                        this.uploadSign = true;
+
                         this.$swal.fire({
                             type: 'success',
-                            text: '头像修改成功！',
-                            confirmButtonText: '确认',
-                        }).then(() => {
-                            this.uploadSign = true;
-                        });
+                            title: '头像修改成功',
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2000,
+                        }).then();
 
                     }).catch(error => {
                         if (error.response.data.errors.avatar) {
                             this.$swal.fire({
                                 type: 'warning',
-                                text: error.response.data.errors.avatar,
-                                confirmButtonText: '确认',
+                                title: error.response.data.errors.avatar,
+                                toast: true,
+                                position: 'top',
+                                showConfirmButton: false,
+                                timer: 2500,
                             }).then();
                         }
                     })
@@ -193,8 +211,11 @@
 
                         this.$swal.fire({
                             type: 'success',
-                            text: '头像修改成功！',
-                            confirmButtonText: '确认',
+                            title: '头像修改成功',
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2000,
                         }).then();
 
                     }).catch();
@@ -243,6 +264,7 @@
 
     .modal-content {
         width: 85%;
+        margin-left: 38px;
     }
 
     .modal-body {

@@ -119,27 +119,37 @@
                             }
 
                             if (result.value[2] !== 'false') {
+
+                                // 刷新页面
+                                this.$router.push({name: 'setbindsns'});
+
                                 this.$swal.fire({
                                     type: 'success',
-                                    text: '解绑成功！',
-                                    confirmButtonText: '确定'
-                                }).then(() => {
-                                    // 解绑成功，不管点确定还是关闭，都刷新页面
-                                    this.$router.push({name: 'setbindsns'});
-                                });
+                                    title: '解绑成功',
+                                    toast: true,
+                                    position: 'top',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                }).then();
                             }else {
                                 this.$swal.fire({
                                     type: 'error',
-                                    text: '哎呀，网络问题，解绑失败~',
-                                    confirmButtonText: '确定'
+                                    title: '哎呀，网络问题，解绑失败~',
+                                    toast: true,
+                                    position: 'top',
+                                    showConfirmButton: false,
+                                    timer: 3000,
                                 });
                             }
                         })
                     }else {
                         this.$swal.fire({
                             type: 'warning',
-                            text: 'sorry, 您未绑定邮箱,无法解绑该手机号~',
-                            confirmButtonText: '确定'
+                            title: 'sorry， 您未绑定邮箱，无法解绑该手机号~',
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 3000,
                         })
                     }
                 });
@@ -222,19 +232,25 @@
                     }
 
                     if (result.value[2] !== 'false') {
+                        // 绑定成功,刷新页面
+                        this.$router.push({name: 'setbindsns'});
+
                         this.$swal.fire({
                             type: 'success',
-                            text: '绑定成功!',
-                            confirmButtonText: '确定'
-                        }).then(() => {
-                            // 绑定成功，不管点确定还是关闭，都刷新页面
-                            this.$router.push({name: 'setbindsns'});
-                        });
+                            title: '绑定成功',
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2000,
+                        }).then();
                     }else {
                         this.$swal.fire({
                             type: 'error',
-                            text: '哎呀，网络问题，绑定失败~',
-                            confirmButtonText: '确定'
+                            title: '哎呀，网络问题，绑定失败~',
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 3000,
                         });
                     }
                 })

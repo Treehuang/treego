@@ -5,7 +5,7 @@
                 由 <a href="https://github.com/Treehuang" target="_blank">tree</a> 设计和编码
             </p>
 
-            <p class="float-right"><a href="https://github.com/Treehuang" target="_blank">联系我</a></p>
+            <p class="float-right contact" @click="contact">联系我</p>
         </div>
     </footer>
 </template>
@@ -13,7 +13,23 @@
 <script>
 
     export default {
-        name: 'TheFooter'
+        name: 'TheFooter',
+
+        methods: {
+            contact() {
+                this.$swal.fire({
+                    text: '添加记得备注~',
+                    imageUrl: 'http://192.168.5.105/images/my/me.jpg',
+                    width: '360px',
+                    padding: '10px',
+                    imageWidth: 300,
+                    imageHeight: 300,
+                    imageAlt: 'tree\'s weichat',
+                    animation: false,
+                    allowOutsideClick: false,
+                })
+            }
+        }
     }
 
 </script>
@@ -45,5 +61,10 @@
     .container {
         padding-left: 15px;
         padding-right: 15px;
+    }
+
+    .contact:hover {
+        color: #ffffff;
+        cursor: pointer;
     }
 </style>

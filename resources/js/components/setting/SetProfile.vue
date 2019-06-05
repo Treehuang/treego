@@ -125,10 +125,14 @@
                         this.$store.dispatch('certification/updateUser', formData).then(() => {
                             this.$swal.fire({
                                 type: 'success',
-                                text: '修改个人信息成功！'
+                                title: '修改成功',
+                                toast: true,
+                                position: 'top',
+                                showConfirmButton: false,
+                                timer: 2000,
                             }).then(() => {
                                 this.$router.push({name: 'setprofile'});
-                            });
+                            })
                         }).catch(error => {
                             if(error.response.data.errors.nickname) {
                                 this.usererror = error.response.data.errors.nickname;
