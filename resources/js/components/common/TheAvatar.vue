@@ -108,6 +108,7 @@
     .dropdown-toggle {
         width: 46px;
         cursor:pointer;
+        padding: 4px;
     }
 
     .dropdown-menu-right {
@@ -123,7 +124,7 @@
         box-shadow: 2px 2px 30px -2px rgba(96, 96, 96, 0.2);
     }
 
-    .fa-cog, .fa-shopping-cart, .fa-sign-out-alt, .fa-credit-card {
+    .fa-cog, .fa-shopping-cart, .fa-credit-card {
         color: rgba(13,13,13,0.62);
     }
 

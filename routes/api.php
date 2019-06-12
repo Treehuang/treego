@@ -102,8 +102,38 @@ $api->version('v1', [
             // 修改头像，换一换
             $api->patch('/user/changeAvatar', 'Auth\UserController@update');
 
+            // 获取未读消息
+            $api->get('/unread', 'Mess\MessController@getUnread');
+
+            // 标记为已读消息
+            $api->post('/markread', 'Mess\MessController@markRead');
+
+            // 全部标记为已读
+            $api->post('/markAll', 'Mess\MessController@markAll');
+
+            // 获取已读消息
+            $api->get('/read', 'Mess\MessController@getRead');
+
+            // 将已读消息扔进回收站
+            $api->patch('/remread', 'Mess\MessController@toRecycle');
+
+            // 全部扔进回收站
+            $api->patch('/removeAll', 'Mess\MessController@removeAll');
+
+            // 获取回收站的消息
+            $api->get('/recyle', 'Mess\MessController@getRecycle');
+
+            // 回收站还原消息
+            $api->patch('/restore', 'Mess\MessController@restoreRecycle');
+
+            // 清除一条消息
+            $api->patch('/emptyOne', 'Mess\MessController@emptyOne');
+
+            // 清空回收站
+            $api->patch('/emptyAll', 'Mess\MessController@emptyAll');
+
             // 测试
-            //$api->get('/me', 'Test\TestController@me');
+            $api->get('/testme', 'Test\TestController@me');
         });
     });
 

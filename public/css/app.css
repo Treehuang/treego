@@ -16448,6 +16448,7 @@ html {
   -o-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
   box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
   background: #ffffff;
+  padding-bottom: 10px;
 }
 
 input::-webkit-input-placeholder {

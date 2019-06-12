@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 function loginExpiresTime(Request $request){
     $ip  = $request->getClientIp();
     $key = str_replace('.', '', $ip);
-    $expires = number_format((strtotime(date('Y-m-d', strtotime('+1 day')))-time())/60, 15);
+
+    $expires = (strtotime(date('Y-m-d', strtotime('+1 day')))-time())/60;
 
     if (!Cache::has($key)) {
         Cache::put($key, $expires, Carbon::tomorrow());

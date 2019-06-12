@@ -105,19 +105,40 @@
                             this.$router.push({name:'home'});
 
                         }).catch(error => {
+                            if(error.response.status == 500) {
+
+                                this.isDisable = false;
+                                this.isloading = false;
+                                this.geetestObj = null;
+                                this.captchaObj.reset();
+
+                                this.$swal.fire({
+                                    type: 'error',
+                                    title: '哎呀！网络连接出错了...',
+                                    toast: true,
+                                    position: 'top',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                }).then();
+
+                                return;
+                            }
 
                             if(error.response.status == 429) {
+
+                                this.isDisable = false;
+                                this.isloading = false;
+                                this.geetestObj = null;
+                                this.captchaObj.reset();
+
                                 this.$swal.fire({
-                                    'type': 'warning',
-                                    'text': '哎呀！您今天的登录次数已经耗光啦☹'
-                                }).then((result) => {
-                                    if(result.value) {
-                                        this.isDisable = false;
-                                        this.isloading = false;
-                                        this.geetestObj = null;
-                                        this.captchaObj.reset();
-                                    }
-                                });
+                                    type: 'warning',
+                                    text: '哎呀！您今天的尝试登录次数已经耗光啦☹',
+                                    toast: true,
+                                    position: 'top',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                }).then();
 
                                 return;
                             }
@@ -128,7 +149,7 @@
                                 if (error.response.headers['x-ratelimit-remaining'] == 0) {
                                     this.$swal.fire({
                                         type: 'warning',
-                                        title: '哎呀！您今天的登录次数已经耗光啦☹',
+                                        title: '哎呀！您今天的尝试登录次数已经耗光啦☹',
                                         toast: true,
                                         position: 'top',
                                         showConfirmButton: false,
@@ -137,7 +158,7 @@
                                 }else {
                                     this.$swal.fire({
                                         type: 'warning',
-                                        title: '您今天还有' + error.response.headers['x-ratelimit-remaining'] + '次登录机会',
+                                        title: '您今天还有' + error.response.headers['x-ratelimit-remaining'] + '次登录尝试',
                                         toast: true,
                                         position: 'top',
                                         showConfirmButton: false,

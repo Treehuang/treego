@@ -130,9 +130,7 @@
                                 position: 'top',
                                 showConfirmButton: false,
                                 timer: 2000,
-                            }).then(() => {
-                                this.$router.push({name: 'setprofile'});
-                            })
+                            }).then()
                         }).catch(error => {
                             if(error.response.data.errors.nickname) {
                                 this.usererror = error.response.data.errors.nickname;

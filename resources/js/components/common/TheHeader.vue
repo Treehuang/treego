@@ -53,6 +53,6 @@
         margin-top: 0;
         padding-top: 2px;
         padding-bottom: 1px;
-        height: 49px;
+        min-width: 1100px;
     }
 </style>

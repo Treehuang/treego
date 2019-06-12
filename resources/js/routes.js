@@ -35,7 +35,22 @@ let routes = [
         path: '/user/certificat',
         name: 'certificat',
         components: require('./components/setting/CertiFicat')
-    }
+    },
+    {
+        path: '/read',
+        name: 'read',
+        components: require('./components/message/Read')
+    },
+    {
+        path: '/unread',
+        name: 'unread',
+        components: require('./components/message/UnRead')
+    },
+    {
+        path: '/recyle',
+        name: 'recyle',
+        components: require('./components/message/Recycle')
+    },
 ];
 
 const router = new VueRouter({

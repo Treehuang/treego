@@ -16,21 +16,12 @@ use Illuminate\Support\Facades\Auth;
 class TestController extends Controller
 {
     public function login(Request $request) {
-        $user = User::find(2);
-
-        $bind_data = ['emailCode' => 123456];
-        $template = new SendCloudTemplate('email_code', $bind_data);
-        Mail::raw($template, function ($message) use ($user) {
-            $message->from('treehuang@163.com', 'treeGo');
-            $message->to($user->email)->cc('treehuang@163.com');
-        });
-//        try {
-//
-//        }catch (\Exception $exception) {
-//            return $this->response->errorInternal('邮件发送异常');
-//        }
-
-        return response()->json(['data' => 123]);
+        $ip  = $request->getClientIp();
+        $key = str_replace('.', '', $ip);
+        $expires = strtotime(date('Y-m-d', strtotime('+1 day')))-time()/60;
+        $data = Cache::get($key);
+        var_dump($expires);exit;
+        return response()->json(['data' => $data]);
     }
 
     protected function respondWithToken($token)

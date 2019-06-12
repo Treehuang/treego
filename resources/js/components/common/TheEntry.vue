@@ -5,19 +5,25 @@
         </ul>
 
         <ul v-else-if="isAuth" class="navbar-nav navbar-right">
+
+            <the-bell></the-bell>
+
             <the-avatar></the-avatar>
+
         </ul>
 </template>
 
 <script>
     import {mapGetters} from 'vuex';
     import TheAvatar from './TheAvatar';
+    import TheBell from './TheBell';
 
     export default {
         name: 'TheEntry',
 
         components: {
             TheAvatar,
+            TheBell,
         },
 
         computed: {
@@ -37,5 +43,4 @@
     .fa-sign-in-alt {
         font-size: 14px;
     }
-
 </style>
