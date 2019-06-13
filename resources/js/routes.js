@@ -51,6 +51,11 @@ let routes = [
         name: 'recyle',
         components: require('./components/message/Recycle')
     },
+    {
+        path: '/ticket',
+        name: 'ticket',
+        components: require('./components/ticket/Ticket')
+    }
 ];
 
 const router = new VueRouter({
