@@ -65,7 +65,7 @@ instance.interceptors.response.use(response => {
                     toast: true,
                     position: 'top',
                     showConfirmButton: false,
-                    timer: 2500,
+                    timer: 3000,
                 }).then();
                 break;
 

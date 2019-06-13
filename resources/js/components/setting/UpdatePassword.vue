@@ -45,7 +45,7 @@
 
                             <div class="modal-footer">
                                 <button class="btn light" data-dismiss="modal">取消</button>
-                                <button type="submit" class="btn btn-primary">确定</button>
+                                <button type="submit" class="btn primary">确定</button>
                             </div>
                         </form>
 
@@ -144,7 +144,7 @@
     }
 
     .form-control {
-        width: 65%;
+        width: 68%;
         margin-top: 10px;
     }
 
@@ -152,18 +152,24 @@
         float: left; font-size: 15px; margin-right: 30px; margin-top: 6px; margin-left: 20px; color: #636b6f;
     }
 
-    .btn-primary {
-        font-size: 16px;
+    .primary {
+        box-shadow: none;
+        color: #ffffff;
+        background-color: #4d94a0;
+    }
+
+    .primary:hover {
+        background-color: #50a3af;
     }
 
     .light {
+        box-shadow: none;
         color: #ffffff;
-        font-size: 16px;
-        background-color: #aaaaaa;
+        background-color: #b4b4b4;
     }
 
     .light:hover {
-        background-color: #a0a0a0;
+        background-color: #aaaaaa;
     }
 
     .modal-body {

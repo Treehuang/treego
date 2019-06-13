@@ -26,7 +26,7 @@
 
                         <div class="modal-footer">
                             <button class="btn light" data-dismiss="modal">取消</button>
-                            <button type="submit" class="btn btn-primary">确定</button>
+                            <button type="submit" class="btn primary">确定</button>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
             contact() {
                 this.$swal.fire({
                     text: '添加记得备注~',
-                    imageUrl: 'http://192.168.5.105/images/my/me.jpg',
+                    imageUrl: 'http://192.168.5.104/images/my/me.jpg',
                     width: '360px',
                     padding: '10px',
                     imageWidth: 300,
@@ -112,14 +112,24 @@
         color: #4c94a0;
     }
 
-    .light {
+    .primary {
+        box-shadow: none;
         color: #ffffff;
-        font-size: 16px;
-        background-color: #aaaaaa;
+        background-color: #4d94a0;
+    }
+
+    .primary:hover {
+        background-color: #50a3af;
+    }
+
+    .light {
+        box-shadow: none;
+        color: #ffffff;
+        background-color: #b4b4b4;
     }
 
     .light:hover {
-        background-color: #a0a0a0;
+        background-color: #aaaaaa;
     }
 
     .modal-body {

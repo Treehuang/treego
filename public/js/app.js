@@ -2643,7 +2643,7 @@ __webpack_require__.r(__webpack_exports__);
     contact: function contact() {
       this.$swal.fire({
         text: '添加记得备注~',
-        imageUrl: 'http://192.168.5.105/images/my/me.jpg',
+        imageUrl: 'http://192.168.5.104/images/my/me.jpg',
         width: '360px',
         padding: '10px',
         imageWidth: 300,
@@ -3339,7 +3339,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       file: null,
       time: '2014',
-      style: 'btn btn-primary',
+      style: 'btn primary',
       record: 'u',
       noUpload: false,
       school: '广州大学',
@@ -3394,7 +3394,7 @@ __webpack_require__.r(__webpack_exports__);
         // 清除路径,使得上传同一文件可以触发change
         e.srcElement.value = "";
         this.noUpload = true;
-        this.style = 'btn btn-danger';
+        this.style = 'btn danger';
         this.message = '上传失败';
         this.$swal.fire({
           type: 'warning',
@@ -3412,7 +3412,7 @@ __webpack_require__.r(__webpack_exports__);
         // 清除路径,使得上传同一文件可以触发change
         e.srcElement.value = "";
         this.noUpload = true;
-        this.style = 'btn btn-danger';
+        this.style = 'btn danger';
         this.message = '上传失败';
         this.$swal.fire({
           type: 'warning',
@@ -3426,7 +3426,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.noUpload = false;
-      this.style = 'btn btn-success';
+      this.style = 'btn success';
       this.message = '上传成功';
     },
     hand: function hand() {
@@ -3844,7 +3844,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       file: null,
       oldFile: null,
-      host: 'http://192.168.5.105',
+      host: 'http://192.168.5.104',
       uavatar: null,
       uploadSign: true
     };
@@ -4044,234 +4044,254 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UpdateEmial',
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
-    email: function email(state) {
+    myEmail: function myEmail(state) {
       return state.certification.email;
     }
   })),
+  watch: {
+    password: function password() {
+      this.password_message = '';
+    },
+    emailcode: function emailcode() {
+      this.emailcode_message = '';
+    },
+    bindemail: function bindemail() {
+      this.bindemail_message = '';
+    },
+    bindemailCode: function bindemailCode() {
+      this.bindemailcode_message = '';
+    }
+  },
   data: function data() {
     return {
-      bind_email: null
+      loading: false,
+      isDisable: false,
+      password: null,
+      emailcode: null,
+      bindemail: null,
+      bindemailCode: null,
+      password_message: null,
+      emailcode_message: null,
+      bindemail_message: null,
+      bindemailcode_message: null
     };
   },
   methods: {
-    bindEmail: function bindEmail() {
-      var _this = this;
-
-      this.$swal.mixin({
-        animation: false,
-        allowOutsideClick: false,
-        cancelButtonText: '取消',
-        confirmButtonText: '下一步',
-        showCancelButton: true,
-        progressSteps: ['1', '2', '3']
-      }).queue([{
-        text: '请输入要绑定的邮箱',
-        input: 'text',
-        inputAutoTrim: true,
-        reverseButtons: true,
-        showLoaderOnConfirm: true,
-        inputValidator: function inputValidator(value) {
-          return new Promise(function (resolve) {
-            if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)) {
-              resolve();
-            } else {
-              resolve('邮箱格式错误');
-            }
-          });
-        },
-        preConfirm: function preConfirm(value) {
-          // 发送邮件验证码
-          var formData = {
-            email: value
-          };
-          return _this.$api.auth.bindEmailCode(formData).then(function (response) {
-            _this.bind_email = value;
-            sessionStorage.setItem("verify_key", response.data.verify_key);
-          })["catch"](function (error) {
-            _this.$swal.showValidationMessage(error.response.data.errors.password);
-          });
-        }
-      }, {
-        text: '请输入验证码',
-        input: 'text',
-        inputAutoTrim: true,
-        reverseButtons: true,
-        inputValidator: function inputValidator(value) {
-          return new Promise(function (resolve) {
-            if (/^[0-9]{6}$/.test(value)) {
-              resolve();
-            } else {
-              resolve('请输入正确的验证码');
-            }
-          });
-        },
-        preConfirm: function preConfirm(value) {
-          var formData = {
-            email_code: value,
-            verify_key: sessionStorage.getItem('verify_key')
-          };
-          return _this.$api.auth.checkEmailCode(formData).then(function () {})["catch"](function (error) {
-            _this.$swal.showValidationMessage(error.response.data.errors.code);
-          });
-        }
-      }, {
-        text: '确定绑定邮箱？',
-        reverseButtons: true,
-        confirmButtonText: '确定',
-        preConfirm: function preConfirm() {
-          // 请求后端接口
-          var formData = {
-            email: _this.bind_email
-          };
-          return _this.$api.auth.bindEmail(formData).then(function (response) {
-            _this.$store.commit('certification/updateUser', response.data);
-          })["catch"](function () {
-            return 'false';
-          });
-        }
-      }]).then(function (result) {
-        // 点击取消按钮，直接返回
-        if (result.dismiss) {
-          return;
-        }
-
-        if (result.value[2] !== 'false') {
-          // 刷新页面
-          _this.$router.push({
-            name: 'setbindsns'
-          });
-
-          _this.$swal.fire({
-            type: 'success',
-            title: '绑定成功',
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 2000
-          }).then();
-        } else {
-          _this.$swal.fire({
-            type: 'error',
-            title: '哎呀，网络问题，绑定失败~',
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 3000
-          });
-        }
-      });
-    },
     unbindEmail: function unbindEmail() {
-      var _this2 = this;
+      var _this = this;
 
       // 进行查库，看是不是有emial,如果没有email,不给解绑手机
       this.$api.auth.me().then(function (response) {
         if (response.data.phone) {
-          _this2.$swal.mixin({
-            animation: false,
-            allowOutsideClick: false,
-            cancelButtonText: '取消',
-            confirmButtonText: '下一步',
-            showCancelButton: true,
-            progressSteps: ['1', '2', '3']
-          }).queue([{
-            text: _this2.$store.state.certification.email + ' 请输入登录密码验证身份',
-            input: 'text',
-            inputAutoTrim: true,
-            reverseButtons: true,
-            showLoaderOnConfirm: true,
-            inputValidator: function inputValidator(value) {
-              return new Promise(function (resolve) {
-                if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value)) {
-                  resolve();
-                } else {
-                  resolve('请输入正确的密码');
-                }
-              });
-            },
-            preConfirm: function preConfirm(value) {
-              // 发送邮件验证码
-              var formData = {
-                password: value
-              };
-              return _this2.$api.auth.unbindEmailCode(formData).then(function (response) {
-                sessionStorage.setItem("verify_key", response.data.verify_key);
-              })["catch"](function (error) {
-                _this2.$swal.showValidationMessage(error.response.data.errors.password);
-              });
-            }
-          }, {
-            text: '请输入验证码',
-            input: 'text',
-            inputAutoTrim: true,
-            reverseButtons: true,
-            inputValidator: function inputValidator(value) {
-              return new Promise(function (resolve) {
-                if (/^[0-9]{6}$/.test(value)) {
-                  resolve();
-                } else {
-                  resolve('请输入正确的验证码');
-                }
-              });
-            },
-            preConfirm: function preConfirm(value) {
-              var formData = {
-                email_code: value,
-                verify_key: sessionStorage.getItem('verify_key')
-              };
-              return _this2.$api.auth.checkEmailCode(formData).then(function () {})["catch"](function (error) {
-                _this2.$swal.showValidationMessage(error.response.data.errors.code);
-              });
-            }
-          }, {
-            text: '确定解绑该邮箱 ' + _this2.$store.state.certification.email + ' ?',
-            reverseButtons: true,
-            confirmButtonText: '确定',
-            preConfirm: function preConfirm() {
-              // 请求后端接口
-              return _this2.$api.auth.unbindEmail().then(function (response) {
-                _this2.$store.commit('certification/updateUser', response.data);
-              })["catch"](function () {
-                return 'false';
-              });
-            }
-          }]).then(function (result) {
-            // 点击取消按钮，直接返回
-            if (result.dismiss) {
-              return;
-            }
-
-            if (result.value[2] !== 'false') {
-              // 刷新页面
-              _this2.$router.push({
-                name: 'setbindsns'
-              });
-
-              _this2.$swal.fire({
-                type: 'success',
-                title: '解绑成功',
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 2000
-              }).then();
-            } else {
-              _this2.$swal.fire({
-                type: 'error',
-                title: '哎呀，网络问题，解绑失败~',
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 3000
-              });
-            }
-          });
+          $('#unbindEmail').modal('show');
         } else {
-          _this2.$swal.fire({
+          _this.$swal.fire({
             type: 'warning',
             title: 'sorry， 您未绑定手机，无法解绑该邮箱~',
             toast: true,
@@ -4280,6 +4300,157 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             timer: 3000
           });
         }
+      })["catch"]();
+    },
+    nextOne: function nextOne() {
+      var _this2 = this;
+
+      this.$validator.validate('password').then(function (result) {
+        if (result) {
+          _this2.isDisable = true;
+          _this2.loading = true; // 发送邮件验证码
+
+          var formData = {
+            password: _this2.password
+          };
+
+          _this2.$api.auth.unbindEmailCode(formData).then(function (response) {
+            sessionStorage.setItem("verify_key", response.data.verify_key);
+            $('#unbindEmail').modal('hide');
+            $('#unbindEmailCode').modal('show');
+            _this2.isDisable = false;
+            _this2.loading = false;
+          })["catch"](function (error) {
+            _this2.isDisable = false;
+            _this2.loading = false;
+            _this2.password_message = error.response.data.errors.password;
+          });
+        }
+      });
+    },
+    nextTwo: function nextTwo() {
+      var _this3 = this;
+
+      this.$validator.validate('emailcode').then(function (result) {
+        if (result) {
+          var formData = {
+            email_code: _this3.emailcode,
+            verify_key: sessionStorage.getItem('verify_key')
+          };
+
+          _this3.$api.auth.checkEmailCode(formData).then(function () {
+            $('#unbindEmailCode').modal('hide');
+            $('#sureUnbindEmail').modal('show');
+          })["catch"](function (error) {
+            _this3.emailcode_message = error.response.data.errors.code;
+          });
+        }
+      });
+    },
+    sureUnbind: function sureUnbind() {
+      var _this4 = this;
+
+      this.$api.auth.unbindEmail().then(function (response) {
+        _this4.$store.commit('certification/updateUser', response.data);
+
+        $('#sureUnbindEmail').modal('hide');
+
+        _this4.$swal.fire({
+          type: 'success',
+          title: '解绑成功',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 2000
+        }).then();
+      })["catch"](function () {
+        '#sureUnbindEmail'.modal('hide');
+
+        _this4.$swal.fire({
+          type: 'error',
+          title: '哎呀，网络问题，解绑失败~',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 3000
+        });
+      });
+    },
+    bindEmail: function bindEmail() {
+      $('#bindEmail').modal('show');
+    },
+    bindNextOne: function bindNextOne() {
+      var _this5 = this;
+
+      this.$validator.validate('bindemail').then(function (result) {
+        if (result) {
+          _this5.isDisable = true;
+          _this5.loading = true;
+          var formData = {
+            email: _this5.bindemail
+          };
+
+          _this5.$api.auth.bindEmailCode(formData).then(function (response) {
+            sessionStorage.setItem("verify_key", response.data.verify_key);
+            $('#bindEmail').modal('hide');
+            $('#bindEmailCode').modal('show');
+            _this5.isDisable = false;
+            _this5.loading = false;
+          })["catch"](function (error) {
+            _this5.isDisable = false;
+            _this5.loading = false;
+            _this5.bindemail_message = error.response.data.errors.password;
+          });
+        }
+      });
+    },
+    bindNextTwo: function bindNextTwo() {
+      var _this6 = this;
+
+      this.$validator.validate('bindemailcode').then(function (result) {
+        if (result) {
+          var formData = {
+            email_code: _this6.bindemailCode,
+            verify_key: sessionStorage.getItem('verify_key')
+          };
+
+          _this6.$api.auth.checkEmailCode(formData).then(function () {
+            $('#bindEmailCode').modal('hide');
+            $('#sureBindEmail').modal('show');
+          })["catch"](function (error) {
+            _this6.bindemailcode_message = error.response.data.errors.code;
+          });
+        }
+      });
+    },
+    sureBind: function sureBind() {
+      var _this7 = this;
+
+      var formData = {
+        email: this.bindemail
+      };
+      this.$api.auth.bindEmail(formData).then(function (response) {
+        _this7.$store.commit('certification/updateUser', response.data);
+
+        $('#sureBindEmail').modal('hide');
+
+        _this7.$swal.fire({
+          type: 'success',
+          title: '绑定成功',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 2000
+        }).then();
+      })["catch"](function () {
+        _this7.$swal.fire({
+          type: 'error',
+          title: '哎呀，网络问题，绑定失败~',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 3000
+        });
       });
     }
   }
@@ -4458,14 +4629,242 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UpdatePhone',
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
-    phone: function phone(state) {
+    myPhone: function myPhone(state) {
       return state.certification.phone;
     }
   })),
+  watch: {
+    phone: function phone() {
+      this.phone_message = '';
+    },
+    smscode: function smscode() {
+      this.smscode_message = '';
+    },
+    bindphone: function bindphone() {
+      this.bindphone_message = '';
+    },
+    bindsmscode: function bindsmscode() {
+      this.bindsmscode_message = '';
+    }
+  },
+  data: function data() {
+    return {
+      phone: null,
+      smscode: null,
+      bindphone: null,
+      bindsmscode: null,
+      phone_message: null,
+      bindphone_message: null,
+      smscode_message: null,
+      bindsmscode_message: null
+    };
+  },
   methods: {
     unbindPhone: function unbindPhone() {
       var _this = this;
@@ -4473,105 +4872,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // 进行查库，看是不是有emial,如果没有email,不给解绑手机
       this.$api.auth.me().then(function (response) {
         if (response.data.email) {
-          _this.$swal.mixin({
-            animation: false,
-            allowOutsideClick: false,
-            cancelButtonText: '取消',
-            confirmButtonText: '下一步',
-            showCancelButton: true,
-            progressSteps: ['1', '2', '3']
-          }).queue([{
-            text: '请输入已绑定的手机号',
-            input: 'text',
-            inputAutoTrim: true,
-            reverseButtons: true,
-            showLoaderOnConfirm: true,
-            inputValidator: function inputValidator(value) {
-              return new Promise(function (resolve) {
-                if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(value)) {
-                  resolve();
-                } else {
-                  resolve('请输入正确的手机号');
-                }
-              });
-            },
-            preConfirm: function preConfirm(value) {
-              // 发送短信验证码
-              var formData = {
-                phone: value
-              };
-              return _this.$api.auth.unbindPhoneSms(formData).then(function (response) {
-                sessionStorage.setItem("verify_key", response.data.verify_key);
-              })["catch"](function (error) {
-                _this.$swal.showValidationMessage(error.response.data.errors.phone);
-              });
-            }
-          }, {
-            text: '请输入验证码',
-            input: 'text',
-            inputAutoTrim: true,
-            reverseButtons: true,
-            inputValidator: function inputValidator(value) {
-              return new Promise(function (resolve) {
-                if (/^[0-9]{6}$/.test(value)) {
-                  resolve();
-                } else {
-                  resolve('请输入正确的验证码');
-                }
-              });
-            },
-            preConfirm: function preConfirm(value) {
-              var formData = {
-                smscode: value,
-                verify_key: sessionStorage.getItem('verify_key')
-              };
-              return _this.$api.auth.checkSmsWithUpdate(formData).then(function () {})["catch"](function (error) {
-                _this.$swal.showValidationMessage(error.response.data.errors.smscode);
-              });
-            }
-          }, {
-            html: '<p>确定解绑该手机号？</p> ' + _this.$store.state.certification.phone,
-            reverseButtons: true,
-            confirmButtonText: '确定',
-            preConfirm: function preConfirm() {
-              // 请求后端接口
-              return _this.$api.auth.unbindPhone().then(function (response) {
-                _this.$store.commit('certification/updateUser', response.data);
-              })["catch"](function () {
-                return 'false';
-              });
-            }
-          }]).then(function (result) {
-            // 点击取消按钮，直接返回
-            if (result.dismiss) {
-              return;
-            }
-
-            if (result.value[2] !== 'false') {
-              // 刷新页面
-              _this.$router.push({
-                name: 'setbindsns'
-              });
-
-              _this.$swal.fire({
-                type: 'success',
-                title: '解绑成功',
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 2000
-              }).then();
-            } else {
-              _this.$swal.fire({
-                type: 'error',
-                title: '哎呀，网络问题，解绑失败~',
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 3000
-              });
-            }
-          });
+          $('#unbindPhone').modal('show');
         } else {
           _this.$swal.fire({
             type: 'warning',
@@ -4582,113 +4883,146 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             timer: 3000
           });
         }
+      })["catch"]();
+    },
+    nextOne: function nextOne() {
+      var _this2 = this;
+
+      this.$validator.validate('phone').then(function (result) {
+        if (result) {
+          var formData = {
+            phone: _this2.phone
+          };
+
+          _this2.$api.auth.unbindPhoneSms(formData).then(function (response) {
+            sessionStorage.setItem("verify_key", response.data.verify_key);
+            $('#unbindPhone').modal('hide');
+            $('#unbindPhoneSmsCode').modal('show');
+          })["catch"](function (error) {
+            _this2.phone_message = error.response.data.errors.phone;
+          });
+        }
+      });
+    },
+    nextTwo: function nextTwo() {
+      var _this3 = this;
+
+      this.$validator.validate('smscode').then(function (result) {
+        if (result) {
+          var formData = {
+            smscode: _this3.smscode,
+            verify_key: sessionStorage.getItem('verify_key')
+          };
+
+          _this3.$api.auth.checkSmsWithUpdate(formData).then(function () {
+            $('#unbindPhoneSmsCode').modal('hide');
+            $('#sureUnbindPhone').modal('show');
+          })["catch"](function (error) {
+            _this3.smscode_message = error.response.data.errors.smscode;
+          });
+        }
+      });
+    },
+    sureUnbind: function sureUnbind() {
+      var _this4 = this;
+
+      this.$api.auth.unbindPhone().then(function (response) {
+        _this4.$store.commit('certification/updateUser', response.data);
+
+        $('#sureUnbindPhone').modal('hide');
+
+        _this4.$swal.fire({
+          type: 'success',
+          title: '解绑成功',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 2000
+        }).then();
+      })["catch"](function () {
+        $('#sureUnbindPhone').modal('hide');
+
+        _this4.$swal.fire({
+          type: 'error',
+          title: '哎呀，网络问题，解绑失败~',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 3000
+        });
       });
     },
     bindPhone: function bindPhone() {
-      var _this2 = this;
+      $('#bindPhone').modal('show');
+    },
+    bindNextOne: function bindNextOne() {
+      var _this5 = this;
 
-      this.$swal.mixin({
-        animation: false,
-        allowOutsideClick: false,
-        cancelButtonText: '取消',
-        confirmButtonText: '下一步',
-        showCancelButton: true,
-        progressSteps: ['1', '2', '3']
-      }).queue([{
-        text: '请输入要绑定的手机号',
-        input: 'text',
-        inputAutoTrim: true,
-        reverseButtons: true,
-        showLoaderOnConfirm: true,
-        inputValidator: function inputValidator(value) {
-          return new Promise(function (resolve) {
-            if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(value)) {
-              resolve();
-            } else {
-              resolve('手机号格式错误');
-            }
-          });
-        },
-        preConfirm: function preConfirm(value) {
-          // 发送短信验证码
+      this.$validator.validate('bindphone').then(function (result) {
+        if (result) {
           var formData = {
-            phone: value
+            phone: _this5.bindphone
           };
-          return _this2.$api.auth.bindPhoneSms(formData).then(function (response) {
-            sessionStorage.setItem("bind_unbind_phone", value);
+
+          _this5.$api.auth.bindPhoneSms(formData).then(function (response) {
             sessionStorage.setItem("verify_key", response.data.verify_key);
+            $('#bindPhone').modal('hide');
+            $('#bindPhoneSmsCode').modal('show');
           })["catch"](function (error) {
-            _this2.$swal.showValidationMessage(error.response.data.errors.phone);
+            _this5.bindphone_message = error.response.data.errors.phone;
           });
         }
-      }, {
-        text: '请输入验证码',
-        input: 'text',
-        inputAutoTrim: true,
-        reverseButtons: true,
-        inputValidator: function inputValidator(value) {
-          return new Promise(function (resolve) {
-            if (/^[0-9]{6}$/.test(value)) {
-              resolve();
-            } else {
-              resolve('请输入正确的验证码');
-            }
-          });
-        },
-        preConfirm: function preConfirm(value) {
+      });
+    },
+    bindNextTwo: function bindNextTwo() {
+      var _this6 = this;
+
+      this.$validator.validate('bindsmscode').then(function (result) {
+        if (result) {
           var formData = {
-            smscode: value,
+            smscode: _this6.bindsmscode,
             verify_key: sessionStorage.getItem('verify_key')
           };
-          return _this2.$api.auth.checkSmsWithUpdate(formData).then(function () {})["catch"](function (error) {
-            _this2.$swal.showValidationMessage(error.response.data.errors.smscode);
-          });
-        }
-      }, {
-        text: '是否要绑定该手机号 ' + sessionStorage.getItem("bind_unbind_phone") + ' ?',
-        reverseButtons: true,
-        confirmButtonText: '确定',
-        preConfirm: function preConfirm() {
-          // 请求后端接口
-          var formData = {
-            phone: sessionStorage.getItem("bind_unbind_phone")
-          };
-          return _this2.$api.auth.bindPhone(formData).then(function (response) {
-            _this2.$store.commit('certification/updateUser', response.data);
-          })["catch"](function () {
-            return 'false';
-          });
-        }
-      }]).then(function (result) {
-        // 点击取消按钮，直接返回
-        if (result.dismiss) {
-          return;
-        }
 
-        if (result.value[2] !== 'false') {
-          // 绑定成功,刷新页面
-          _this2.$router.push({
-            name: 'setbindsns'
-          });
-
-          _this2.$swal.fire({
-            type: 'success',
-            title: '绑定成功',
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 2000
-          }).then();
-        } else {
-          _this2.$swal.fire({
-            type: 'error',
-            title: '哎呀，网络问题，绑定失败~',
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 3000
+          _this6.$api.auth.checkSmsWithUpdate(formData).then(function () {
+            $('#bindPhoneSmsCode').modal('hide');
+            $('#sureBindPhone').modal('show');
+          })["catch"](function (error) {
+            _this6.bindsmscode_message = error.response.data.errors.smscode;
           });
         }
+      });
+    },
+    sureBind: function sureBind() {
+      var _this7 = this;
+
+      var formData = {
+        phone: this.bindphone
+      };
+      this.$api.auth.bindPhone(formData).then(function (response) {
+        _this7.$store.commit('certification/updateUser', response.data);
+
+        $('#sureBindPhone').modal('hide');
+
+        _this7.$swal.fire({
+          type: 'success',
+          title: '绑定成功',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 2000
+        }).then();
+      })["catch"](function () {
+        $('#sureBindPhone').modal('hide');
+
+        _this7.$swal.fire({
+          type: 'error',
+          title: '哎呀，网络问题，绑定失败~',
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 3000
+        });
       });
     }
   }
@@ -9277,7 +9611,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.dropdown-toggle[data-v-62a37531] {\n    width: 46px;\n    cursor:pointer;\n    padding: 4px;\n}\n.dropdown-menu-right[data-v-62a37531] {\n    background-color: #f4f6f8;\n    width: 253px;\n    padding-top: 30px;\n    padding-bottom: 10px;\n    padding-right: 20px;\n    padding-left: 20px;\n    border: 0;\n    border-radius: 0;\n    margin-top: 0;\n    box-shadow: 2px 2px 30px -2px rgba(96, 96, 96, 0.2);\n}\n.fa-cog[data-v-62a37531], .fa-shopping-cart[data-v-62a37531], .fa-credit-card[data-v-62a37531] {\n    color: rgba(13,13,13,0.62);\n}\n.fa-bell[data-v-62a37531] {\n    margin-left: 1px;\n    margin-right: 1px;\n    font-size: 15px;\n    color: rgba(13,13,13,0.62);\n}\nspan[data-v-62a37531] {\n    font-size: 12px;\n}\n\n/*悬停下拉菜单延迟*/\nli:hover .dropdown-menu[data-v-62a37531] {display: block; -webkit-animation:ttt-data-v-62a37531 1s 1 forwards; animation:ttt-data-v-62a37531 1s 1 forwards;}\n.li .dropdown-menu[data-v-62a37531] {\n    opacity:0\n}\n@-webkit-keyframes ttt-data-v-62a37531 {\n0% {\n        opacity: 0;\n}\n1% { /*这里表示3s的66%也就是大约2秒的时候*/\n        opacity: 0;\n}\n50% {\n        opacity: 1;\n}\n}\n@keyframes ttt-data-v-62a37531 {\n0% {\n        opacity: 0;\n}\n1% { /*这里表示3s的66%也就是大约2秒的时候*/\n        opacity: 0;\n}\n50% {\n        opacity: 1;\n}\n}\n.rounded-circle-puls[data-v-62a37531] {\n    margin-right: 30px;\n    border: solid #a6b7bf 2px\n}\n.rounded-circle-puls[data-v-62a37531]:hover {\n    border: solid #c1d2d7 2px;\n}\n.dropdown-toggle[data-v-62a37531]::after {\n    display: none;\n}\n.rounded-img[data-v-62a37531] {\n    float: left;\n    margin-right: 14px;\n    margin-bottom: 20px;\n}\n.btn[data-v-62a37531] {\n    box-shadow: none;\n    width: 106px;\n    border-radius: 0;\n    border-color: #ecf0f3;\n    background-color: #ecf0f3;\n}\n.btn[data-v-62a37531]:hover {\n    border-color: #d5dde2;\n    background-color: #d5dde2;\n}\n.shop[data-v-62a37531],\n.center[data-v-62a37531]\n{\n    float: left;\n    margin-right: 1px;\n}\nhr[data-v-62a37531] {\n    margin-top: 8px;\n    margin-bottom: 12px;\n    border-top: 1px solid rgb(222, 233, 234);\n}\n.prompt[data-v-62a37531] {\n    color: #93999f;\n}\n", ""]);
+exports.push([module.i, "\n.dropdown-toggle[data-v-62a37531] {\n    width: 46px;\n    cursor:pointer;\n    padding: 4px;\n}\n.dropdown-menu-right[data-v-62a37531] {\n    background-color: #f4f6f8;\n    width: 253px;\n    padding: 30px 20px 10px 20px;\n    border: 0;\n    border-radius: 0;\n    margin-top: 0;\n    box-shadow: 2px 2px 30px -2px rgba(96, 96, 96, 0.2);\n}\n.fa-cog[data-v-62a37531], .fa-shopping-cart[data-v-62a37531], .fa-credit-card[data-v-62a37531] {\n    color: rgba(13,13,13,0.62);\n}\n.fa-bell[data-v-62a37531] {\n    margin-left: 1px;\n    margin-right: 1px;\n    font-size: 15px;\n    color: rgba(13,13,13,0.62);\n}\nspan[data-v-62a37531] {\n    font-size: 12px;\n}\n\n/*悬停下拉菜单延迟*/\nli:hover .dropdown-menu[data-v-62a37531] {display: block; -webkit-animation:ttt-data-v-62a37531 1s 1 forwards; animation:ttt-data-v-62a37531 1s 1 forwards;}\n.li .dropdown-menu[data-v-62a37531] {\n    opacity:0\n}\n@-webkit-keyframes ttt-data-v-62a37531 {\n0% {\n        opacity: 0;\n}\n1% { /*这里表示3s的66%也就是大约2秒的时候*/\n        opacity: 0;\n}\n50% {\n        opacity: 1;\n}\n}\n@keyframes ttt-data-v-62a37531 {\n0% {\n        opacity: 0;\n}\n1% { /*这里表示3s的66%也就是大约2秒的时候*/\n        opacity: 0;\n}\n50% {\n        opacity: 1;\n}\n}\n.rounded-circle-puls[data-v-62a37531] {\n    margin-right: 30px;\n    border: solid #a6b7bf 2px\n}\n.rounded-circle-puls[data-v-62a37531]:hover {\n    border: solid #c1d2d7 2px;\n}\n.dropdown-toggle[data-v-62a37531]::after {\n    display: none;\n}\n.rounded-img[data-v-62a37531] {\n    float: left;\n    margin-right: 14px;\n    margin-bottom: 20px;\n}\n.btn[data-v-62a37531] {\n    box-shadow: none;\n    width: 106px;\n    border-radius: 0;\n    border-color: #ecf0f3;\n    background-color: #ecf0f3;\n}\n.btn[data-v-62a37531]:hover {\n    border-color: #d5dde2;\n    background-color: #d5dde2;\n}\n.shop[data-v-62a37531],\n.center[data-v-62a37531]\n{\n    float: left;\n    margin-right: 1px;\n}\nhr[data-v-62a37531] {\n    margin-top: 8px;\n    margin-bottom: 12px;\n    border-top: 1px solid rgb(222, 233, 234);\n}\n.prompt[data-v-62a37531] {\n    color: #93999f;\n}\n", ""]);
 
 // exports
 
@@ -9334,7 +9668,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\na[data-v-61510f1a] {\n    color: inherit;\n    text-decoration: none;\n}\na[data-v-61510f1a]:hover {\n    color: #ffffff;\n}\n.footer[data-v-61510f1a] {\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    min-width: 1100px;\n    /* Set the fixed height of the footer here */\n    height: 60px;\n    background-color: #1b1c1d;\n}\np[data-v-61510f1a] {\n    margin: 19px 0;\n    color: #c1c1c1;\n}\n.container[data-v-61510f1a] {\n    padding-left: 15px;\n    padding-right: 15px;\n}\n.contact[data-v-61510f1a]:hover {\n    color: #ffffff;\n    cursor: pointer;\n}\n.fa-pen[data-v-61510f1a] {\n    border: solid 1px #DDD;\n    box-shadow: none;\n    position: absolute;\n    right: 30px;\n    bottom: 40px;\n    font-size: 15px;\n    padding: 7px;\n    color: #999;\n    border-radius: 5px;\n}\n.fa-pen[data-v-61510f1a]:hover {\n    cursor: pointer;\n    color: #4c94a0;\n}\n.light[data-v-61510f1a] {\n    color: #ffffff;\n    font-size: 16px;\n    background-color: #aaaaaa;\n}\n.light[data-v-61510f1a]:hover {\n    background-color: #a0a0a0;\n}\n.modal-body[data-v-61510f1a] {\n    padding-bottom: 0;\n}\n.form-control[data-v-61510f1a] {\n    margin-bottom: 28px;\n}\n", ""]);
+exports.push([module.i, "\na[data-v-61510f1a] {\n    color: inherit;\n    text-decoration: none;\n}\na[data-v-61510f1a]:hover {\n    color: #ffffff;\n}\n.footer[data-v-61510f1a] {\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    min-width: 1100px;\n    /* Set the fixed height of the footer here */\n    height: 60px;\n    background-color: #1b1c1d;\n}\np[data-v-61510f1a] {\n    margin: 19px 0;\n    color: #c1c1c1;\n}\n.container[data-v-61510f1a] {\n    padding-left: 15px;\n    padding-right: 15px;\n}\n.contact[data-v-61510f1a]:hover {\n    color: #ffffff;\n    cursor: pointer;\n}\n.fa-pen[data-v-61510f1a] {\n    border: solid 1px #DDD;\n    box-shadow: none;\n    position: absolute;\n    right: 30px;\n    bottom: 40px;\n    font-size: 15px;\n    padding: 7px;\n    color: #999;\n    border-radius: 5px;\n}\n.fa-pen[data-v-61510f1a]:hover {\n    cursor: pointer;\n    color: #4c94a0;\n}\n.primary[data-v-61510f1a] {\n    box-shadow: none;\n    color: #ffffff;\n    background-color: #4d94a0;\n}\n.primary[data-v-61510f1a]:hover {\n    background-color: #50a3af;\n}\n.light[data-v-61510f1a] {\n    box-shadow: none;\n    color: #ffffff;\n    background-color: #b4b4b4;\n}\n.light[data-v-61510f1a]:hover {\n    background-color: #aaaaaa;\n}\n.modal-body[data-v-61510f1a] {\n    padding-bottom: 0;\n}\n.form-control[data-v-61510f1a] {\n    margin-bottom: 28px;\n}\n", ""]);
 
 // exports
 
@@ -9448,7 +9782,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.container[data-v-0b590cb8] {\n    min-width: 1100px;\n}\n.card[data-v-0b590cb8] {\n    border: none;\n    background-color: #f8fafc\n}\n.card-body[data-v-0b590cb8] {\n    width: 600px;\n}\n.form-control[data-v-0b590cb8] {\n    width: 198px; box-shadow: none\n}\n.realname[data-v-0b590cb8], .school[data-v-0b590cb8], .record[data-v-0b590cb8] {\n    float: left;\n    color: #9ca0a4;\n    margin-top: 8px;\n    margin-left: 2px;\n    margin-right: 150px;\n    font-size: 15px\n}\n.time[data-v-0b590cb8], .prove[data-v-0b590cb8] {\n    float: left;\n    color: #9ca0a4;\n    margin-top: 8px;\n    margin-left: 2px;\n    margin-right: 120px;\n    font-size: 15px;\n}\n.secondary[data-v-0b590cb8] {\n    width: 90px; font-size: 15px; border-radius: 20px; margin-top: 8px; margin-bottom: 8px; color: #6c757d; border-color: #6c757d; box-shadow: none;float: right; margin-right: 50px;\n}\n.secondary[data-v-0b590cb8]:hover {\n    color: #5ca9b7; border-color: #5da9b6; background-color: rgba(200, 255, 193, 0);\n}\n.file[data-v-0b590cb8] {\n    display: inline-block;\n    position: absolute;\n    top: 0;\n    left: 0;\n    opacity: 0;\n    cursor: pointer;\n    width: 198px;\n    height: 35px;\n    font-size: 0;\n}\n.btn-primary[data-v-0b590cb8], .btn-danger[data-v-0b590cb8], .btn-success[data-v-0b590cb8] {\n    width: 198px;\n}\n.itembox[data-v-0b590cb8] {\n    position: relative;\n}\n.error-message[data-v-0b590cb8] {\n    position: absolute; top: 6px; left: 390px;\n}\n.hand[data-v-0b590cb8] {\n    color:#45555d;\n    cursor: pointer;\n}\n.hand[data-v-0b590cb8]:hover {\n    color: #1b1e21;\n}\n.error-message[data-v-0b590cb8] {\n    position: absolute; top: 6px; left: 390px;\n}\n.upload[data-v-0b590cb8] {\n    position: relative;\n    left: 182px;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-0b590cb8] {\n    min-width: 1100px;\n}\n.card[data-v-0b590cb8] {\n    border: none;\n    background-color: #f8fafc\n}\n.card-body[data-v-0b590cb8] {\n    width: 600px;\n}\n.form-control[data-v-0b590cb8] {\n    width: 198px; box-shadow: none\n}\n.realname[data-v-0b590cb8], .school[data-v-0b590cb8], .record[data-v-0b590cb8] {\n    float: left;\n    color: #9ca0a4;\n    margin-top: 8px;\n    margin-left: 2px;\n    margin-right: 150px;\n    font-size: 15px\n}\n.time[data-v-0b590cb8], .prove[data-v-0b590cb8] {\n    float: left;\n    color: #9ca0a4;\n    margin-top: 8px;\n    margin-left: 2px;\n    margin-right: 120px;\n    font-size: 15px;\n}\n.secondary[data-v-0b590cb8] {\n    width: 90px; font-size: 15px; border-radius: 20px; margin-top: 8px; margin-bottom: 8px; color: #6c757d; border-color: #6c757d; box-shadow: none;float: right; margin-right: 50px;\n}\n.secondary[data-v-0b590cb8]:hover {\n    color: #5ca9b7; border-color: #5da9b6; background-color: rgba(200, 255, 193, 0);\n}\n.file[data-v-0b590cb8] {\n    display: inline-block;\n    position: absolute;\n    top: 0;\n    left: 0;\n    opacity: 0;\n    cursor: pointer;\n    width: 198px;\n    height: 35px;\n    font-size: 0;\n}\n.primary[data-v-0b590cb8] {\n    width: 198px;\n    color: #ffffff;\n    background-color: #51a1ad;\n}\n.primary[data-v-0b590cb8]:hover {\n    background-color: #55a8b4;\n}\n.success[data-v-0b590cb8] {\n    width: 198px;\n    color: #ffffff;\n    background-color: #37b96b;\n}\n.success[data-v-0b590cb8]:hover {\n    background-color: #35af63;\n}\n.danger[data-v-0b590cb8] {\n    width: 198px;\n    color: #ffffff;\n    background-color: #ee6763;\n}\n.danger[data-v-0b590cb8]:hover {\n    background-color: #ff6f6b;\n}\n.itembox[data-v-0b590cb8] {\n    position: relative;\n}\n.error-message[data-v-0b590cb8] {\n    position: absolute; top: 6px; left: 390px;\n}\n.hand[data-v-0b590cb8] {\n    color:#45555d;\n    cursor: pointer;\n}\n.hand[data-v-0b590cb8]:hover {\n    color: #1b1e21;\n}\n.error-message[data-v-0b590cb8] {\n    position: absolute; top: 6px; left: 390px;\n}\n.upload[data-v-0b590cb8] {\n    position: relative;\n    left: 182px;\n}\n", ""]);
 
 // exports
 
@@ -9505,7 +9839,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sidebar[data-v-0fb0f462] {\n    float: left;\n    padding:0;\n    width:216px;\n    min-width: 216px;\n    margin-right: 50px;\n    margin-bottom: 80px;\n    background-color: #f2f4f6;\n}\n.card-body[data-v-0fb0f462] {\n    text-align: center;\n    position: relative;\n    padding: 0;\n}\n.username[data-v-0fb0f462] {\n    margin-top: 12px;\n    margin-bottom: 13px;\n}\n.icon[data-v-0fb0f462] {\n    margin-left: 22px;\n    margin-bottom: 15px;\n    color: #4c94a0\n}\n.account[data-v-0fb0f462] {\n    float: left;\n    font-size: 16px;\n    color: #aaacb1;\n    margin-left: 20px\n}\nhr[data-v-0fb0f462] {\n    margin-right: 20px;\n    margin-left: 20px;\n}\na[data-v-0fb0f462] {\n    color: #707578;\n    background-color: #f2f4f6;\n}\na[data-v-0fb0f462]:hover {\n    color: #ffffff;\n    background-color: #3490dc;\n}\n.list-group-item[data-v-0fb0f462] {\n    border: 0.1px solid #f2f4f6;\n    border-radius: 0;\n    text-decoration: none;\n}\n.fa-angle-right[data-v-0fb0f462] {\n    float: right;\n    margin-top: 4px;\n}\n.fa-venus[data-v-0fb0f462] {\n    color: #f06595\n}\n.fa-mars[data-v-0fb0f462], .fa-transgender[data-v-0fb0f462] {\n    color: #4c94a0\n}\n", ""]);
+exports.push([module.i, "\n.sidebar[data-v-0fb0f462] {\n    float: left;\n    padding:0;\n    width:216px;\n    min-width: 216px;\n    margin-right: 50px;\n    margin-bottom: 80px;\n    background-color: #f2f4f6;\n}\n.card-body[data-v-0fb0f462] {\n    text-align: center;\n    position: relative;\n    padding: 0;\n}\n.username[data-v-0fb0f462] {\n    margin-top: 12px;\n    margin-bottom: 13px;\n}\n.icon[data-v-0fb0f462] {\n    margin-left: 22px;\n    margin-bottom: 15px;\n    color: #4c94a0\n}\n.account[data-v-0fb0f462] {\n    float: left;\n    font-size: 16px;\n    color: #aaacb1;\n    margin-left: 20px\n}\nhr[data-v-0fb0f462] {\n    margin-right: 20px;\n    margin-left: 20px;\n}\na[data-v-0fb0f462] {\n    color: #707578;\n    background-color: #f2f4f6;\n}\na[data-v-0fb0f462]:hover {\n    color: #ffffff;\n    /*background-color: #3490dc;*/\n    background-color: #51a1ad;\n}\n.active[data-v-0fb0f462] {\n    background-color: #54a1ad;\n}\n.list-group-item[data-v-0fb0f462] {\n    border: 0.1px solid #f2f4f6;\n    border-radius: 0;\n    text-decoration: none;\n}\n.fa-angle-right[data-v-0fb0f462] {\n    float: right;\n    margin-top: 4px;\n}\n.fa-venus[data-v-0fb0f462] {\n    color: #f06595\n}\n.fa-mars[data-v-0fb0f462], .fa-transgender[data-v-0fb0f462] {\n    color: #4c94a0\n}\n", ""]);
 
 // exports
 
@@ -9543,7 +9877,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.rounded-circle[data-v-668aed68] {\n    margin-top: 20px;\n    border: solid #d9dde1 4px;\n}\n.rounded-circle:hover+.update[data-v-668aed68] {\n    display: block;\n}\n.avator[data-v-668aed68] {\n    cursor: pointer;\n    text-align: center;\n}\n.update[data-v-668aed68]:hover {\n    display: block;\n}\n.update[data-v-668aed68] {\n    border-radius: 0 0 50px 50px;\n    width: 86px;\n    height: 22px;\n    background-color: rgba(0, 0, 0, 0.64);\n    position: absolute;\n    top: 83px;\n    left: 65px;\n    cursor: pointer;\n    display: none;\n}\n.modal-content[data-v-668aed68] {\n    width: 85%;\n    margin-left: 38px;\n}\n.modal-body[data-v-668aed68] {\n    border-radius: 5px;\n    padding-bottom: 0;\n    background-color: #f2f4f6;\n}\n.updateAvatar[data-v-668aed68] {\n    color: #3388d2;\n}\n.updateAvatar[data-v-668aed68]:hover {\n    color: #37a1f2;\n}\n.file[data-v-668aed68] {\n    display: inline-block;\n    position: absolute;\n    left: 0;\n    opacity: 0;\n    cursor: pointer;\n    width: 56px;\n    height: 20px;\n    font-size: 0;\n}\n.btn-primary[data-v-668aed68] {\n    font-size: 16px;\n}\n.light[data-v-668aed68] {\n    color: #ffffff;\n    font-size: 16px;\n    background-color: #aaaaaa;\n}\n.light[data-v-668aed68]:hover {\n    background-color: #a0a0a0;\n}\n", ""]);
+exports.push([module.i, "\n.rounded-circle[data-v-668aed68] {\n    margin-top: 20px;\n    border: solid #d9dde1 4px;\n}\n.rounded-circle:hover+.update[data-v-668aed68] {\n    display: block;\n}\n.avator[data-v-668aed68] {\n    cursor: pointer;\n    text-align: center;\n}\n.update[data-v-668aed68]:hover {\n    display: block;\n}\n.update[data-v-668aed68] {\n    border-radius: 0 0 50px 50px;\n    width: 86px;\n    height: 22px;\n    background-color: rgba(0, 0, 0, 0.64);\n    position: absolute;\n    top: 83px;\n    left: 65px;\n    cursor: pointer;\n    display: none;\n}\n.modal-content[data-v-668aed68] {\n    width: 85%;\n    margin-left: 38px;\n}\n.modal-body[data-v-668aed68] {\n    border-radius: 5px;\n    padding-bottom: 0;\n    background-color: #f2f4f6;\n}\n.updateAvatar[data-v-668aed68] {\n    /*color: #3388d2;*/\n    color: #1e87a5;\n}\n.updateAvatar[data-v-668aed68]:hover {\n    /*color: #37a1f2;*/\n    color: #2198b9;\n}\n.file[data-v-668aed68] {\n    display: inline-block;\n    position: absolute;\n    left: 0;\n    opacity: 0;\n    cursor: pointer;\n    width: 56px;\n    height: 20px;\n    font-size: 0;\n}\n.primary[data-v-668aed68] {\n    box-shadow: none;\n    color: #ffffff;\n    background-color: #4d94a0;\n}\n.primary[data-v-668aed68]:hover {\n    background-color: #50a3af;\n}\n.light[data-v-668aed68] {\n    box-shadow: none;\n    color: #ffffff;\n    background-color: #b4b4b4;\n}\n.light[data-v-668aed68]:hover {\n    background-color: #aaaaaa;\n}\n", ""]);
 
 // exports
 
@@ -9562,7 +9896,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.fa-envelope[data-v-2e67820e] {\n    float: left; margin-left: 20px; margin-right: 20px; font-size: 27px; color: #4c94a0\n}\n.email[data-v-2e67820e] {\n    float: left;\n    margin-right: 300px;\n}\n.info[data-v-2e67820e] {\n    margin-bottom: 2px;\n}\n.prompt[data-v-2e67820e] {\n    color: #acb0b4;\n}\n.secondary[data-v-2e67820e] {\n    width: 70px; font-size: 15px; border-radius: 20px; margin-top: 8px; margin-bottom: 8px; color: #6c757d; border-color: #6c757d; box-shadow: none;\n}\n.secondary[data-v-2e67820e]:hover {\n    color: #5ca9b7; border-color: #5da9b6; background-color: rgba(200, 255, 193, 0);\n}\n.match[data-v-2e67820e] {\n    font-size: 17px;\n}\n", ""]);
+exports.push([module.i, "\n.fa-envelope[data-v-2e67820e] {\n    float: left; margin-left: 20px; margin-right: 20px; font-size: 27px; color: #4c94a0\n}\n.email[data-v-2e67820e] {\n    float: left;\n    margin-right: 300px;\n}\n.info[data-v-2e67820e] {\n    margin-bottom: 2px;\n}\n.prompt[data-v-2e67820e] {\n    color: #acb0b4;\n}\n.secondary[data-v-2e67820e] {\n    width: 70px; font-size: 15px; border-radius: 20px; margin-top: 8px; margin-bottom: 8px; color: #6c757d; border-color: #6c757d; box-shadow: none;\n}\n.secondary[data-v-2e67820e]:hover {\n    color: #5ca9b7; border-color: #5da9b6; background-color: rgba(200, 255, 193, 0);\n}\n.match[data-v-2e67820e] {\n    font-size: 17px;\n}\n.label[data-v-2e67820e] {\n    float: left; font-size: 15px; margin-right: 20px; margin-top: 6px; margin-left: 20px; color: #636b6f;\n}\n.form-control[data-v-2e67820e] {\n    width: 60%;\n    margin-top: 10px;\n}\n.modal-body[data-v-2e67820e] {\n    padding-bottom: 0;\n}\n.light[data-v-2e67820e] {\n    box-shadow: none;\n    color: #ffffff;\n    background-color: #b4b4b4;\n}\n.light[data-v-2e67820e]:hover {\n    background-color: #aaaaaa;\n}\n.invalid-feedback[data-v-2e67820e], .password_message[data-v-2e67820e] {\n    margin-left: 161px;\n}\n.next[data-v-2e67820e] {\n    width: 70px;\n    box-shadow: none;\n    color: #ffffff;\n    background-color: #4d94a0;\n}\n.next[data-v-2e67820e]:hover {\n    background-color: #50a3af;\n}\n.head[data-v-2e67820e] {\n    float: left;\n    color: #545454;\n}\n.unbindEmail[data-v-2e67820e] {\n    font-size: 15px;\n    color: #1b829d;\n    margin-top: 6px;\n    float: right;\n    margin-right: 165px\n}\n.unbindEmails[data-v-2e67820e] {\n    font-size: 15px;\n    color: #1b829d;\n    margin-top: 6px;\n    float: right;\n    margin-right: 160px\n}\n", ""]);
 
 // exports
 
@@ -9581,7 +9915,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.fa-shield-alt[data-v-1f5c06ce] {\n    float: left; margin-left: 20px; margin-right: 20px; font-size: 27px; color: #4c94a0\n}\n.password[data-v-1f5c06ce] {\n    float: left; margin-right: 419px\n}\n.info[data-v-1f5c06ce] {\n    margin-bottom: 2px;\n}\n.prompt[data-v-1f5c06ce] {\n    color: #acb0b4;\n}\n.secondary[data-v-1f5c06ce] {\n    width: 70px; font-size: 15px; border-radius: 20px; margin-top: 8px; margin-bottom: 8px; color: #6c757d; border-color: #6c757d; box-shadow: none;\n}\n.secondary[data-v-1f5c06ce]:hover {\n    color: #5ca9b7; border-color: #5da9b6; background-color: rgba(200, 255, 193, 0);\n}\n.match[data-v-1f5c06ce] {\n    font-size: 17px;\n}\n.form-control[data-v-1f5c06ce] {\n    width: 65%;\n    margin-top: 10px;\n}\n.label[data-v-1f5c06ce] {\n    float: left; font-size: 15px; margin-right: 30px; margin-top: 6px; margin-left: 20px; color: #636b6f;\n}\n.btn-primary[data-v-1f5c06ce] {\n    font-size: 16px;\n}\n.light[data-v-1f5c06ce] {\n    color: #ffffff;\n    font-size: 16px;\n    background-color: #aaaaaa;\n}\n.light[data-v-1f5c06ce]:hover {\n    background-color: #a0a0a0;\n}\n.modal-body[data-v-1f5c06ce] {\n    padding-bottom: 0;\n}\n.invalid-feedback[data-v-1f5c06ce], .pass_error[data-v-1f5c06ce] {\n    margin-left: 125px;\n}\n", ""]);
+exports.push([module.i, "\n.fa-shield-alt[data-v-1f5c06ce] {\n    float: left; margin-left: 20px; margin-right: 20px; font-size: 27px; color: #4c94a0\n}\n.password[data-v-1f5c06ce] {\n    float: left; margin-right: 419px\n}\n.info[data-v-1f5c06ce] {\n    margin-bottom: 2px;\n}\n.prompt[data-v-1f5c06ce] {\n    color: #acb0b4;\n}\n.secondary[data-v-1f5c06ce] {\n    width: 70px; font-size: 15px; border-radius: 20px; margin-top: 8px; margin-bottom: 8px; color: #6c757d; border-color: #6c757d; box-shadow: none;\n}\n.secondary[data-v-1f5c06ce]:hover {\n    color: #5ca9b7; border-color: #5da9b6; background-color: rgba(200, 255, 193, 0);\n}\n.match[data-v-1f5c06ce] {\n    font-size: 17px;\n}\n.form-control[data-v-1f5c06ce] {\n    width: 68%;\n    margin-top: 10px;\n}\n.label[data-v-1f5c06ce] {\n    float: left; font-size: 15px; margin-right: 30px; margin-top: 6px; margin-left: 20px; color: #636b6f;\n}\n.primary[data-v-1f5c06ce] {\n    box-shadow: none;\n    color: #ffffff;\n    background-color: #4d94a0;\n}\n.primary[data-v-1f5c06ce]:hover {\n    background-color: #50a3af;\n}\n.light[data-v-1f5c06ce] {\n    box-shadow: none;\n    color: #ffffff;\n    background-color: #b4b4b4;\n}\n.light[data-v-1f5c06ce]:hover {\n    background-color: #aaaaaa;\n}\n.modal-body[data-v-1f5c06ce] {\n    padding-bottom: 0;\n}\n.invalid-feedback[data-v-1f5c06ce], .pass_error[data-v-1f5c06ce] {\n    margin-left: 125px;\n}\n", ""]);
 
 // exports
 
@@ -9600,7 +9934,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.fa-mobile-alt[data-v-2d13f7cb] {\n    float: left; margin-left: 25px; margin-right: 24px; font-size: 27px; color: #4c94a0\n}\n.phone[data-v-2d13f7cb] {\n    float: left; margin-right: 260px;\n}\n.match[data-v-2d13f7cb] {\n    font-size: 17px;\n}\n.info[data-v-2d13f7cb] {\n    margin-bottom: 2px;\n}\n.prompt[data-v-2d13f7cb] {\n    color: #acb0b4;\n}\n.secondary[data-v-2d13f7cb] {\n    width: 70px; font-size: 15px; border-radius: 20px; margin-top: 8px; margin-bottom: 8px; color: #6c757d; border-color: #6c757d; box-shadow: none;\n}\n.secondary[data-v-2d13f7cb]:hover {\n    color: #5ca9b7; border-color: #5da9b6; background-color: rgba(200, 255, 193, 0);\n}\n", ""]);
+exports.push([module.i, "\n.fa-mobile-alt[data-v-2d13f7cb] {\n    float: left; margin-left: 25px; margin-right: 24px; font-size: 27px; color: #4c94a0\n}\n.phone[data-v-2d13f7cb] {\n    float: left; margin-right: 260px;\n}\n.match[data-v-2d13f7cb] {\n    font-size: 17px;\n}\n.info[data-v-2d13f7cb] {\n    margin-bottom: 2px;\n}\n.prompt[data-v-2d13f7cb] {\n    color: #acb0b4;\n}\n.secondary[data-v-2d13f7cb] {\n    width: 70px; font-size: 15px; border-radius: 20px; margin-top: 8px; margin-bottom: 8px; color: #6c757d; border-color: #6c757d; box-shadow: none;\n}\n.secondary[data-v-2d13f7cb]:hover {\n    color: #5ca9b7; border-color: #5da9b6; background-color: rgba(200, 255, 193, 0);\n}\n.label[data-v-2d13f7cb] {\n    float: left; font-size: 15px; margin-right: 20px; margin-top: 6px; margin-left: 20px; color: #636b6f;\n}\n.form-control[data-v-2d13f7cb] {\n    width: 58%;\n    margin-top: 10px;\n}\n.modal-body[data-v-2d13f7cb] {\n    padding-bottom: 0;\n}\n.light[data-v-2d13f7cb] {\n    box-shadow: none;\n    color: #ffffff;\n    background-color: #b4b4b4;\n}\n.light[data-v-2d13f7cb]:hover {\n    background-color: #aaaaaa;\n}\n.invalid-feedback[data-v-2d13f7cb], .phone_message[data-v-2d13f7cb] {\n    margin-left: 175px;\n}\n.next[data-v-2d13f7cb] {\n    box-shadow: none;\n    color: #ffffff;\n    background-color: #4d94a0;\n}\n.next[data-v-2d13f7cb]:hover {\n    background-color: #50a3af;\n}\n.head[data-v-2d13f7cb] {\n    float: left;\n    color: #545454;\n}\n.unbindPhone[data-v-2d13f7cb] {\n    font-size: 15px;\n    color: #1b829d;\n    margin-top: 6px;\n    float: right;\n    margin-right: 214px\n}\n.unbindPhones[data-v-2d13f7cb] {\n    font-size: 15px;\n    color: #1b829d;\n    margin-top: 6px;\n    float: right;\n    margin-right: 200px\n}\n.sureUnbindPhone[data-v-2d13f7cb] {\n    font-size: 15px;\n    color: #1b829d;\n    margin-top: 6px;\n    float: right;\n    margin-right: 190px\n}\n", ""]);
 
 // exports
 
@@ -56742,10 +57076,7 @@ var staticRenderFns = [
                   _vm._v(" "),
                   _c(
                     "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "submit" }
-                    },
+                    { staticClass: "btn primary", attrs: { type: "submit" } },
                     [_vm._v("确定")]
                   )
                 ])
@@ -58332,7 +58663,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-primary",
+                      staticClass: "btn primary",
                       attrs: { type: "submit" },
                       on: { click: _vm.updateAvatar }
                     },
@@ -58386,7 +58717,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.email
+    _vm.myEmail
       ? _c("div", [
           _c("i", { staticClass: "far fa-envelope" }),
           _vm._v(" "),
@@ -58395,7 +58726,7 @@ var render = function() {
               _c("span", { staticClass: "match" }, [_vm._v("邮箱")]),
               _vm._v(" "),
               _c("span", { staticStyle: { color: "#1b829d" } }, [
-                _vm._v(_vm._s(_vm.email))
+                _vm._v(_vm._s(_vm.myEmail))
               ]),
               _vm._v(" "),
               _c("span", [_vm._v("已经绑定")])
@@ -58422,7 +58753,672 @@ var render = function() {
             { staticClass: "btn secondary", on: { click: _vm.bindEmail } },
             [_vm._v("绑定")]
           )
-        ])
+        ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "unbindEmail",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "unbindEmail",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("解绑邮箱")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _c("div", [
+                    _c("span", { staticClass: "label" }, [
+                      _vm._v("原来已绑定的邮箱")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "unbindEmail" }, [
+                      _vm._v(_vm._s(_vm.myEmail))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }),
+                  _vm._v(" "),
+                  _c("div", { staticStyle: { "margin-top": "20px" } }, [
+                    _c(
+                      "label",
+                      { staticClass: "label", attrs: { for: "password" } },
+                      [_vm._v("输入密码验证身份")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required|password",
+                          expression: "'required|password'"
+                        },
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.password,
+                          expression: "password"
+                        }
+                      ],
+                      class: [
+                        { "is-invalid": _vm.errors.has("password") },
+                        "form-control"
+                      ],
+                      attrs: {
+                        name: "password",
+                        id: "password",
+                        type: "password"
+                      },
+                      domProps: { value: _vm.password },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.password = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.has("password")
+                      ? _c("span", { staticClass: "invalid-feedback" }, [
+                          _vm._v(_vm._s(_vm.errors.first("password")))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.errors.has("password")
+                      ? _c(
+                          "span",
+                          { staticClass: "message password_message" },
+                          [_vm._v(_vm._s(_vm.password_message))]
+                        )
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn next",
+                      attrs: { disabled: _vm.isDisable },
+                      on: { click: _vm.nextOne }
+                    },
+                    [
+                      _c(
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.loading,
+                              expression: "!loading"
+                            }
+                          ]
+                        },
+                        [_vm._v("下一步")]
+                      ),
+                      _c("i", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.loading,
+                            expression: "loading"
+                          }
+                        ],
+                        staticClass: "spinner-border spinner-border-sm"
+                      })
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "unbindEmailCode",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "unbindEmailCode",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("解绑邮箱")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _c("div", [
+                    _c("span", { staticClass: "label" }, [
+                      _vm._v("原来已绑定的邮箱")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "unbindEmail" }, [
+                      _vm._v(_vm._s(_vm.myEmail))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }),
+                  _vm._v(" "),
+                  _c("div", { staticStyle: { "margin-top": "20px" } }, [
+                    _c(
+                      "label",
+                      { staticClass: "label", attrs: { for: "emailcode" } },
+                      [_vm._v("输入收到的验证码")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required|emailcode",
+                          expression: "'required|emailcode'"
+                        },
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.emailcode,
+                          expression: "emailcode"
+                        }
+                      ],
+                      class: [
+                        { "is-invalid": _vm.errors.has("emailcode") },
+                        "form-control"
+                      ],
+                      attrs: {
+                        name: "emailcode",
+                        id: "emailcode",
+                        type: "text"
+                      },
+                      domProps: { value: _vm.emailcode },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.emailcode = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.has("emailcode")
+                      ? _c("span", { staticClass: "invalid-feedback" }, [
+                          _vm._v(_vm._s(_vm.errors.first("emailcode")))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.errors.has("emailcode")
+                      ? _c(
+                          "span",
+                          { staticClass: "message password_message" },
+                          [_vm._v(_vm._s(_vm.emailcode_message))]
+                        )
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn next", on: { click: _vm.nextTwo } },
+                    [_vm._v("下一步")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "sureUnbindEmail",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "sureUnbindEmail",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("解绑邮箱")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _c("div", [
+                    _c("span", { staticClass: "label" }, [
+                      _vm._v("确定解绑该邮箱")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "unbindEmails" }, [
+                      _vm._v(_vm._s(_vm.myEmail) + " ？")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn next", on: { click: _vm.sureUnbind } },
+                    [_vm._v("确定")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "bindEmail",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "bindEmail",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("绑定邮箱")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }),
+                  _vm._v(" "),
+                  _c("div", { staticStyle: { "margin-top": "20px" } }, [
+                    _c(
+                      "label",
+                      { staticClass: "label", attrs: { for: "bindemails" } },
+                      [_vm._v("输入要绑定的邮箱")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required|bindemail",
+                          expression: "'required|bindemail'"
+                        },
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.bindemail,
+                          expression: "bindemail"
+                        }
+                      ],
+                      class: [
+                        { "is-invalid": _vm.errors.has("bindemail") },
+                        "form-control"
+                      ],
+                      attrs: {
+                        name: "bindemail",
+                        id: "bindemails",
+                        type: "text"
+                      },
+                      domProps: { value: _vm.bindemail },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.bindemail = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.has("bindemail")
+                      ? _c("span", { staticClass: "invalid-feedback" }, [
+                          _vm._v(_vm._s(_vm.errors.first("bindemail")))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.errors.has("bindemail")
+                      ? _c(
+                          "span",
+                          { staticClass: "message password_message" },
+                          [_vm._v(_vm._s(_vm.bindemail_message))]
+                        )
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn next",
+                      attrs: { disabled: _vm.isDisable },
+                      on: { click: _vm.bindNextOne }
+                    },
+                    [
+                      _c(
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.loading,
+                              expression: "!loading"
+                            }
+                          ]
+                        },
+                        [_vm._v("下一步")]
+                      ),
+                      _c("i", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.loading,
+                            expression: "loading"
+                          }
+                        ],
+                        staticClass: "spinner-border spinner-border-sm"
+                      })
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "bindEmailCode",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "bindEmailCode",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("绑定邮箱")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }),
+                  _vm._v(" "),
+                  _c("div", { staticStyle: { "margin-top": "20px" } }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "label",
+                        attrs: { for: "bindemailcodes" }
+                      },
+                      [_vm._v("输入收到的验证码")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required|bindemailcode",
+                          expression: "'required|bindemailcode'"
+                        },
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.bindemailCode,
+                          expression: "bindemailCode"
+                        }
+                      ],
+                      class: [
+                        { "is-invalid": _vm.errors.has("bindemailcode") },
+                        "form-control"
+                      ],
+                      attrs: {
+                        name: "bindemailcode",
+                        id: "bindemailcodes",
+                        type: "text"
+                      },
+                      domProps: { value: _vm.bindemailCode },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.bindemailCode = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.has("bindemailcode")
+                      ? _c("span", { staticClass: "invalid-feedback" }, [
+                          _vm._v(_vm._s(_vm.errors.first("bindemailcode")))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.errors.has("bindemailcode")
+                      ? _c(
+                          "span",
+                          { staticClass: "message password_message" },
+                          [_vm._v(_vm._s(_vm.bindemailcode_message))]
+                        )
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn next", on: { click: _vm.bindNextTwo } },
+                    [_vm._v("下一步")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "sureBindEmail",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "sureBindEmail",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("解绑邮箱")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _c("div", [
+                    _c("span", { staticClass: "label" }, [
+                      _vm._v("确认绑定该邮箱")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "unbindEmails" }, [
+                      _vm._v(_vm._s(_vm.bindemail) + " ？")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn next", on: { click: _vm.sureBind } },
+                    [_vm._v("确定")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -58439,6 +59435,26 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("p", { staticClass: "prompt" }, [
         _vm._v("可用邮箱加密码登录 tree go，可用邮箱找回密码")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("span", { staticClass: "label" }, [
+        _vm._v("绑定后，您可以使用此邮箱进行找回密码及登录的相关操作")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("span", { staticClass: "label" }, [
+        _vm._v("绑定后，您可以使用此邮箱进行找回密码及登录的相关操作")
       ])
     ])
   }
@@ -58699,11 +59715,9 @@ var staticRenderFns = [
         [_vm._v("取消")]
       ),
       _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("确定")]
-      )
+      _c("button", { staticClass: "btn primary", attrs: { type: "submit" } }, [
+        _vm._v("确定")
+      ])
     ])
   }
 ]
@@ -58729,7 +59743,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.phone
+    _vm.myPhone
       ? _c("div", [
           _c("i", { staticClass: "fas fa-mobile-alt" }),
           _vm._v(" "),
@@ -58738,7 +59752,7 @@ var render = function() {
               _c("span", { staticClass: "match" }, [_vm._v("手机")]),
               _vm._v(" "),
               _c("span", { staticStyle: { color: "#1b829d" } }, [
-                _vm._v(_vm._s(_vm.phone))
+                _vm._v(_vm._s(_vm.myPhone))
               ])
             ]),
             _vm._v(" "),
@@ -58763,7 +59777,593 @@ var render = function() {
             { staticClass: "btn secondary", on: { click: _vm.bindPhone } },
             [_vm._v("绑定")]
           )
-        ])
+        ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "unbindPhone",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "unbindPhone",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("解绑手机号")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _c("div", [
+                    _c("span", { staticClass: "label" }, [
+                      _vm._v("原来已绑定的手机号")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "unbindPhone" }, [
+                      _vm._v(_vm._s(_vm.myPhone))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }),
+                  _vm._v(" "),
+                  _c("div", { staticStyle: { "margin-top": "20px" } }, [
+                    _c(
+                      "label",
+                      { staticClass: "label", attrs: { for: "oldPhone" } },
+                      [_vm._v("输入已绑定的手机号")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required|phone",
+                          expression: "'required|phone'"
+                        },
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.phone,
+                          expression: "phone"
+                        }
+                      ],
+                      class: [
+                        { "is-invalid": _vm.errors.has("phone") },
+                        "form-control"
+                      ],
+                      attrs: { name: "phone", id: "oldPhone", type: "text" },
+                      domProps: { value: _vm.phone },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.phone = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.has("phone")
+                      ? _c("span", { staticClass: "invalid-feedback" }, [
+                          _vm._v(_vm._s(_vm.errors.first("phone")))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.errors.has("phone")
+                      ? _c("span", { staticClass: "message phone_message" }, [
+                          _vm._v(_vm._s(_vm.phone_message))
+                        ])
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn next", on: { click: _vm.nextOne } },
+                    [_vm._v("下一步")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "unbindPhoneSmsCode",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "unbindPhoneSms",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("解绑手机号")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _c("div", [
+                    _c("span", { staticClass: "label" }, [
+                      _vm._v("原来已绑定的手机号")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "unbindPhones" }, [
+                      _vm._v(_vm._s(_vm.phone))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }),
+                  _vm._v(" "),
+                  _c("div", { staticStyle: { "margin-top": "20px" } }, [
+                    _c(
+                      "label",
+                      { staticClass: "label", attrs: { for: "smscode" } },
+                      [_vm._v("请输入收到的验证码")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required|smscode",
+                          expression: "'required|smscode'"
+                        },
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.smscode,
+                          expression: "smscode"
+                        }
+                      ],
+                      class: [
+                        { "is-invalid": _vm.errors.has("smscode") },
+                        "form-control"
+                      ],
+                      attrs: { name: "smscode", id: "smscode", type: "text" },
+                      domProps: { value: _vm.smscode },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.smscode = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.has("smscode")
+                      ? _c("span", { staticClass: "invalid-feedback" }, [
+                          _vm._v(_vm._s(_vm.errors.first("smscode")))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.errors.has("smscode")
+                      ? _c("span", { staticClass: "message phone_message" }, [
+                          _vm._v(_vm._s(_vm.smscode_message))
+                        ])
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn next", on: { click: _vm.nextTwo } },
+                    [_vm._v("下一步")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "sureUnbindPhone",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "sureUnbindPhone",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("解绑手机号")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _c("div", [
+                    _c("span", { staticClass: "label" }, [
+                      _vm._v("确定解绑该手机号")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "sureUnbindPhone" }, [
+                      _vm._v(_vm._s(_vm.phone) + " ？")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn next", on: { click: _vm.sureUnbind } },
+                    [_vm._v("确定")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "bindPhone",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "bindPhone",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("绑定手机号")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }),
+                  _vm._v(" "),
+                  _c("div", { staticStyle: { "margin-top": "20px" } }, [
+                    _c(
+                      "label",
+                      { staticClass: "label", attrs: { for: "bindphones" } },
+                      [_vm._v("输入要绑定的手机号")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required|bindphone",
+                          expression: "'required|bindphone'"
+                        },
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.bindphone,
+                          expression: "bindphone"
+                        }
+                      ],
+                      class: [
+                        { "is-invalid": _vm.errors.has("bindphone") },
+                        "form-control"
+                      ],
+                      attrs: {
+                        name: "bindphone",
+                        id: "bindphones",
+                        type: "text"
+                      },
+                      domProps: { value: _vm.bindphone },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.bindphone = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.has("bindphone")
+                      ? _c("span", { staticClass: "invalid-feedback" }, [
+                          _vm._v(_vm._s(_vm.errors.first("bindphone")))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.errors.has("bindphone")
+                      ? _c("span", { staticClass: "message phone_message" }, [
+                          _vm._v(_vm._s(_vm.bindphone_message))
+                        ])
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn next", on: { click: _vm.bindNextOne } },
+                    [_vm._v("下一步")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "bindPhoneSmsCode",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "bindPhoneSms",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("绑定手机号")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }),
+                  _vm._v(" "),
+                  _c("div", { staticStyle: { "margin-top": "20px" } }, [
+                    _c(
+                      "label",
+                      { staticClass: "label", attrs: { for: "bindsmscode" } },
+                      [_vm._v("请输入收到的验证码")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required|bindsmscode",
+                          expression: "'required|bindsmscode'"
+                        },
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.bindsmscode,
+                          expression: "bindsmscode"
+                        }
+                      ],
+                      class: [
+                        { "is-invalid": _vm.errors.has("bindsmscode") },
+                        "form-control"
+                      ],
+                      attrs: {
+                        name: "bindsmscode",
+                        id: "bindsmscode",
+                        type: "text"
+                      },
+                      domProps: { value: _vm.bindsmscode },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.bindsmscode = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.has("bindsmscode")
+                      ? _c("span", { staticClass: "invalid-feedback" }, [
+                          _vm._v(_vm._s(_vm.errors.first("bindsmscode")))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.errors.has("bindsmscode")
+                      ? _c("span", { staticClass: "message phone_message" }, [
+                          _vm._v(_vm._s(_vm.bindsmscode_message))
+                        ])
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn next", on: { click: _vm.bindNextTwo } },
+                    [_vm._v("下一步")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "sureBindPhone",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "sureBindPhone",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("h5", { staticClass: "head" }, [_vm._v("绑定手机号")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticStyle: { "margin-bottom": "20px" } }, [
+                  _c("div", [
+                    _c("span", { staticClass: "label" }, [
+                      _vm._v("确认绑定该手机号")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "sureUnbindPhone" }, [
+                      _vm._v(_vm._s(_vm.bindphone) + " ？")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn light",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("取消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn next", on: { click: _vm.sureBind } },
+                    [_vm._v("确定")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -58780,6 +60380,26 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("p", { staticClass: "prompt" }, [
         _vm._v("可用手机号加密码登录 tree go，可通过手机号找回密码")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("span", { staticClass: "label" }, [
+        _vm._v("绑定后，您可以使用此手机号进行找回密码及登录的相关操作")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("span", { staticClass: "label" }, [
+        _vm._v("绑定后，您可以使用此手机号进行找回密码及登录的相关操作")
       ])
     ])
   }
@@ -75027,7 +76647,7 @@ instance.interceptors.response.use(function (response) {
         toast: true,
         position: 'top',
         showConfirmButton: false,
-        timer: 2500
+        timer: 3000
       }).then();
       break;
 
@@ -77872,6 +79492,14 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('account', {
     return /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(value) || /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
   }
 });
+vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('bindemail', {
+  getMessage: function getMessage(field) {
+    return '请输入正确的邮箱';
+  },
+  validate: function validate(value) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
+  }
+});
 vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('password', {
   getMessage: function getMessage(field) {
     return '请输入6-16位密码,区分大小写';
@@ -77904,6 +79532,14 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('phone', {
     return /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(value);
   }
 });
+vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('bindphone', {
+  getMessage: function getMessage(field) {
+    return '请输入正确的手机号';
+  },
+  validate: function validate(value) {
+    return /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(value);
+  }
+});
 vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('username', {
   getMessage: function getMessage(field) {
     return '用户名格式错误';
@@ -77929,6 +79565,30 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('realname', {
   }
 });
 vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('smscode', {
+  getMessage: function getMessage(field) {
+    return '请输入正确的短信验证码';
+  },
+  validate: function validate(value) {
+    return /^[0-9]{6}$/.test(value);
+  }
+});
+vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('bindsmscode', {
+  getMessage: function getMessage(field) {
+    return '请输入正确的短信验证码';
+  },
+  validate: function validate(value) {
+    return /^[0-9]{6}$/.test(value);
+  }
+});
+vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('emailcode', {
+  getMessage: function getMessage(field) {
+    return '请输入正确的短信验证码';
+  },
+  validate: function validate(value) {
+    return /^[0-9]{6}$/.test(value);
+  }
+});
+vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].extend('bindemailcode', {
   getMessage: function getMessage(field) {
     return '请输入正确的短信验证码';
   },
@@ -77988,12 +79648,22 @@ var dictionary = {
           return '手机号不能为空';
         }
       },
+      bindphone: {
+        required: function required() {
+          return '手机号不能为空';
+        }
+      },
       username: {
         required: function required() {
           return '用户名不能为空';
         }
       },
       smscode: {
+        required: function required() {
+          return '短信验证码不能为空';
+        }
+      },
+      bindsmscode: {
         required: function required() {
           return '短信验证码不能为空';
         }
@@ -78006,6 +79676,21 @@ var dictionary = {
       realname: {
         required: function required() {
           return '真实姓名不能为空';
+        }
+      },
+      bindemail: {
+        required: function required() {
+          return '邮箱不能为空';
+        }
+      },
+      emailcode: {
+        required: function required() {
+          return '短信验证码不能为空';
+        }
+      },
+      bindemailcode: {
+        required: function required() {
+          return '短信验证码不能为空';
         }
       }
     }

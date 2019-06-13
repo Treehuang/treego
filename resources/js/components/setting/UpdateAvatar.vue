@@ -27,7 +27,7 @@
 
                         <div class="modal-footer">
                             <button class="btn light" @click="close">取消</button>
-                            <button type="submit" class="btn btn-primary" @click="updateAvatar">确定</button>
+                            <button type="submit" class="btn primary" @click="updateAvatar">确定</button>
                         </div>
 
                     </div>
@@ -60,7 +60,7 @@
             return {
                 file: null,
                 oldFile: null,
-                host: 'http://192.168.5.105',
+                host: 'http://192.168.5.104',
                 uavatar: null,
                 uploadSign: true,
             }
@@ -274,11 +274,13 @@
     }
 
     .updateAvatar {
-        color: #3388d2;
+        /*color: #3388d2;*/
+        color: #1e87a5;
     }
 
     .updateAvatar:hover {
-        color: #37a1f2;
+        /*color: #37a1f2;*/
+        color: #2198b9;
     }
 
     .file {
@@ -292,17 +294,23 @@
         font-size: 0;
     }
 
-    .btn-primary {
-        font-size: 16px;
+    .primary {
+        box-shadow: none;
+        color: #ffffff;
+        background-color: #4d94a0;
+    }
+
+    .primary:hover {
+        background-color: #50a3af;
     }
 
     .light {
+        box-shadow: none;
         color: #ffffff;
-        font-size: 16px;
-        background-color: #aaaaaa;
+        background-color: #b4b4b4;
     }
 
     .light:hover {
-        background-color: #a0a0a0;
+        background-color: #aaaaaa;
     }
 </style>

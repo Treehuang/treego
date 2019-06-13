@@ -114,10 +114,7 @@
     .dropdown-menu-right {
         background-color: #f4f6f8;
         width: 253px;
-        padding-top: 30px;
-        padding-bottom: 10px;
-        padding-right: 20px;
-        padding-left: 20px;
+        padding: 30px 20px 10px 20px;
         border: 0;
         border-radius: 0;
         margin-top: 0;

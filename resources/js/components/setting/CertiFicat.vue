@@ -101,7 +101,7 @@
             return {
                 file: null,
                 time: '2014',
-                style: 'btn btn-primary',
+                style: 'btn primary',
                 record: 'u',
                 noUpload: false,
                 school: '广州大学',
@@ -164,7 +164,7 @@
                     e.srcElement.value = "" ;
 
                     this.noUpload = true;
-                    this.style = 'btn btn-danger';
+                    this.style = 'btn danger';
                     this.message = '上传失败';
 
                     this.$swal.fire({
@@ -186,7 +186,7 @@
                     e.srcElement.value = "" ;
 
                     this.noUpload = true;
-                    this.style = 'btn btn-danger';
+                    this.style = 'btn danger';
                     this.message = '上传失败';
 
                     this.$swal.fire({
@@ -202,7 +202,7 @@
                 }
 
                 this.noUpload = false;
-                this.style = 'btn btn-success';
+                this.style = 'btn success';
                 this.message = '上传成功';
             },
 
@@ -287,8 +287,34 @@
         font-size: 0;
     }
 
-    .btn-primary, .btn-danger, .btn-success {
+    .primary {
         width: 198px;
+        color: #ffffff;
+        background-color: #51a1ad;
+    }
+
+    .primary:hover {
+        background-color: #55a8b4;
+    }
+
+    .success {
+        width: 198px;
+        color: #ffffff;
+        background-color: #37b96b;
+    }
+
+    .success:hover {
+        background-color: #35af63;
+    }
+
+    .danger {
+        width: 198px;
+        color: #ffffff;
+        background-color: #ee6763;
+    }
+
+    .danger:hover {
+        background-color: #ff6f6b;
     }
 
     .itembox {

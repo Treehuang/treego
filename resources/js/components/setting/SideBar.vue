@@ -118,7 +118,12 @@
 
     a:hover {
         color: #ffffff;
-        background-color: #3490dc;
+        /*background-color: #3490dc;*/
+        background-color: #51a1ad;
+    }
+
+    .active {
+        background-color: #54a1ad;
     }
 
     .list-group-item {
