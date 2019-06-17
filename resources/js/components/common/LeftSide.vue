@@ -14,7 +14,8 @@
 <style scoped>
 
     a {
-        color: #45555d;
+        font-weight: bold;
+        color: #67838c;
         padding: 9px 11px 9px 11px;
         border-radius: 5px;
     }
@@ -26,7 +27,6 @@
     .active {
         font-weight: bold;
         color: #4c94a0;
-        /*background-color: rgba(76, 148, 160, 0.15);*/
     }
 
     .side {

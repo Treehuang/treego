@@ -90,6 +90,10 @@
         padding-right: 15px;
     }
 
+    .contact {
+        margin-right: 10px;
+    }
+
     .contact:hover {
         color: #ffffff;
         cursor: pointer;

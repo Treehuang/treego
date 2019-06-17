@@ -54,7 +54,7 @@ let routes = [
     {
         path: '/ticket',
         name: 'ticket',
-        components: require('./components/ticket/Ticket')
+        components: require('./components/ticket/TicketOffice')
     }
 ];
 

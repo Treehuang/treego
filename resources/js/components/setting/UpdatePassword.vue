@@ -22,20 +22,20 @@
 
                         <form @submit.prevent="updatePass">
                             <div style="margin-bottom: 20px">
-                                <div>
+                                <div style="margin-bottom: 20px">
                                     <label for="old" class="label">输入原密码</label>
                                     <input v-validate="'required|oldpassword'" :class="[{'is-invalid' : errors.has('oldpassword')}, 'form-control']" v-model="oldPass" name="oldpassword" id="old" type="password" placeholder="6-16位包含字母数字的密码">
                                     <span class="invalid-feedback" v-if="errors.has('oldpassword')">{{ errors.first('oldpassword') }}</span>
                                     <span class="message pass_error" v-if="!errors.has('oldpassword')">{{ pass_error }}</span>
                                 </div>
 
-                                <div>
+                                <div style="margin-bottom: 20px">
                                     <label for="new" class="label">输入新密码</label>
                                     <input v-validate="'required|newpassword'" :class="[{'is-invalid' : errors.has('newpassword')}, 'form-control']" v-model="newPass" name="newpassword" id="new" type="password" placeholder="6-16位包含字母数字的密码">
                                     <span class="invalid-feedback" v-if="errors.has('newpassword')">{{ errors.first('newpassword') }}</span>
                                 </div>
 
-                                <div>
+                                <div class="form-group">
                                     <label for="news" class="label">确认新密码</label>
                                     <input v-validate="{'required': 'true', 'is': newPass}" :class="[{'is-invalid' : errors.has('repassword')}, 'form-control']" name="repassword" id="news" type="password" placeholder="6-16位包含字母数字的密码">
                                     <span class="invalid-feedback" v-if="errors.has('repassword')">{{ errors.first('repassword') }}</span>

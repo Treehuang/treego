@@ -16432,6 +16432,10 @@ readers do not read off random characters that represent icons */
 }
 
 body {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   font-size: 14px;
   margin-bottom: 70px;
   font-family: Helvetica, "Microsoft YaHei", Arial, sans-serif;
@@ -16443,12 +16447,12 @@ html {
 }
 
 .fh5co-form {
-  padding: 30px;
-  margin-top: 4em;
-  -o-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 27px 30px 10px 30px;
+  margin-top: 40px;
+  -o-box-shadow: 0 0 15px #d4d4d4;
+  box-shadow: 0 0 15px #d4d4d4;
   background: #ffffff;
-  padding-bottom: 10px;
 }
 
 input::-webkit-input-placeholder {
@@ -16469,6 +16473,14 @@ input:-moz-placeholder {
 input:-ms-input-placeholder {
   /* Internet Explorer 10-11 */
   color: #cbd1d7 !important;
+}
+
+input:focus {
+  border: 1px solid #4b8f9b !important;
+}
+
+textarea:focus {
+  border: 1px solid #4b8f9b !important;
 }
 
 .form-control:focus {
@@ -16514,7 +16526,7 @@ p {
   width: 0.8em;
   height: 0.8em;
   margin-top: 14.5px;
-  background-color: #3873ff;
+  background-color: #50a3af;
   border-radius: 100%;
   display: inline-block;
   -webkit-animation: sk-three-bounce 1.4s ease-in-out 0s infinite both;
@@ -16561,7 +16573,7 @@ p {
   margin: 0 auto;
   width: 15%;
   height: 15%;
-  background-color: #337ab7;
+  background-color: #50a3af;
   border-radius: 100%;
   -webkit-animation: sk-circle-bounce-delay 1.2s infinite ease-in-out both;
   animation: sk-circle-bounce-delay 1.2s infinite ease-in-out both;
@@ -16572,5 +16584,15 @@ p {
   font-size: 80%;
   display: block;
   margin-top: 0.25rem;
+}
+
+.invalid-feedback,
+.message {
+  float: left;
+  margin-top: 0;
+}
+
+.form-group {
+  margin-bottom: 19px !important;
 }
 

@@ -2,47 +2,46 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4 offset-md-7">
+            <div class="col-md-8 offset-md-2">
                 <!-- Start Sign In Form -->
                 <form class="fh5co-form" @submit.prevent="register">
-                    <h2>Sign Up</h2>
 
-                    <div class="form-group">
-                        <div class="alert alert-success" role="alert">Your info has been saved!</div>
+                    <div style="float: left; width: 320px">
+                        <img src="https://coding.imooc.com/static/module/class/content/img/311/section2-6.png" width="170px"/>
+                        <img src="https://coding.imooc.com/static/module/class/content/img/219/section1-1.png" width="220px" style="margin-left: 130px; margin-top: 20px"/>
                     </div>
 
-                    <div class="form-group">
-                        <input v-validate="'required|phone'" v-model="phone" type="text" :class="[{'is-invalid' : errors.has('phone')}, 'form-control']" name="phone" placeholder="请输入手机号">
-                        <span class="invalid-feedback" v-if="errors.has('phone')">{{ errors.first('phone') }}</span>
-                        <span class="message" v-if="!errors.has('phone')">{{ phone_message }}</span>
+                    <div style="float: right; width: 300px">
+                        <h4 style="color: #67838c; font-weight: bold; margin-bottom: 19px">注册</h4>
+
+                        <div class="form-group">
+                            <input v-validate="'required|phone'" v-model="phone" type="text" :class="[{'is-invalid' : errors.has('phone')}, 'form-control']" name="phone" placeholder="请输入手机号">
+                            <span class="invalid-feedback" v-if="errors.has('phone')">{{ errors.first('phone') }}</span>
+                            <span class="message" v-if="!errors.has('phone')">{{ phone_message }}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <geet-test @getGeet="getGeetTestObj" message="register_geetest"></geet-test>
+                            <span class="message" v-if="noGeet">{{ geet_message }}</span>
+                        </div>
+                        <!-- github登录 -->
+                        <div class="form-group">
+                            <button type="button" class="btn btn-block github">GitHub登录</button>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block register" :disabled="isDisable">注册 <i :class="[isloading ? 'spinner-border spinner-border-sm' : 'fas fa-sign-in-alt']"></i></button>
+                        </div>
+
+                        <div class="fa-pull-right">
+                            <p>已经注册了? <router-link to="/login">登录</router-link></p>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <geet-test @getGeet="getGeetTestObj" message="register_geetest"></geet-test>
-                        <span class="message" v-if="noGeet">{{ geet_message }}</span>
-                    </div>
-                    <!-- github登录 -->
-                    <div class="form-group">
-                        <a href="#">
-                            <input value="GitHub登录" type="button" class="btn btn-block github">
-                        </a>
-                    </div>
-
-                    <div class="form-group fa-pull-right">
-                        <p>已经注册了? <router-link to="/login">登录</router-link></p>
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn register" :disabled="isDisable">Sign Up <i :class="[isloading ? 'spinner-border spinner-border-sm' : 'fas fa-sign-in-alt']"></i></button>
-                    </div>
-
+                    <div class="clearfix"></div>
                 </form>
 
             </div>
-        </div>
-
-        <div class="row sign">
-            <div class="col-md-12 text-center"><p><small>&copy; Inspiration comes from life!</small></p></div>
         </div>
     </div>
 
@@ -92,7 +91,6 @@
                             sessionStorage.setItem("phone", this.phone);
                             sessionStorage.setItem("verify_key", response.data.verify_key);
                             this.$router.push({name:'verify'});
-                            //console.log(response.data);
                         }).catch(error => {
                             console.log(error.response);
                             if(error.response.status == 429) {
@@ -162,7 +160,7 @@
     }
 
     .fa-sign-in-alt {
-        margin-left: 1.5px;
+        margin-left: 2px;
     }
 
     .github{
@@ -172,25 +170,27 @@
     }
 
     .github:hover{
-        color: #32c6c6;
-        border-color: #32c6c6;
-        background-color: rgba(200, 255, 193, 0);
+        color: #4b8f9b;
+        border-color: #50a3af;
     }
 
     .register{
-        min-width: 96px;
         color: #ffffff;
-        border-color: #33cccc;
-        background-color: #33cdcd;
-        box-shadow: -4px 7px 20px 2px rgba(53, 212, 212, 0.2);
+        border-color: #4d94a0;
+        background-color: #4d94a0;
+        box-shadow: -2px 2px 5px 2px rgba(78, 173, 185, 0.1);
     }
 
     .register:hover{
-        background-color: #34d7d7;
+        border-color: #50a3af;
+        background-color: #50a3af;
     }
 
-    .sign {
-        clear: both;
-        padding-top: 168px;
+    a {
+        color: #45555d;
+    }
+
+    a:hover {
+        color: #54a3af;
     }
 </style>

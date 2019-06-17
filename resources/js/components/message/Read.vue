@@ -149,10 +149,9 @@
     .destory {
         border: 1px solid #dcdfe6;
         border-radius: 3px;
-        padding: 5px 15px 5px 15px;
-        /*color: #606266;*/
+        padding: 5px 10px 5px 10px;
         color: #45555d;
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .destory:hover {

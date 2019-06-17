@@ -86,7 +86,7 @@
 <style scoped>
     .fa-bell {
         margin-top: 2px;
-        color: #4c94a0;
+        color: #67838c;
         font-size: 18px;
         position: relative;
         padding-bottom: 4px;

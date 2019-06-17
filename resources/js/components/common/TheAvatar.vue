@@ -26,7 +26,7 @@
 
             <div style="margin-bottom: 10px">
                 <router-link class="btn shop" tag="a" to="" @click.native="isDown=false"><i class="fas fa-shopping-cart"></i>&nbsp;<span>积分商城</span></router-link>
-                <router-link class="btn bell" tag="a" to="" @click.native="isDown=false"><i class="far fa-bell"></i>&nbsp;<span>消息管理</span></router-link>
+                <router-link class="btn bell" tag="a" to="/unread" @click.native="isDown=false"><i class="far fa-bell"></i>&nbsp;<span>消息管理</span></router-link>
             </div>
 
             <div class="prompt">
@@ -37,7 +37,7 @@
             <hr>
 
             <router-link tag="a" to="" @click.native="logout">
-                <span>安全退出</span>
+                <span class="logout">安全退出</span>
             </router-link>
         </div>
     </li>
@@ -90,14 +90,6 @@
                             this.$router.push({name: 'home'});
                         });
                     }
-                });
-            },
-
-            test() {
-                this.$api.auth.test().then(response => {
-                    console.log(response.data);
-                }).catch(error => {
-
                 });
             },
         }
@@ -202,5 +194,13 @@
 
     .prompt {
         color: #93999f;
+    }
+
+    .logout {
+        color: #45555d;
+    }
+
+    .logout:hover {
+        color: #54a3af;
     }
 </style>

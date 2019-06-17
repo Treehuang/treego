@@ -50,10 +50,12 @@
                 <div class="itembox">
 
                     <label class="prove" for="prove">学籍证明</label>
-                    <button  :class="style" style="position: relative;">{{ message }}
+                    <button  :class="style" style="float: left; position: relative">{{ message }}
                         <input type="file" @change="uploadAvatar($event)" accept="image/png,image/jpeg,image/jpg" class="file" title="">
                     </button>
+                    <div class="clearfix"></div>
                     <span class="message upload" v-if="noUpload">请上传学籍证明</span>
+
                     <span class="error-message hand" @click="hand">什么可以是学籍证明文件？</span>
                 </div>
 
@@ -65,11 +67,11 @@
         </div>
 
         <div class="card">
-            <div style="width: 240px; margin-top: 85px; float: right;">
+            <div style="width: 219px; margin-top: 85px; float: right;">
                 <h6 class="card-title" style="color: #ff9600;">认证须知</h6>
                 <div style="color:#45555d;">
                     <p>
-                        • 学籍证明中的不能有作假信息，如有误，将无法通过审核；
+                        • 上传学籍证明文件格式为PNG或JPG格式。请确保学籍文件清晰可见；
                     </p>
 
                     <p>
@@ -77,7 +79,7 @@
                     </p>
 
                     <p>
-                        • 上传学籍证明文件格式为PNG或JPG格式。请确保学籍文件清晰可见；
+                        • 学籍证明中的不能有作假信息，如有误，将无法通过审核；
                     </p>
 
                     <p>
@@ -335,11 +337,11 @@
     }
 
     .error-message {
-        position: absolute; top: 6px; left: 390px;
+        width: 200px;
+        position: absolute; top: 10px; left: 385px;
     }
 
     .upload {
-        position: relative;
-        left: 182px;
+        margin-left: 182px;
     }
 </style>

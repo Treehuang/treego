@@ -61,7 +61,7 @@
     }
 
     .fa-tree {
-        color: #45555d;
+        color: #647e87;
         font-style: italic;
     }
 
@@ -76,6 +76,7 @@
     }
 
     .tree {
-        color: #45555d;
+        color: #67838c;
+        font-weight: bold;
     }
 </style>

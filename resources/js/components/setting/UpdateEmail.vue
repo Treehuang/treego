@@ -697,7 +697,7 @@
     }
 
     .invalid-feedback, .password_message {
-        margin-left: 161px;
+        margin-left: 160px;
     }
 
     .next {

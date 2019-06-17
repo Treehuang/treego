@@ -50,10 +50,11 @@
 
                     <div>
                         <label class="campus" for="campus">校区</label>
-                        <select class="form-control" name="campus" id="campus" v-model="campus">
+                        <select class="form-control selectpicker" name="campus" id="campus" v-model="campus">
                             <option value="b">大学城</option>
                             <option value="g">桂花岗</option>
                         </select>
+
                     </div>
 
                     <hr>
@@ -155,6 +156,7 @@
 
     .card-body {
         width: 755px;
+        padding-bottom: 0;
     }
 
     .sex {
@@ -187,6 +189,11 @@
     }
 
     .error-message {
-        position: absolute; top: 6px; left: 390px;
+        width: 200px;
+        position: absolute; top: 10px; left: 385px;
+    }
+
+    select:focus {
+        border: 1px solid #4b8f9b !important;
     }
 </style>
