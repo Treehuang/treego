@@ -52,9 +52,14 @@ let routes = [
         components: require('./components/message/Recycle')
     },
     {
-        path: '/ticket',
-        name: 'ticket',
+        path: '/ticketOffice',
+        name: 'ticketOffice',
         components: require('./components/ticket/TicketOffice')
+    },
+    {
+        path: '/ticketList',
+        name: 'ticketList',
+        components: require('./components/ticket/TicketList')
     }
 ];
 

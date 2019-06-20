@@ -67,7 +67,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $random = rand(1, 30);
-        $avatar = 'http://192.168.5.105/images/change/' . $random . '.jpg';
+        $avatar = '/images/change/' . $random . '.jpg';
 
         return User::create([
             'phone' => $data['phone'],

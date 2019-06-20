@@ -132,9 +132,27 @@ $api->version('v1', [
             // 清空回收站
             $api->patch('/emptyAll', 'Mess\MessController@emptyAll');
 
+            // 获取登录用户的车票
+            $api->get('/authTickets', 'Ticket\TicketController@getAuthTickets');
+
+            //保存前往大学城的车票
+            $api->post('/toUniversity', 'Ticket\TicketController@addToUniversity');
+
+            // 保存前往桂花岗的车票
+            $api->post('/toOsmanthus', 'Ticket\TicketController@addToOsmanthus');
+
+            // 获取用户订购的车票
+            $api->get('/tickets', 'Ticket\TicketController@getBuyTickets');
+
             // 测试
             $api->get('/testme', 'Test\TestController@me');
         });
+
+        // 获取车票订购系统是否开放
+        $api->get('/ticketsOfficeState', 'Ticket\TicketController@getTicketsOfficeState');
+
+        // 获取游客车票
+        $api->get('/noAuthTickets', 'Ticket\TicketController@getNoAuthTickets');
     });
 
     // 测试

@@ -5,9 +5,27 @@
                 由 <a href="https://github.com/Treehuang" target="_blank">tree</a> 设计和编码
             </p>
 
-            <p class="float-right contact" @click="contact">联系我</p>
+            <p class="float-right contact" data-toggle="modal" data-target="#image">联系我</p>
         </div>
 
+        <!-- 添加微信模态框 -->
+        <div class="modal fade" id="image" tabindex="-1" role="dialog" aria-labelledby="suggest" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" style="width: 332px; margin-left: 84px">
+                    <div class="modal-body">
+                        <img :src="imageUrl" width="300px" height="300px"/>
+
+                        <div class="modal-footer">
+                            <button class="btn light" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn primary" data-dismiss="modal">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 反馈意见模态框 -->
         <i class="fas fa-pen shadow-sm mb-5 bg-white rounded" data-toggle="modal" data-target="#suggest"></i>
 
         <div class="modal fade" id="suggest" tabindex="-1" role="dialog" aria-labelledby="suggest" aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -41,21 +59,11 @@
     export default {
         name: 'TheFooter',
 
-        methods: {
-            contact() {
-                this.$swal.fire({
-                    text: '添加记得备注~',
-                    imageUrl: 'http://192.168.5.104/images/my/me.jpg',
-                    width: '360px',
-                    padding: '10px',
-                    imageWidth: 300,
-                    imageHeight: 300,
-                    imageAlt: 'tree\'s weichat',
-                    animation: false,
-                    allowOutsideClick: false,
-                })
+        data() {
+            return {
+                imageUrl: '/images/my/me.jpg',
             }
-        }
+        },
     }
 
 </script>

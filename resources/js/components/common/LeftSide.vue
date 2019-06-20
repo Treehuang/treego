@@ -1,7 +1,7 @@
 <template>
     <ul class="navbar-nav mr-auto">
         <li><router-link tag="a" to="/" :class="[{'active': this.$route.path === '/'}]"><span class="side">首页</span></router-link></li>
-        <li><router-link tag="a" to="/ticket" :class="[{'active': this.$route.path === '/ticket'}]"><span class="side">Ticket office</span></router-link></li>
+        <li><router-link tag="a" to="/ticketOffice" :class="[{'active': this.$route.path === '/ticketOffice'}]"><span class="side">Ticket office</span></router-link></li>
     </ul>
 </template>
 

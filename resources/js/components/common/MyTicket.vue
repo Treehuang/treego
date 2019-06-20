@@ -1,6 +1,6 @@
 <template>
     <li class="nav-item">
-        <router-link tag="a" class="nav-link" to="/unread">
+        <router-link tag="a" class="nav-link" to="/ticketList">
             <span class="btn myticket"><i class="fas fa-ticket-alt"></i> ticket</span>
         </router-link>
     </li>

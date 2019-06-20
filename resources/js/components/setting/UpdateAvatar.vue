@@ -60,7 +60,7 @@
             return {
                 file: null,
                 oldFile: null,
-                host: 'http://192.168.5.104',
+                // host: 'http://192.168.1.108',
                 uavatar: null,
                 uploadSign: true,
             }
@@ -69,7 +69,8 @@
         methods: {
             getAvatar() {
                 let random  = Math.floor(Math.random() * (30 - 1)) + 1;
-                this.uavatar = this.host +  '/images/change/' + random + '.jpg';
+                // this.uavatar = this.host +  '/images/change/' + random + '.jpg';
+                this.uavatar = '/images/change/' + random + '.jpg';
             },
 
             uploadAvatar(e) {
@@ -172,7 +173,7 @@
 
                     this.$api.auth.uploadAvatar(formData).then(response => {
 
-                        response.data.avatar = this.host + response.data.avatar;
+                        // response.data.avatar = this.host + response.data.avatar;
 
                         this.$store.commit('certification/updateUser', response.data);
 

@@ -77,10 +77,10 @@
         border-radius: 6px;
         padding-bottom: 9px;
         border: 1px solid #fcfcfc;
-        -webkit-box-shadow: -4px 7px 2px 2px rgba(80, 168, 180, 0.15);
-        -moz-box-shadow: -4px 7px 6px 2px rgba(80, 168, 180, 0.15);
-        -o-box-shadow: -4px 7px 6px 2px rgba(80, 168, 180, 0.15);
-        box-shadow: -4px 8px 7px 2px rgba(80, 163, 175, 0.15);
+        -webkit-box-shadow: -2px 2px 5px 2px rgba(80, 163, 175, 0.15);
+        -moz-box-shadow: -2px 2px 5px 2px rgba(80, 163, 175, 0.15);
+        -o-box-shadow: -2px 2px 5px 2px rgba(80, 163, 175, 0.15);
+        box-shadow: -2px 2px 5px 2px rgba(80, 163, 175, 0.15);
     }
 
     .card-body:hover i {
@@ -161,7 +161,7 @@
     }
 
     .fa-minus-square:hover {
-        color: #59cbd7;
+        color: #57bcc8;
     }
 
     .fa-plus-square {
@@ -171,7 +171,7 @@
     }
 
     .fa-plus-square:hover {
-        color: #59cbd7;
+        color: #57bcc8;
     }
 
     .ticketNum {
