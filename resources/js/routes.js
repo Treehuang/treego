@@ -60,6 +60,12 @@ let routes = [
         path: '/ticketList',
         name: 'ticketList',
         components: require('./components/ticket/TicketList')
+    },
+    {
+        path: '/mhome',
+        name: 'mHome',
+        components: require('./components/managment/mHome'),
+        meta: { title: '系统首页' }
     }
 ];
 

@@ -4,6 +4,7 @@ import createPersistedState from "vuex-persistedstate"
 
 import certification from './modules/certification'
 import messages from './modules/messages'
+import management from './modules/management'
 
 Vue.use(Vuex);
 
@@ -11,7 +12,8 @@ export default new Vuex.Store({
 
     modules: {
         certification,
-        messages
+        messages,
+        management,
     },
 
     plugins: [createPersistedState({
@@ -19,6 +21,7 @@ export default new Vuex.Store({
             return {
                 certification: val.certification,
                 messages: val.messages,
+                management: val.management,
             }
         }
     })]

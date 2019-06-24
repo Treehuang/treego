@@ -124,30 +124,14 @@
                         // 游客
                         this.$api.ticket.getNoAuthTickets().then(response => {
                             this.startPlaceTicketList = response.data.startPlaceTicketList;
-                        }).catch(() => {
-                            this.$swal.fire({
-                                type: 'error',
-                                title: '游客获取tickets失败~',
-                                toast: true,
-                                position: 'top',
-                                showConfirmButton: false,
-                                timer: 2500,
-                            })
+                        }).catch(error => {
+                            this.hasError(error);
                         });
                     }
                 }
 
-            }).catch(() => {
-                this.$swal.fire({
-                    type: 'warning',
-                    title: '系统正在维护~',
-                    toast: true,
-                    position: 'top',
-                    showConfirmButton: false,
-                    timer: 2500,
-                }).then(() => {
-                    this.$router.push({name: 'home'});
-                });
+            }).catch(error => {
+                this.hasError(error);
             });
         },
 
@@ -241,6 +225,38 @@
                     }).then(() => { this.pop = false })
                 }
             },
+
+            hasError(error) {
+                // 429
+                if(error.response.status === 429) {
+                    this.pop = true;
+                    this.$swal.fire({
+                        type: 'warning',
+                        title: '您操作太频繁了，请稍后~',
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 3000,
+                    }).then(() => {
+                        this.$router.push({name: 'home'});
+                    });
+                }
+
+                // 500
+                if(error.response.status === 500) {
+                    this.pop = true;
+                    this.$swal.fire({
+                        type: 'warning',
+                        title: '哎呀！网络连接出错了...',
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 3000,
+                    }).then(() => {
+                        this.$router.push({name: 'home'});
+                    });
+                }
+            }
         }
     }
 </script>

@@ -72,6 +72,9 @@ $api->version('v1', [
 
         // 需要进行身份认证的API
         $api->group(['middleware' => 'jwt'], function($api){
+            // 获取是否为管理员
+            $api->get('/ismanager', 'Auth\UserController@getIsManager');
+
             // 尝试登录
             $api->post('/trylogin', 'Auth\LoginController@tryLogin');
 

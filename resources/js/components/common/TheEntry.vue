@@ -15,6 +15,8 @@
 
         <ul v-else-if="isAuth" class="navbar-nav navbar-right">
 
+            <the-management></the-management>
+
             <my-ticket></my-ticket>
 
             <the-bell></the-bell>
@@ -29,11 +31,13 @@
     import TheAvatar from './TheAvatar';
     import TheBell from './TheBell';
     import MyTicket from './MyTicket';
+    import TheManagement from '../managment/common/TheManagement';
 
     export default {
         name: 'TheEntry',
 
         components: {
+            TheManagement,
             TheAvatar,
             TheBell,
             MyTicket,

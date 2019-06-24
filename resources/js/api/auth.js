@@ -114,8 +114,9 @@ const auth = {
         return instance.patch(`${base.prefix}/user/changeAvatar`, formData);
     },
 
-    test() {
-        return instance.get(`${base.prefix}/me`);
+    // 获取是不是管理员
+    getIsManager () {
+        return instance.get(`${base.prefix}/ismanager`);
     }
 };
 

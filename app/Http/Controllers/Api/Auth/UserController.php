@@ -224,4 +224,9 @@ class UserController extends Controller
 
         return 0;
     }
+
+    public function getIsManager() {
+        $user = Auth::guard('api')->user();
+        return response()->json(['is_manager' => $user->is_manager]);
+    }
 }

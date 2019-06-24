@@ -22,9 +22,9 @@ instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlenco
 const toLogin = () => {
     router.replace({
         path: '/login',
-        query: {
-            redirect: router.currentRoute.fullPath
-        }
+        // query: {
+        //     redirect: router.currentRoute.fullPath
+        // }
     });
 };
 
@@ -55,6 +55,7 @@ instance.interceptors.response.use(response => {
         switch(error.response.status) {
             case 401:
                 store.commit('certification/resetAuthUser');
+                store.commit('management/resetManager');
                 toLogin();
                 break;
 

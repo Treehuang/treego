@@ -15,21 +15,23 @@
 <style scoped>
     .myticket{
         color: #67838c;
-        padding: 3px 12px 3px 12px;
-        border-radius: 20px;
+        padding: 1px 12px 1px 12px;
+        border-radius: 6px;
         border: 1px solid #dcdfe6;
         margin-right: 20px;
         font-weight: bold;
+        background-color: rgba(76, 148, 160, 0.1);
     }
 
     .myticket:hover {
         cursor: pointer;
-        color: #4c94a0;
-        border: 1px solid rgba(76, 148, 160, 0.15);
-        background-color: rgba(76, 148, 160, 0.15);
+        /*color: #4c94a0;*/
+        /*border: 1px solid rgba(76, 148, 160, 0.3);*/
+        background-color: rgba(76, 148, 160, 0.2);
     }
 
     a {
+        margin-top: 2px;
         padding: 4px 8px 2px 8px;
     }
 
