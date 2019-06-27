@@ -178,7 +178,6 @@
         box-sizing: border-box;
         text-align: center;
         width: 140px;
-        /*height: 30px;*/
         z-index: 10;
     }
 </style>

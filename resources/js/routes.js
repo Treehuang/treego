@@ -66,6 +66,12 @@ let routes = [
         name: 'mHome',
         components: require('./components/managment/mHome'),
         meta: { title: '系统首页' }
+    },
+    {
+        path: '/maccount',
+        name: 'mAccount',
+        components: require('./components/managment/mAccount'),
+        meta: { title: '账号管理' }
     }
 ];
 

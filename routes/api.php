@@ -147,9 +147,30 @@ $api->version('v1', [
             // 获取用户订购的车票
             $api->get('/tickets', 'Ticket\TicketController@getBuyTickets');
 
+            // 管理系统账号管理 -- 获取最高管理员账号id
+            $api->get('/management/topid', 'Management\UserController@getTopManagemerId');
+            // 管理系统账号管理 -- 获取所有账号
+            $api->get('/management/accounts', 'Management\UserController@getUsers');
+            // 管理系统账号管理 -- 获取特定页码的账号
+            $api->get('/management/pageaccounts', 'Management\UserController@getCurrentPagesUsers');
+            // 管理系统账号管理 -- 冻结账号
+            $api->post('/management/freeze', 'Management\UserController@freezeUser');
+            // 管理系统账号管理 -- 解冻账号
+            $api->post('/management/unfreeze', 'Management\UserController@unfreezeUser');
+            // 管理系统账号管理 -- 删除账号
+            $api->delete('/management/unset', 'Management\UserController@unsetUser');
+            // 管理系统账号管理 -- 批量删除账号
+            $api->delete('/management/batchUnset', 'Management\UserController@batchUnsetUser');
+            // 管理系统账号管理 -- 授权管理员
+            $api->post('/management/authorization', 'Management\UserController@authorization');
+            // 管理系统账号管理 -- 回收管理员授权
+            $api->post('/management/unAuthorization', 'Management\UserController@unAuthorization');
+
             // 测试
             $api->get('/testme', 'Test\TestController@me');
         });
+
+
 
         // 获取车票订购系统是否开放
         $api->get('/ticketsOfficeState', 'Ticket\TicketController@getTicketsOfficeState');

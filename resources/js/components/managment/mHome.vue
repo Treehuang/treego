@@ -1,13 +1,12 @@
 <template>
     <div class="container" style="margin-top: 40px">
-        <h4>系统首页</h4>
+        <h3>系统首页</h3>
     </div>
 </template>
 
 <script>
     export default {
         name: 'mHome',
-
     }
 </script>
 

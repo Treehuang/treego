@@ -68,18 +68,8 @@
                     },
                     {
                         icon: 'el-icon-user-solid',
-                        index: 'table',
+                        index: 'maccount',
                         title: '用户管理',
-                        subs: [
-                            {
-                                index: 'tables',
-                                title: '权限管理',
-                            },
-                            {
-                                index: 'tabless',
-                                title: '账号管理'
-                            }
-                        ]
                     },
                     {
                         icon: 'el-icon-bell',
@@ -128,7 +118,7 @@
         left: 0;
         top: 0;
         bottom:0;
-        overflow-y: scroll;
+        /*overflow-y: scroll;*/
         -ms-overflow-style: none;
     }
     .sidebar::-webkit-scrollbar {

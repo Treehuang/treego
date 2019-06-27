@@ -23,7 +23,13 @@ class LoginController extends Controller
             return response()->json(['errors' => [ 'account' => '账号或密码错误'] ], 401);
         }
 
-        return $this->response->item(Auth::guard('api')->user(), new UserTranformer())
+        // 检测账号是否被冻结
+        $user = Auth::guard('api')->user();
+        if ($user->state == 0) {
+            return response()->json(['errors' => [ 'account' => '账号处于冻结状态'] ], 401);
+        }
+
+        return $this->response->item($user, new UserTranformer())
             ->setMeta([
                 'access_token' =>  'Bearer '. $token,
                 'expires_in'   =>  Auth::guard('api')->factory()->getTTL() * 60

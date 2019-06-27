@@ -30,7 +30,6 @@
 
         created() {
             this.$swal.fire({
-                // type: 'success',
                 text: '欢迎您，tree go管理员',
                 toast: true,
                 position: 'top-end',
@@ -63,6 +62,8 @@
                 // 标志退出后台管理系统
                 this.$store.commit('management/resetManager');
                 this.exitManagement();
+                // 显示首页
+                this.$router.push('/');
             }
         },
 
