@@ -36,10 +36,19 @@
 
             <hr>
 
-            <router-link tag="a" to="" @click.native="logout">
+            <router-link tag="a" to="" @click.native="logoutSure">
                 <span class="logout">安全退出</span>
             </router-link>
         </div>
+
+        <!-- 退出提示-->
+        <el-dialog title="提示" :visible.sync="logoutVisible" width="300px" :show-close="showClose" center>
+            <div class="del-dialog-cnt">您确定退出登录？</div>
+            <span slot="footer" class="dialog-footer">
+                <span class="cancel" @click="logoutVisible = false">取 消</span>
+                <span class="sure" @click="logout">确 定</span>
+            </span>
+        </el-dialog>
     </li>
 
 </template>
@@ -67,31 +76,23 @@
         data() {
             return {
                 isDown: true,
+                showClose: false,
+                logoutVisible: false,
             }
         },
 
         methods: {
             logout() {
-                this.$swal.fire({
-                    text: "您确定要退出登录吗？",
-                    type: 'warning',
-                    width: '400px',
-                    focusConfirm: false,
-                    reverseButtons: true,
-                    showCancelButton: true,
-                    allowOutsideClick: false,
-                    confirmButtonColor: '#83d1f5',
-                    cancelButtonColor: '#c1c1c1',
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                }).then((result) => {
-                    if (result.value) {
-                        this.$store.dispatch('certification/logout').then(() => {
-                            this.$router.push({name: 'home'});
-                        });
-                    }
+                this.logoutVisible = false;
+                this.$store.dispatch('certification/logout').then(() => {
+                    this.$router.push({name: 'home'});
                 });
             },
+
+            logoutSure() {
+                this.isDown = false;
+                this.logoutVisible = true;
+            }
         }
     }
 </script>
@@ -202,5 +203,41 @@
 
     .logout:hover {
         color: #54a3af;
+    }
+
+    .sure {
+        cursor: pointer;
+        color: #ffffff;
+        padding: 7px 14px;
+        background: #4d94a0;
+        border: 1px solid #4d94a0 !important;
+        border-radius: 3px;
+        font-size: 12px;
+        margin-left: 8px;
+    }
+
+    .sure:hover {
+        background:#50a3af;
+    }
+
+    .cancel {
+        cursor: pointer;
+        color: #ffffff;
+        padding: 7px 14px;
+        background: #b4b4b4;
+        border: 1px solid #b4b4b4 !important;
+        border-radius: 3px;
+        font-size: 12px;
+        margin-right: 8px;
+        margin-left: 4px;
+    }
+
+    .cancel:hover {
+        background: #aaaaaa;
+    }
+
+    .del-dialog-cnt{
+        font-size: 16px;
+        text-align: center
     }
 </style>

@@ -1,5 +1,6 @@
 <template>
-        <nav :class="[{'content-collapse': collapse}, 'navbar', 'navbar-static-top']">
+
+        <nav :class="[{'content-collapse': collapse}, 'navbar', 'navbar-static-top', 'navbar-expand-lg']">
             <div class="collapse-btn" @click="collapseChage">
                 <i class="el-icon-menu"></i>
             </div>
@@ -14,6 +15,18 @@
                         <i class="fas fa-undo-alt"> 返回</i>
                     </router-link>
                 </li>
+
+                <li class="nav-item" @click="logoutVisible = true">
+                    <i class="fas fa-power-off"></i>
+                </li>
+
+                <el-dialog title="提示" :visible.sync="logoutVisible" width="300px" :show-close="showClose" center>
+                    <div class="del-dialog-cnt">您确定退出系统？</div>
+                    <span slot="footer" class="dialog-footer">
+                        <span class="cancel" @click="logoutVisible = false">取 消</span>
+                        <span class="sure" @click="logout">确 定</span>
+                    </span>
+                </el-dialog>
             </ul>
         </nav>
 </template>
@@ -47,6 +60,8 @@
         data() {
             return {
                 collapse: true,
+                showClose: false,
+                logoutVisible: false,
             }
         },
 
@@ -63,7 +78,19 @@
                 this.$store.commit('management/resetManager');
                 this.exitManagement();
                 // 显示首页
-                this.$router.push('/');
+                this.$router.push({name: 'home'});
+            },
+
+            // 退出登录
+            logout() {
+                this.logoutVisible = false;
+
+                this.$store.dispatch('certification/logout').then(() => {
+                    // 标志退出后台管理系统
+                    this.$store.commit('management/resetManager');
+                    this.exitManagement();
+                    this.$router.push({name: 'home'});
+                });
             }
         },
 
@@ -75,7 +102,7 @@
         background-color: #1ab394;
         margin-top: 0;
         margin-bottom: 0;
-        padding: 13px 80px 13px 20px;
+        padding: 13px 40px 13px 20px;
         left: 205px;
         right: 0;
         width: auto;
@@ -93,7 +120,14 @@
         font-size: 27px;
     }
 
-    .el-icon-menu:hover, a:hover {
+    .fa-power-off {
+        color: #ffffff;
+        font-size: 16px;
+        margin-left: 40px;
+        margin-top: 3px;
+    }
+
+    .el-icon-menu:hover, .fa-power-off:hover, a:hover {
         cursor: pointer;
         color: #ebebeb;
     }
@@ -106,4 +140,39 @@
         left: 64px !important;
     }
 
+    .sure {
+        cursor: pointer;
+        color: #ffffff;
+        padding: 7px 14px;
+        background: #1ac9a9;
+        border: 1px solid #1ac9a9 !important;
+        border-radius: 3px;
+        font-size: 12px;
+        margin-left: 8px;
+    }
+
+    .sure:hover {
+        background: #1ad2b2;
+    }
+
+    .cancel {
+        cursor: pointer;
+        color: #ffffff;
+        padding: 7px 14px;
+        background: #b4b4b4;
+        border: 1px solid #b4b4b4 !important;
+        border-radius: 3px;
+        font-size: 12px;
+        margin-right: 8px;
+        margin-left: 4px;
+    }
+
+    .cancel:hover {
+        background: #aaaaaa;
+    }
+
+    .del-dialog-cnt{
+        font-size: 16px;
+        text-align: center
+    }
 </style>

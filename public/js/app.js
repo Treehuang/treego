@@ -2630,6 +2630,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'TheAvatar',
@@ -2651,34 +2660,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      isDown: true
+      isDown: true,
+      showClose: false,
+      logoutVisible: false
     };
   },
   methods: {
     logout: function logout() {
       var _this = this;
 
-      this.$swal.fire({
-        text: "您确定要退出登录吗？",
-        type: 'warning',
-        width: '400px',
-        focusConfirm: false,
-        reverseButtons: true,
-        showCancelButton: true,
-        allowOutsideClick: false,
-        confirmButtonColor: '#83d1f5',
-        cancelButtonColor: '#c1c1c1',
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      }).then(function (result) {
-        if (result.value) {
-          _this.$store.dispatch('certification/logout').then(function () {
-            _this.$router.push({
-              name: 'home'
-            });
-          });
-        }
+      this.logoutVisible = false;
+      this.$store.dispatch('certification/logout').then(function () {
+        _this.$router.push({
+          name: 'home'
+        });
       });
+    },
+    logoutSure: function logoutSure() {
+      this.isDown = false;
+      this.logoutVisible = true;
     }
   }
 });
@@ -3032,6 +3032,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3053,7 +3066,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })),
   data: function data() {
     return {
-      collapse: true
+      collapse: true,
+      showClose: false,
+      logoutVisible: false
     };
   },
   methods: {
@@ -3068,7 +3083,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$store.commit('management/resetManager');
       this.exitManagement(); // 显示首页
 
-      this.$router.push('/');
+      this.$router.push({
+        name: 'home'
+      });
+    },
+    // 退出登录
+    logout: function logout() {
+      var _this = this;
+
+      this.logoutVisible = false;
+      this.$store.dispatch('certification/logout').then(function () {
+        // 标志退出后台管理系统
+        _this.$store.commit('management/resetManager');
+
+        _this.exitManagement();
+
+        _this.$router.push({
+          name: 'home'
+        });
+      });
     }
   }
 });
@@ -3338,6 +3371,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -11644,7 +11678,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.dropdown-toggle[data-v-62a37531] {\n    width: 46px;\n    cursor:pointer;\n    padding: 4px;\n}\n.dropdown-menu-right[data-v-62a37531] {\n    background-color: #f4f6f8;\n    width: 253px;\n    padding: 30px 20px 10px 20px;\n    border: 0;\n    border-radius: 0;\n    margin-top: 0;\n    box-shadow: 2px 2px 30px -2px rgba(96, 96, 96, 0.2);\n}\n.fa-cog[data-v-62a37531], .fa-shopping-cart[data-v-62a37531], .fa-credit-card[data-v-62a37531] {\n    color: rgba(13,13,13,0.62);\n}\n.fa-bell[data-v-62a37531] {\n    margin-left: 1px;\n    margin-right: 1px;\n    font-size: 15px;\n    color: rgba(13,13,13,0.62);\n}\nspan[data-v-62a37531] {\n    font-size: 12px;\n}\n\n/*悬停下拉菜单延迟*/\nli:hover .dropdown-menu[data-v-62a37531] {display: block; -webkit-animation:ttt-data-v-62a37531 1s 1 forwards; animation:ttt-data-v-62a37531 1s 1 forwards;}\n.li .dropdown-menu[data-v-62a37531] {\n    opacity:0\n}\n@-webkit-keyframes ttt-data-v-62a37531 {\n0% {\n        opacity: 0;\n}\n1% { /*这里表示3s的66%也就是大约2秒的时候*/\n        opacity: 0;\n}\n50% {\n        opacity: 1;\n}\n}\n@keyframes ttt-data-v-62a37531 {\n0% {\n        opacity: 0;\n}\n1% { /*这里表示3s的66%也就是大约2秒的时候*/\n        opacity: 0;\n}\n50% {\n        opacity: 1;\n}\n}\n.rounded-circle-puls[data-v-62a37531] {\n    margin-right: 30px;\n    border: solid #a6b7bf 2px\n}\n.rounded-circle-puls[data-v-62a37531]:hover {\n    border: solid #c1d2d7 2px;\n}\n.dropdown-toggle[data-v-62a37531]::after {\n    display: none;\n}\n.rounded-img[data-v-62a37531] {\n    float: left;\n    margin-right: 14px;\n    margin-bottom: 20px;\n}\n.btn[data-v-62a37531] {\n    box-shadow: none;\n    width: 106px;\n    border-radius: 0;\n    border-color: #ecf0f3;\n    background-color: #ecf0f3;\n}\n.btn[data-v-62a37531]:hover {\n    border-color: #d5dde2;\n    background-color: #d5dde2;\n}\n.shop[data-v-62a37531],\n.center[data-v-62a37531]\n{\n    float: left;\n    margin-right: 1px;\n}\nhr[data-v-62a37531] {\n    margin-top: 8px;\n    margin-bottom: 12px;\n    border-top: 1px solid rgb(222, 233, 234);\n}\n.prompt[data-v-62a37531] {\n    color: #93999f;\n}\n.logout[data-v-62a37531] {\n    color: #45555d;\n}\n.logout[data-v-62a37531]:hover {\n    color: #54a3af;\n}\n", ""]);
+exports.push([module.i, "\n.dropdown-toggle[data-v-62a37531] {\n    width: 46px;\n    cursor:pointer;\n    padding: 4px;\n}\n.dropdown-menu-right[data-v-62a37531] {\n    background-color: #f4f6f8;\n    width: 253px;\n    padding: 30px 20px 10px 20px;\n    border: 0;\n    border-radius: 0;\n    margin-top: 0;\n    box-shadow: 2px 2px 30px -2px rgba(96, 96, 96, 0.2);\n}\n.fa-cog[data-v-62a37531], .fa-shopping-cart[data-v-62a37531], .fa-credit-card[data-v-62a37531] {\n    color: rgba(13,13,13,0.62);\n}\n.fa-bell[data-v-62a37531] {\n    margin-left: 1px;\n    margin-right: 1px;\n    font-size: 15px;\n    color: rgba(13,13,13,0.62);\n}\nspan[data-v-62a37531] {\n    font-size: 12px;\n}\n\n/*悬停下拉菜单延迟*/\nli:hover .dropdown-menu[data-v-62a37531] {display: block; -webkit-animation:ttt-data-v-62a37531 1s 1 forwards; animation:ttt-data-v-62a37531 1s 1 forwards;}\n.li .dropdown-menu[data-v-62a37531] {\n    opacity:0\n}\n@-webkit-keyframes ttt-data-v-62a37531 {\n0% {\n        opacity: 0;\n}\n1% { /*这里表示3s的66%也就是大约2秒的时候*/\n        opacity: 0;\n}\n50% {\n        opacity: 1;\n}\n}\n@keyframes ttt-data-v-62a37531 {\n0% {\n        opacity: 0;\n}\n1% { /*这里表示3s的66%也就是大约2秒的时候*/\n        opacity: 0;\n}\n50% {\n        opacity: 1;\n}\n}\n.rounded-circle-puls[data-v-62a37531] {\n    margin-right: 30px;\n    border: solid #a6b7bf 2px\n}\n.rounded-circle-puls[data-v-62a37531]:hover {\n    border: solid #c1d2d7 2px;\n}\n.dropdown-toggle[data-v-62a37531]::after {\n    display: none;\n}\n.rounded-img[data-v-62a37531] {\n    float: left;\n    margin-right: 14px;\n    margin-bottom: 20px;\n}\n.btn[data-v-62a37531] {\n    box-shadow: none;\n    width: 106px;\n    border-radius: 0;\n    border-color: #ecf0f3;\n    background-color: #ecf0f3;\n}\n.btn[data-v-62a37531]:hover {\n    border-color: #d5dde2;\n    background-color: #d5dde2;\n}\n.shop[data-v-62a37531],\n.center[data-v-62a37531]\n{\n    float: left;\n    margin-right: 1px;\n}\nhr[data-v-62a37531] {\n    margin-top: 8px;\n    margin-bottom: 12px;\n    border-top: 1px solid rgb(222, 233, 234);\n}\n.prompt[data-v-62a37531] {\n    color: #93999f;\n}\n.logout[data-v-62a37531] {\n    color: #45555d;\n}\n.logout[data-v-62a37531]:hover {\n    color: #54a3af;\n}\n.sure[data-v-62a37531] {\n    cursor: pointer;\n    color: #ffffff;\n    padding: 7px 14px;\n    background: #4d94a0;\n    border: 1px solid #4d94a0 !important;\n    border-radius: 3px;\n    font-size: 12px;\n    margin-left: 8px;\n}\n.sure[data-v-62a37531]:hover {\n    background:#50a3af;\n}\n.cancel[data-v-62a37531] {\n    cursor: pointer;\n    color: #ffffff;\n    padding: 7px 14px;\n    background: #b4b4b4;\n    border: 1px solid #b4b4b4 !important;\n    border-radius: 3px;\n    font-size: 12px;\n    margin-right: 8px;\n    margin-left: 4px;\n}\n.cancel[data-v-62a37531]:hover {\n    background: #aaaaaa;\n}\n.del-dialog-cnt[data-v-62a37531]{\n    font-size: 16px;\n    text-align: center\n}\n", ""]);
 
 // exports
 
@@ -11739,7 +11773,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.navbar-static-top[data-v-4be0de2a] {\n    background-color: #1ab394;\n    margin-top: 0;\n    margin-bottom: 0;\n    padding: 13px 80px 13px 20px;\n    left: 205px;\n    right: 0;\n    width: auto;\n    transition: left .3s ease-in-out;\n    position: absolute;\n}\n.welcome[data-v-4be0de2a] {\n    color: #ffffff;\n    margin-left: 15px;\n}\n.el-icon-menu[data-v-4be0de2a] {\n    color: #ffffff;\n    font-size: 27px;\n}\n.el-icon-menu[data-v-4be0de2a]:hover, a[data-v-4be0de2a]:hover {\n    cursor: pointer;\n    color: #ebebeb;\n}\na[data-v-4be0de2a] {\n    color: #ffffff;\n}\n.content-collapse[data-v-4be0de2a] {\n    left: 64px !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.navbar-static-top[data-v-4be0de2a] {\n    background-color: #1ab394;\n    margin-top: 0;\n    margin-bottom: 0;\n    padding: 13px 40px 13px 20px;\n    left: 205px;\n    right: 0;\n    width: auto;\n    transition: left .3s ease-in-out;\n    position: absolute;\n}\n.welcome[data-v-4be0de2a] {\n    color: #ffffff;\n    margin-left: 15px;\n}\n.el-icon-menu[data-v-4be0de2a] {\n    color: #ffffff;\n    font-size: 27px;\n}\n.fa-power-off[data-v-4be0de2a] {\n    color: #ffffff;\n    font-size: 16px;\n    margin-left: 40px;\n    margin-top: 3px;\n}\n.el-icon-menu[data-v-4be0de2a]:hover, .fa-power-off[data-v-4be0de2a]:hover, a[data-v-4be0de2a]:hover {\n    cursor: pointer;\n    color: #ebebeb;\n}\na[data-v-4be0de2a] {\n    color: #ffffff;\n}\n.content-collapse[data-v-4be0de2a] {\n    left: 64px !important;\n}\n.sure[data-v-4be0de2a] {\n    cursor: pointer;\n    color: #ffffff;\n    padding: 7px 14px;\n    background: #1ac9a9;\n    border: 1px solid #1ac9a9 !important;\n    border-radius: 3px;\n    font-size: 12px;\n    margin-left: 8px;\n}\n.sure[data-v-4be0de2a]:hover {\n    background: #1ad2b2;\n}\n.cancel[data-v-4be0de2a] {\n    cursor: pointer;\n    color: #ffffff;\n    padding: 7px 14px;\n    background: #b4b4b4;\n    border: 1px solid #b4b4b4 !important;\n    border-radius: 3px;\n    font-size: 12px;\n    margin-right: 8px;\n    margin-left: 4px;\n}\n.cancel[data-v-4be0de2a]:hover {\n    background: #aaaaaa;\n}\n.del-dialog-cnt[data-v-4be0de2a]{\n    font-size: 16px;\n    text-align: center\n}\n", ""]);
 
 // exports
 
@@ -84289,7 +84323,7 @@ var render = function() {
                   attrs: { tag: "a", to: "" },
                   nativeOn: {
                     click: function($event) {
-                      return _vm.logout($event)
+                      return _vm.logoutSure($event)
                     }
                   }
                 },
@@ -84298,7 +84332,57 @@ var render = function() {
             ],
             1
           )
-        : _vm._e()
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "提示",
+            visible: _vm.logoutVisible,
+            width: "300px",
+            "show-close": _vm.showClose,
+            center: ""
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.logoutVisible = $event
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "del-dialog-cnt" }, [
+            _vm._v("您确定退出登录？")
+          ]),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "span",
+                {
+                  staticClass: "cancel",
+                  on: {
+                    click: function($event) {
+                      _vm.logoutVisible = false
+                    }
+                  }
+                },
+                [_vm._v("取 消")]
+              ),
+              _vm._v(" "),
+              _c("span", { staticClass: "sure", on: { click: _vm.logout } }, [
+                _vm._v("确 定")
+              ])
+            ]
+          )
+        ]
+      )
     ],
     1
   )
@@ -84805,7 +84889,8 @@ var render = function() {
       class: [
         { "content-collapse": _vm.collapse },
         "navbar",
-        "navbar-static-top"
+        "navbar-static-top",
+        "navbar-expand-lg"
       ]
     },
     [
@@ -84817,18 +84902,88 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _c("ul", { staticClass: "navbar-nav navbar-right" }, [
-        _c(
-          "li",
-          { staticClass: "nav-item", on: { click: _vm.exit } },
-          [
-            _c("router-link", { attrs: { tag: "a", to: "/" } }, [
-              _c("i", { staticClass: "fas fa-undo-alt" }, [_vm._v(" 返回")])
-            ])
-          ],
-          1
-        )
-      ])
+      _c(
+        "ul",
+        { staticClass: "navbar-nav navbar-right" },
+        [
+          _c(
+            "li",
+            { staticClass: "nav-item", on: { click: _vm.exit } },
+            [
+              _c("router-link", { attrs: { tag: "a", to: "/" } }, [
+                _c("i", { staticClass: "fas fa-undo-alt" }, [_vm._v(" 返回")])
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              staticClass: "nav-item",
+              on: {
+                click: function($event) {
+                  _vm.logoutVisible = true
+                }
+              }
+            },
+            [_c("i", { staticClass: "fas fa-power-off" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "el-dialog",
+            {
+              attrs: {
+                title: "提示",
+                visible: _vm.logoutVisible,
+                width: "300px",
+                "show-close": _vm.showClose,
+                center: ""
+              },
+              on: {
+                "update:visible": function($event) {
+                  _vm.logoutVisible = $event
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "del-dialog-cnt" }, [
+                _vm._v("您确定退出系统？")
+              ]),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "dialog-footer",
+                  attrs: { slot: "footer" },
+                  slot: "footer"
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "cancel",
+                      on: {
+                        click: function($event) {
+                          _vm.logoutVisible = false
+                        }
+                      }
+                    },
+                    [_vm._v("取 消")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    { staticClass: "sure", on: { click: _vm.logout } },
+                    [_vm._v("确 定")]
+                  )
+                ]
+              )
+            ]
+          )
+        ],
+        1
+      )
     ]
   )
 }
@@ -85261,7 +85416,12 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "username", label: "用户名", align: "center" }
+            attrs: {
+              prop: "username",
+              label: "用户名",
+              width: "170px",
+              align: "center"
+            }
           }),
           _vm._v(" "),
           _c("el-table-column", {

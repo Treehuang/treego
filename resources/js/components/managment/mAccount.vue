@@ -38,6 +38,7 @@
             <el-table-column
                     prop="username"
                     label="用户名"
+                    width="170px"
                     align="center">
             </el-table-column>
 
