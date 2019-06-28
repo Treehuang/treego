@@ -46,8 +46,8 @@
                     this.messList = response.data.unReadList;
 
                     // 先销毁tooltip，再激活tooltip(不能去掉！)
-                    $(function () { $("[data-toggle='tooltip']").tooltip('dispose'); });
-                    $(function () { $("[data-toggle='tooltip']").tooltip(); });
+                    // $(function () { $("[data-toggle='tooltip']").tooltip('dispose'); });
+                    // $(function () { $("[data-toggle='tooltip']").tooltip(); });
 
                     this.showButton = true;
                 }else {
@@ -93,8 +93,8 @@
                     }
 
                     // 先销毁tooltip，再激活tooltip(不能去掉！)
-                    $(function () { $("[data-toggle='tooltip']").tooltip('dispose'); });
-                    $(function () { $("[data-toggle='tooltip']").tooltip(); });
+                    // $(function () { $("[data-toggle='tooltip']").tooltip('dispose'); });
+                    // $(function () { $("[data-toggle='tooltip']").tooltip(); });
 
                 }).catch(() => {
                     this.$swal.fire({
@@ -120,8 +120,8 @@
                     this.noMess = true;
 
                     // 先销毁tooltip，再激活tooltip(不能去掉！)
-                    $(function () { $("[data-toggle='tooltip']").tooltip('dispose'); });
-                    $(function () { $("[data-toggle='tooltip']").tooltip(); });
+                    // $(function () { $("[data-toggle='tooltip']").tooltip('dispose'); });
+                    // $(function () { $("[data-toggle='tooltip']").tooltip(); });
 
                 }).catch(() => {
                     this.$swal.fire({
@@ -148,18 +148,18 @@
     }
 
     .read {
-        border: 1px solid #dcdfe6;
+        color: #4c94a0;
+        border: 1px solid rgba(76, 148, 160, 0.25);
+        background-color: rgba(76, 148, 160, 0.1);
         border-radius: 3px;
         padding: 5px 10px 5px 10px;
-        color: #45555d;
         font-size: 12px;
     }
 
     .read:hover {
         cursor: pointer;
-        color: #4c94a0;
-        border: 1px solid rgba(76, 148, 160, 0.15);
-        background-color: rgba(76, 148, 160, 0.15);
+        color: #ffffff;
+        background-color: #4d94a0;
     }
 
     .item {

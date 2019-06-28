@@ -1,9 +1,15 @@
 <template>
     <li class="nav-item bell">
         <router-link class="nav-link" to="/unread">
-            <i class="far fa-bell" @click="hideTool" id="element" data-toggle="tooltip" data-placement="bottom" :title="`有${unReadNum}条未读消息`">
-                <span v-show="showUnread" class="bell-badge"></span>
-            </i>
+            <!--<i class="far fa-bell" @click="hideTool" id="element" data-toggle="tooltip" data-placement="bottom" :title="`有${unReadNum}条未读消息`">-->
+                <!--<span v-show="showUnread" class="bell-badge"></span>-->
+            <!--</i>-->
+
+            <el-badge v-if="unReadNum !== 0" :value="unReadNum" :max="8">
+                <i class="far fa-bell"></i>
+            </el-badge>
+
+            <i v-else class="far fa-bell"></i>
         </router-link>
     </li>
 </template>
@@ -23,14 +29,14 @@
 
         created() {
             // 后端获取未读消息
-            this.$store.dispatch('messages/getUnread').then(response => {
+            this.$store.dispatch('messages/getUnread').then(() => {
 
-                if (response.data.unReadList.length !== 0) {
-                    this.showUnread = true;
-                }
-
-                // 激活tooltip(为的是先将vuex的数据设置好再激活，不然会出现两个tooltip)
-                $(function () { $("[data-toggle='tooltip']").tooltip(); });
+                // if (response.data.unReadList.length !== 0) {
+                //     this.showUnread = true;
+                // }
+                //
+                // // 激活tooltip(为的是先将vuex的数据设置好再激活，不然会出现两个tooltip)
+                // $(function () { $("[data-toggle='tooltip']").tooltip(); });
 
             }).catch(() => {
                 this.$swal.fire({
@@ -74,12 +80,6 @@
                 showUnread: false,
             }
         },
-
-        methods: {
-            hideTool() {
-                $('#element').tooltip('hide');
-            }
-        }
     }
 </script>
 
@@ -95,16 +95,5 @@
     .bell {
         width: 32px;
         margin-right: 15px;
-    }
-
-    .bell-badge {
-        position: absolute;
-        right: -4px;
-        top: -2px;
-        width: 8px;
-        height: 8px;
-        border-radius: 4px;
-        background: #f56c6c;
-        color: #fff;
     }
 </style>

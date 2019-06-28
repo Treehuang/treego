@@ -24,7 +24,7 @@
             <hr>
         </div>
 
-        <button v-show="showButton" class="btn emptyAll" @click="emptyAll">清空回收站</button>
+        <button v-show="showButton" class="btn emptyAll" @click="emptyAll"><i class="el-icon-magic-stick"></i> 清空回收站</button>
 
     </div>
 </template>
@@ -166,19 +166,19 @@
     }
 
     .restore {
-        border: 1px solid #dcdfe6;
         border-radius: 3px;
         padding: 5px 10px 5px 10px;
-        color: #45555d;
         font-size: 12px;
         margin-right: 15px;
+        color: #4c94a0;
+        border: 1px solid rgba(76, 148, 160, 0.25);
+        background-color: rgba(76, 148, 160, 0.1);
     }
 
     .restore:hover {
         cursor: pointer;
-        color: #4c94a0;
-        border: 1px solid rgba(76, 148, 160, 0.15);
-        background-color: rgba(76, 148, 160, 0.15);
+        color: #ffffff;
+        background-color: #4d94a0;
     }
 
     .emptyAll {
@@ -192,17 +192,18 @@
     }
 
     .empty {
-        border: 1px solid #dcdfe6;
+        border: 1px solid #fbc4c4;
         border-radius: 3px;
         padding: 5px 10px 5px 10px;
-        color: #45555d;
+        color: #F56C6C;
         font-size: 12px;
+        background: #fef0f0;
     }
 
     .empty:hover {
         cursor: pointer;
-        color: #f56c6c;
-        border: 1px solid rgba(245, 108, 108, 0.3);
-        background-color: rgba(245, 108, 108, 0.3);
+        color: #ffffff;
+        background-color: #f56c6c;
+        border: 1px solid #f56c6c;
     }
 </style>

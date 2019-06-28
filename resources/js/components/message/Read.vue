@@ -23,7 +23,7 @@
             <hr>
         </div>
 
-        <button v-show="showButton" class="btn removeAll" @click="removeAll">全部删除</button>
+        <button v-show="showButton" class="btn removeAll" @click="removeAll"><i class="el-icon-delete"> 全部删除</i></button>
 
     </div>
 </template>
@@ -147,18 +147,19 @@
     }
 
     .destory {
-        border: 1px solid #dcdfe6;
+        border: 1px solid #fbc4c4;
         border-radius: 3px;
         padding: 5px 10px 5px 10px;
-        color: #45555d;
+        color: #F56C6C;
         font-size: 12px;
+        background-color: #fef0f0;
     }
 
     .destory:hover {
         cursor: pointer;
-        color: #f56c6c;
-        border: 1px solid rgba(245, 108, 108, 0.3);
-        background-color: rgba(245, 108, 108, 0.3);
+        color: #ffffff;
+        background: #f56c6c;
+        border: 1px solid #f56c6c;
     }
 
     .removeAll {

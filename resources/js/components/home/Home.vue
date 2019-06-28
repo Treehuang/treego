@@ -13,8 +13,6 @@
 <script>
     export default {
         mounted() {
-            // 一登录就激活tooltip
-            // $(function () { $("[data-toggle='tooltip']").tooltip(); });
             console.log('Component mounted.')
         }
     }

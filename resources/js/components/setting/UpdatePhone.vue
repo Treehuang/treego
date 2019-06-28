@@ -83,7 +83,7 @@
                                 <label for="smscode" class="label">请输入收到的验证码</label>
                                 <input v-validate="'required|smscode'" :class="[{'is-invalid' : errors.has('smscode')}, 'form-control']" v-model="smscode" name="smscode" id="smscode" type="text">
                                 <span class="invalid-feedback" v-if="errors.has('smscode')">{{ errors.first('smscode') }}</span>
-                                <span class="message phone_message" v-if="!errors.has('smscode')">{{ smscode_message }}</span>
+                                <span class="message" v-if="!errors.has('smscode')">{{ smscode_message }}</span>
                             </div>
                         </div>
 
@@ -149,7 +149,7 @@
                                 <label for="bindphones" class="label">输入要绑定的手机号</label>
                                 <input v-validate="'required|bindphone'" :class="[{'is-invalid' : errors.has('bindphone')}, 'form-control']" v-model="bindphone" name="bindphone" id="bindphones" type="text">
                                 <span class="invalid-feedback" v-if="errors.has('bindphone')">{{ errors.first('bindphone') }}</span>
-                                <span class="message phone_message" v-if="!errors.has('bindphone')">{{ bindphone_message }}</span>
+                                <span class="message" v-if="!errors.has('bindphone')">{{ bindphone_message }}</span>
                             </div>
                         </div>
 
@@ -183,7 +183,7 @@
                                 <label for="bindsmscode" class="label">请输入收到的验证码</label>
                                 <input v-validate="'required|bindsmscode'" :class="[{'is-invalid' : errors.has('bindsmscode')}, 'form-control']" v-model="bindsmscode" name="bindsmscode" id="bindsmscode" type="text">
                                 <span class="invalid-feedback" v-if="errors.has('bindsmscode')">{{ errors.first('bindsmscode') }}</span>
-                                <span class="message phone_message" v-if="!errors.has('bindsmscode')">{{ bindsmscode_message }}</span>
+                                <span class="message" v-if="!errors.has('bindsmscode')">{{ bindsmscode_message }}</span>
                             </div>
                         </div>
 

@@ -50,11 +50,10 @@
 
                     <div>
                         <label class="campus" for="campus">校区</label>
-                        <select class="form-control selectpicker" name="campus" id="campus" v-model="campus">
-                            <option value="b">大学城</option>
-                            <option value="g">桂花岗</option>
-                        </select>
-
+                        <el-select name="campus" id="campus" v-model="campus">
+                            <el-option key="1" label="大学城" value="b"></el-option>
+                            <el-option key="2" label="桂花岗" value="g"></el-option>
+                        </el-select>
                     </div>
 
                     <hr>
@@ -193,7 +192,16 @@
         position: absolute; top: 10px; left: 385px;
     }
 
-    select:focus {
+    /deep/ .el-select {
+        width: 198px;
+    }
+
+    /deep/ .el-select .el-input.is-focus .el-input__inner {
         border: 1px solid #4b8f9b !important;
+    }
+
+    .el-select-dropdown__item.selected {
+        color: #4b8f9b;
+        font-weight: normal;
     }
 </style>

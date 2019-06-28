@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Models\Certificat;
+use App\Models\User;
 use Auth;
 use \Hash;
 use \Cache;
@@ -25,6 +27,13 @@ class UserController extends Controller
             $user = Auth::guard('api')->user();
             if ($phone !== $user->phone) {
                 return response()->json([ 'errors' => ['phone' => '输入的手机号与绑定的手机号不符'] ], 422);
+            }
+        }
+
+        // 绑定手机时检测手机是否被注册
+        if ($request->getPathInfo() == '/api/user/bindPhoneSmscode') {
+            if(User::where([['phone', '=', $phone]])->first()) {
+                return response()->json([ 'errors' => ['phone' => '该手机已被注册'] ], 422);
             }
         }
 
@@ -57,7 +66,6 @@ class UserController extends Controller
 
         if ($request->getPathInfo() === '/api/user/unbindEmailCode') {
             // 解绑邮箱时发送
-
             $user = Auth::guard('api')->user();
             $email = $user->email;
 
@@ -66,8 +74,14 @@ class UserController extends Controller
                 return response()->json([ 'errors' => ['password' => '输入的原密码与此账号的密码不符'] ], 422);
             }
         }else {
-            // 绑定邮箱时发送
+
             $email = $request->email;
+
+            // 检测邮箱是否被注册
+            if(User::where([['email', '=', $email]])->first()) {
+                return response()->json([ 'errors' => ['bindemail_message' => '该邮箱已被绑定'] ], 422);
+            }
+
         }
 
         // 生成随机6位数
@@ -228,5 +242,46 @@ class UserController extends Controller
     public function getIsManager() {
         $user = Auth::guard('api')->user();
         return response()->json(['is_manager' => $user->is_manager]);
+    }
+
+    public function getIsCheck() {
+        $user = Auth::guard('api')->user();
+        return response()->json(['is_check' => $user->is_check]);
+    }
+
+    // 学籍认证
+    public function uploadCertificat(Request $request) {
+
+        $user = Auth::guard('api')->user();
+
+        $certificat = $request->certificat;
+        $extension = $certificat->getClientOriginalExtension();
+
+        if (!$request->hasFile('certificat') || !$certificat->isValid() || !in_array(strtolower($extension), ['jpg', 'jpeg', 'png'])) {
+            return response()->json(['errors' => ['certificat' => '上传的图片不合格']], 422);
+        }
+
+        // 学籍证明存储路径
+        $folder_name = '/images/uploads/certificat/' . date("Ym/d", time());
+        $upload_path = public_path() . $folder_name;
+
+        $filename = $user->id . '_' . time() . '_' . str_random(10) . '.' . $extension;
+
+        // 将图片移动到目标存储路径中
+        $certificat->move($upload_path, $filename);
+
+        $certificat_url = $folder_name . '/' . $filename;
+
+        Certificat::create([
+            'time' => $request->time,
+            'user_id' => $user->id,
+            'record' => $request->record,
+            'realname' => $request->realname,
+            'certificat' => $certificat_url,
+        ]);
+
+        User::where([['id', '=', $user->id]])->update(['is_check' => 2]);
+
+        return $this->response->created();
     }
 }

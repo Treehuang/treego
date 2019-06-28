@@ -4,7 +4,11 @@
 
         <div class="card" style="float: left;">
             <div class="card-body">
-                <h5 class="card-title">学籍认证</h5>
+                <h5 class="card-title">学籍认证
+                    <span v-if="is_check === 1" style="color: #4b8f9b;">（已认证）</span>
+                    <span v-if="is_check === 2" style="color: #4b8f9b;">（审核中）</span>
+                    <span v-if="is_check === 3" style="color: #d36b75;">（审核不通过）</span>
+                </h5>
 
                 <hr>
 
@@ -26,23 +30,24 @@
 
                 <div>
                     <label class="record" for="record">学历</label>
-                    <select class="form-control" name="record" id="record" v-model="record">
-                        <option value="u">本科生</option>
-                        <option value="r">研究生</option>
-                    </select>
+                    <el-select name="record" id="record" v-model="record">
+                        <el-option key="1" label="本科生" value="u"></el-option>
+                        <el-option key="2" label="研究生" value="r"></el-option>
+                    </el-select>
                 </div>
 
                 <hr>
 
                 <div>
                     <label class="time" for="time">入学时间</label>
-                    <select class="form-control" name="time" id="time" v-model="time">
-                        <option value="2014">2014</option>
-                        <option value="2015">2015</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                    </select>
+                    <el-select name="time" id="time" v-model="time">
+                        <el-option key="1" label="2014" value="2014"></el-option>
+                        <el-option key="2" label="2015" value="2015"></el-option>
+                        <el-option key="3" label="2016" value="2016"></el-option>
+                        <el-option key="4" label="2017" value="2017"></el-option>
+                        <el-option key="5" label="2018" value="2018"></el-option>
+                        <el-option key="6" label="2019" value="2019"></el-option>
+                    </el-select>
                 </div>
 
                 <hr>
@@ -51,17 +56,18 @@
 
                     <label class="prove" for="prove">学籍证明</label>
                     <button  :class="style" style="float: left; position: relative">{{ message }}
-                        <input type="file" @change="uploadAvatar($event)" accept="image/png,image/jpeg,image/jpg" class="file" title="">
+                        <input type="file" @change="uploadAvatar($event)" accept="image/png,image/jpeg,image/jpg" class="file" id="prove" title="">
                     </button>
                     <div class="clearfix"></div>
                     <span class="message upload" v-if="noUpload">请上传学籍证明</span>
+                    <span class="message upload" v-if="show_certificat_error">{{ certificat_error }}</span>
 
                     <span class="error-message hand" @click="hand">什么可以是学籍证明文件？</span>
                 </div>
 
                 <hr>
 
-                <button type="submit" class="btn secondary" @click="audit">提交审核</button>
+                <button type="submit" class="btn secondary"  @click="audit">提交审核</button>
 
             </div>
         </div>
@@ -99,17 +105,27 @@
             SideBar
         },
 
+        created() {
+            this.$api.auth.getIsCheck().then(response => {
+                this.is_check = response.data.is_check;
+            })
+        },
+
         data() {
             return {
                 file: null,
+                oldFile: null,
                 time: '2014',
                 style: 'btn primary',
                 record: 'u',
+                is_check: false,
                 noUpload: false,
                 school: '广州大学',
                 message: '上传文件',
                 realname: '',
                 realerror: '',
+                certificat_error: '',
+                show_certificat_error: false,
             }
         },
 
@@ -122,22 +138,69 @@
         methods: {
 
             audit() {
+                // 如果是已经认证成功的，直接返回
+                if (this.is_check === 1) {
+                    this.$swal.fire({
+                        type: 'success',
+                        title: '您已认证，无需进行此操作~',
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 2500,
+                    }).then()
+                    return false;
+                }
+
+                if (this.is_check === 2) {
+                    this.$swal.fire({
+                        type: 'warning',
+                        title: '资料审核中，无需进行此操作~',
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 2500,
+                    }).then()
+                    return false;
+                }
 
                 // 判断是否上传了图像
-                if (!this.file) {
+                if (!this.oldFile) {
                     this.noUpload = true;
                 }
 
                 this.$validator.validateAll().then((result) => {
                     if (result && !this.noUpload) {
+                        // 后端对接
+                        let formData = new FormData();
+                        formData.set('certificat', this.oldFile);
+                        formData.set('realname', this.realname);
+                        formData.set('record', this.record);
+                        formData.set('time', this.time);
 
-
-                        console.log(this.time)
+                        this.$api.auth.uploadCertificat(formData).then(() => {
+                            this.$swal.fire({
+                                type: 'success',
+                                title: '提交成功！',
+                                toast: true,
+                                position: 'top',
+                                showConfirmButton: false,
+                                timer: 2500,
+                            }).then()
+                            this.is_check = 2;
+                        }).catch(error => {
+                            if (error.data.errors.certificat) {
+                                this.show_certificat_error = true;
+                                this.certificat_error = error.data.errors.certificat;
+                            }
+                        })
                     }
                 });
             },
 
             uploadAvatar(e) {
+                // 将上传图片不合格的错误消除
+                this.show_certificat_error = false;
+
                 // 判断浏览器是否支持FileReader
                 if (!window.FileReader) {
                     this.$swal.fire({
@@ -204,6 +267,7 @@
                 }
 
                 this.noUpload = false;
+                this.oldFile = this.file;
                 this.style = 'btn success';
                 this.message = '上传成功';
             },
@@ -343,5 +407,18 @@
 
     .upload {
         margin-left: 182px;
+    }
+
+    /deep/ .el-select {
+        width: 198px;
+    }
+
+    /deep/ .el-select .el-input.is-focus .el-input__inner {
+        border: 1px solid #4b8f9b !important;
+    }
+
+    .el-select-dropdown__item.selected {
+        color: #4b8f9b;
+        font-weight: normal;
     }
 </style>

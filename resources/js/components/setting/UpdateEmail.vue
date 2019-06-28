@@ -82,7 +82,7 @@
                                 <label for="emailcode" class="label">输入收到的验证码</label>
                                 <input v-validate="'required|emailcode'" :class="[{'is-invalid' : errors.has('emailcode')}, 'form-control']" v-model="emailcode" name="emailcode" id="emailcode" type="text">
                                 <span class="invalid-feedback" v-if="errors.has('emailcode')">{{ errors.first('emailcode') }}</span>
-                                <span class="message password_message" v-if="!errors.has('emailcode')">{{ emailcode_message }}</span>
+                                <span class="message" v-if="!errors.has('emailcode')">{{ emailcode_message }}</span>
                             </div>
                         </div>
 
@@ -148,7 +148,7 @@
                                 <label for="bindemails" class="label">输入要绑定的邮箱</label>
                                 <input v-validate="'required|bindemail'" :class="[{'is-invalid' : errors.has('bindemail')}, 'form-control']" v-model="bindemail" name="bindemail" id="bindemails" type="text">
                                 <span class="invalid-feedback" v-if="errors.has('bindemail')">{{ errors.first('bindemail') }}</span>
-                                <span class="message password_message" v-if="!errors.has('bindemail')">{{ bindemail_message }}</span>
+                                <span class="message" v-if="!errors.has('bindemail')">{{ bindemail_message }}</span>
                             </div>
                         </div>
 
@@ -183,7 +183,7 @@
                                 <label for="bindemailcodes" class="label">输入收到的验证码</label>
                                 <input v-validate="'required|bindemailcode'" :class="[{'is-invalid' : errors.has('bindemailcode')}, 'form-control']" v-model="bindemailCode" name="bindemailcode" id="bindemailcodes" type="text">
                                 <span class="invalid-feedback" v-if="errors.has('bindemailcode')">{{ errors.first('bindemailcode') }}</span>
-                                <span class="message password_message" v-if="!errors.has('bindemailcode')">{{ bindemailcode_message }}</span>
+                                <span class="message" v-if="!errors.has('bindemailcode')">{{ bindemailcode_message }}</span>
                             </div>
                         </div>
 
@@ -378,7 +378,7 @@
                         }).catch(error => {
                             this.isDisable = false;
                             this.loading = false;
-                            this.bindemail_message = error.response.data.errors.password;
+                            this.bindemail_message = error.response.data.errors.bindemail_message;
                         })
                     }
                 })

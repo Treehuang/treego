@@ -116,7 +116,17 @@ const auth = {
 
     // 获取是不是管理员
     getIsManager () {
-        return instance.get(`${base.prefix}/ismanager`);
+        return instance.get(`${base.prefix}/user/ismanager`);
+    },
+
+    // 获取学籍认证状态
+    getIsCheck() {
+        return instance.get(`${base.prefix}/user/ischeck`);
+    },
+
+    // 学籍认证
+    uploadCertificat(formData) {
+        return instance.post(`${base.prefix}/user/uploadCertificat`, formData);
     }
 };
 

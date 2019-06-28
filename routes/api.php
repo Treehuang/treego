@@ -73,7 +73,10 @@ $api->version('v1', [
         // 需要进行身份认证的API
         $api->group(['middleware' => 'jwt'], function($api){
             // 获取是否为管理员
-            $api->get('/ismanager', 'Auth\UserController@getIsManager');
+            $api->get('/user/ismanager', 'Auth\UserController@getIsManager');
+
+            // 获取账户是否进行学籍认证
+            $api->get('/user/ischeck', 'Auth\UserController@getIsCheck');
 
             // 尝试登录
             $api->post('/trylogin', 'Auth\LoginController@tryLogin');
@@ -104,6 +107,9 @@ $api->version('v1', [
 
             // 修改头像，换一换
             $api->patch('/user/changeAvatar', 'Auth\UserController@update');
+
+            // 学籍认证
+            $api->post('/user/uploadCertificat', 'Auth\UserController@uploadCertificat');
 
             // 获取未读消息
             $api->get('/unread', 'Mess\MessController@getUnread');
