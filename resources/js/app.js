@@ -12,7 +12,7 @@ import swal from 'sweetalert2';     // 引入sweetalert2
 import LightTimeline from 'vue-light-timeline';     // 引入vue-light-timeline
 
 // import ElementUI from 'element-ui';
-import { Menu, Submenu, MenuItem, MenuItemGroup, Table, TableColumn, Pagination, Button, Tag, Select, Option, OptionGroup, Input, Dialog, Badge } from 'element-ui';
+import { Menu, Submenu, MenuItem, MenuItemGroup, Table, TableColumn, Pagination, Button, Tag, Select, Option, OptionGroup, Input, Dialog, Badge, Upload, Image } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 // 全局引入数据验证
@@ -25,8 +25,8 @@ import './geetest/gt'
 Vue.use(Menu); Vue.use(Submenu);
 Vue.use(MenuItem); Vue.use(MenuItemGroup);
 Vue.use(Table); Vue.use(TableColumn);
-Vue.use(Pagination);
-Vue.use(Button); Vue.use(Dialog);
+Vue.use(Pagination); Vue.use(Upload);
+Vue.use(Button); Vue.use(Dialog); Vue.use(Image);
 Vue.use(Tag); Vue.use(Input); Vue.use(Badge);
 Vue.use(Select); Vue.use(Option); Vue.use(OptionGroup);
 Vue.use(VueRouter);

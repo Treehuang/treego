@@ -73,7 +73,7 @@ instance.interceptors.response.use(response => {
             case 500:
                 swal.fire({
                     type: 'error',
-                    title: '哎呀！网络连接出错了...',
+                    title: '出错啦~ 呼叫程序小哥哥！',
                     toast: true,
                     position: 'top',
                     showConfirmButton: false,

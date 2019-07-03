@@ -70,8 +70,14 @@ let routes = [
     {
         path: '/maccount',
         name: 'mAccount',
-        components: require('./components/managment/mAccount'),
+        components: require('./components/managment/maccount/mAccount'),
         meta: { title: '账号管理' }
+    },
+    {
+        path: '/certificatCheck',
+        name: 'certificatCheck',
+        components: require('./components/managment/certificatCheck/certificatCheck'),
+        meta: { title: '学籍审核' }
     }
 ];
 

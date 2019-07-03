@@ -38,7 +38,7 @@ class UserController extends Controller
         }
 
         // 生成随机6位数
-//        $code = str_pad(random_int(200000, 999999), 6, 3, STR_PAD_LEFT);
+        $code = str_pad(random_int(200000, 999999), 6, 3, STR_PAD_LEFT);
 
 //        try{
 //            $easySms->send($phone, [

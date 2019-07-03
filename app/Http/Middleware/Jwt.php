@@ -22,8 +22,11 @@ class Jwt extends BaseMiddleware
 
         // 使用 try 包裹，以捕捉 token 过期所抛出的 TokenExpiredException  异常
         try {
-            // 检测用户的登录状态，如果正常则通过
-            if ($this->auth->parseToken()->authenticate()) {
+            // 获取 token 中的 user 信息
+            $user = $this->auth->parseToken()->authenticate();
+
+            // 检测用户的登录状态和冻结状态，如果正常则通过
+            if ($user && $user->state === 1) {
                 return $next($request);
             }
 

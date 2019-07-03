@@ -54,7 +54,7 @@
 
                         <div class="modal-footer">
                             <button class="btn light" data-dismiss="modal">取消</button>
-                            <button class="btn next" @click="nextOne">下一步</button>
+                            <button class="btn next" @click="nextOne" :disabled="isDisable"><span v-show="!loading">下一步</span><i v-show="loading" class="spinner-border spinner-border-sm"></i></button>
                         </div>
 
                     </div>
@@ -155,7 +155,7 @@
 
                         <div class="modal-footer">
                             <button class="btn light" data-dismiss="modal">取消</button>
-                            <button class="btn next" @click="bindNextOne">下一步</button>
+                            <button class="btn next" @click="bindNextOne" :disabled="isDisable"><span v-show="!loading">下一步</span><i v-show="loading" class="spinner-border spinner-border-sm"></i></button>
                         </div>
 
                     </div>
@@ -262,6 +262,8 @@
 
         data() {
             return {
+                loading: false,
+                isDisable: false,
                 phone: null,
                 smscode: null,
                 bindphone: null,
@@ -296,12 +298,20 @@
             nextOne() {
                 this.$validator.validate('phone').then((result) => {
                     if (result) {
+
+                        this.isDisable = true;
+                        this.loading = true;
+
                         let formData = { phone: this.phone };
                         this.$api.auth.unbindPhoneSms(formData).then(response => {
                             sessionStorage.setItem("verify_key", response.data.verify_key);
                             $('#unbindPhone').modal('hide');
                             $('#unbindPhoneSmsCode').modal('show');
+                            this.isDisable = false;
+                            this.loading = false;
                         }).catch(error => {
+                            this.isDisable = false;
+                            this.loading = false;
                             this.phone_message = error.response.data.errors.phone;
                         })
                     }
@@ -354,12 +364,20 @@
             bindNextOne() {
                 this.$validator.validate('bindphone').then((result) => {
                     if (result) {
+
+                        this.isDisable = true;
+                        this.loading = true;
+
                         let formData = { phone: this.bindphone };
                         this.$api.auth.bindPhoneSms(formData).then(response => {
                             sessionStorage.setItem("verify_key", response.data.verify_key);
                             $('#bindPhone').modal('hide');
                             $('#bindPhoneSmsCode').modal('show');
+                            this.isDisable = false;
+                            this.loading = false;
                         }).catch(error => {
+                            this.isDisable = false;
+                            this.loading = false;
                             this.bindphone_message = error.response.data.errors.phone;
                         })
                     }
@@ -681,6 +699,7 @@
     }
 
     .next {
+        width: 70px;
         box-shadow: none;
         color: #ffffff;
         background-color: #4d94a0;

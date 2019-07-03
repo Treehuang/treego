@@ -21,12 +21,12 @@
 
                 <hr>
 
-                <div>
-                    <label class="school" for="school">院校</label>
-                    <input type="text" class="form-control" name="school" id="school" v-model="school" disabled>
-                </div>
+                <!--<div>-->
+                    <!--<label class="school" for="school">院校</label>-->
+                    <!--<input type="text" class="form-control" name="school" id="school" v-model="school" disabled>-->
+                <!--</div>-->
 
-                <hr>
+                <!--<hr>-->
 
                 <div>
                     <label class="record" for="record">学历</label>
@@ -55,19 +55,22 @@
                 <div class="itembox">
 
                     <label class="prove" for="prove">学籍证明</label>
-                    <button  :class="style" style="float: left; position: relative">{{ message }}
+
+                    <img v-if="imageUrl" :src="imageUrl" class="certificat">
+
+                    <i class="el-icon-upload certificat-uploader-icon">
                         <input type="file" @change="uploadAvatar($event)" accept="image/png,image/jpeg,image/jpg" class="file" id="prove" title="">
-                    </button>
+                    </i>
+
                     <div class="clearfix"></div>
-                    <span class="message upload" v-if="noUpload">请上传学籍证明</span>
+
+                    <span class="message upload" v-if="noUpload">{{ noUploadMessage }}</span>
                     <span class="message upload" v-if="show_certificat_error">{{ certificat_error }}</span>
 
-                    <span class="error-message hand" @click="hand">什么可以是学籍证明文件？</span>
+                    <button type="submit" class="btn secondary"  @click="audit">提交审核</button>
                 </div>
 
                 <hr>
-
-                <button type="submit" class="btn secondary"  @click="audit">提交审核</button>
 
             </div>
         </div>
@@ -77,11 +80,11 @@
                 <h6 class="card-title" style="color: #ff9600;">认证须知</h6>
                 <div style="color:#45555d;">
                     <p>
-                        • 上传学籍证明文件格式为PNG或JPG格式。请确保学籍文件清晰可见；
+                        • 你提交学籍证明后，1个工作日内完成审核，审核结果将会以审核通知的形式发送给你；
                     </p>
 
                     <p>
-                        • 你提交学籍证明后的1个工作日内完成审核，审核结果将会以系统通知的形式发送给你；
+                        • 上传学籍证明文件格式为PNG，JPG或JPEG格式。请确保学籍文件清晰可见；
                     </p>
 
                     <p>
@@ -90,6 +93,10 @@
 
                     <p>
                         • 我们会确保你所提供的信息均处于严格的保密状态，不会泄露；
+                    </p>
+
+                    <p @click="hand" style="cursor: pointer;">
+                        <i class="far fa-hand-point-right"></i> 什么可以是学籍证明文件？
                     </p>
                 </div>
             </div>
@@ -121,11 +128,12 @@
                 is_check: false,
                 noUpload: false,
                 school: '广州大学',
-                message: '上传文件',
                 realname: '',
                 realerror: '',
                 certificat_error: '',
                 show_certificat_error: false,
+                imageUrl: '',
+                noUploadMessage: ''
             }
         },
 
@@ -166,6 +174,9 @@
                 // 判断是否上传了图像
                 if (!this.oldFile) {
                     this.noUpload = true;
+                    this.noUploadMessage = '请上传学籍证明！';
+                }else {
+                    this.noUpload = false;
                 }
 
                 this.$validator.validateAll().then((result) => {
@@ -226,50 +237,44 @@
                 if (!/^image/.test(this.file.type)) {
 
                     // 清除路径,使得上传同一文件可以触发change
-                    e.srcElement.value = "" ;
+                    e.srcElement.value = '' ;
 
                     this.noUpload = true;
-                    this.style = 'btn danger';
-                    this.message = '上传失败';
-
-                    this.$swal.fire({
-                        type: 'warning',
-                        toast: true,
-                        position: 'top',
-                        title: '请上传格式为png，jpeg，jpg的图片',
-                        showConfirmButton: false,
-                        timer: 2500,
-                    }).then();
+                    this.noUploadMessage = '仅支持png，jpeg，jpg的图片！'
 
                     return false;
                 }
 
                 // 判断图片是否超过5m
-                if (this.file.size / 1024 > 2049) {
+                if (this.file.size / 1024 > 5121) {
 
                     // 清除路径,使得上传同一文件可以触发change
                     e.srcElement.value = "" ;
 
                     this.noUpload = true;
-                    this.style = 'btn danger';
-                    this.message = '上传失败';
-
-                    this.$swal.fire({
-                        type: 'warning',
-                        title: '请上传大小不超过2M的图片',
-                        toast: true,
-                        position: 'top',
-                        showConfirmButton: false,
-                        timer: 2500,
-                    }).then();
+                    this.noUploadMessage = '上传的图片大小不能超过 5MB！';
 
                     return false;
                 }
 
+                //创建一个reader
+                let reader = new FileReader();
+                //将图片转成base64格式
+                reader.readAsDataURL(this.file);
+
+                let _that = this;
+
+                //读取成功后的回调
+                reader.onloadend = function() {
+                    _that.imageUrl = this.result;
+                };
+
+                // 清除路径,使得上传同一文件可以触发change
+                e.srcElement.value = "" ;
+
                 this.noUpload = false;
                 this.oldFile = this.file;
-                this.style = 'btn success';
-                this.message = '上传成功';
+                this.uploadSign = true;
             },
 
             hand() {
@@ -289,10 +294,10 @@
                         '</p>' +
                         '<div class="clearfix"></div>' +
                     '</div>',
-                    // confirmButtonText: '确认',
+
                     showConfirmButton: false,
                 }).then();
-            }
+            },
         }
     }
 </script>
@@ -334,7 +339,8 @@
     }
 
     .secondary {
-        width: 90px; font-size: 15px; border-radius: 20px; margin-top: 8px; margin-bottom: 8px; color: #6c757d; border-color: #6c757d; box-shadow: none;float: right; margin-right: 50px;
+        width: 90px; font-size: 15px; border-radius: 20px; color: #6c757d; border-color: #6c757d; box-shadow: none;
+        position: absolute; top: 142px; left: 450px;
     }
 
     .secondary:hover {
@@ -345,42 +351,12 @@
         display: inline-block;
         position: absolute;
         top: 0;
-        left: 0;
+        left: 181px;
+        height: 178px;
         opacity: 0;
         cursor: pointer;
-        width: 198px;
-        height: 35px;
+        width: 196px;
         font-size: 0;
-    }
-
-    .primary {
-        width: 198px;
-        color: #ffffff;
-        background-color: #51a1ad;
-    }
-
-    .primary:hover {
-        background-color: #55a8b4;
-    }
-
-    .success {
-        width: 198px;
-        color: #ffffff;
-        background-color: #37b96b;
-    }
-
-    .success:hover {
-        background-color: #35af63;
-    }
-
-    .danger {
-        width: 198px;
-        color: #ffffff;
-        background-color: #ee6763;
-    }
-
-    .danger:hover {
-        background-color: #ff6f6b;
     }
 
     .itembox {
@@ -420,5 +396,36 @@
     .el-select-dropdown__item.selected {
         color: #4b8f9b;
         font-weight: normal;
+    }
+
+    .certificat-uploader-icon:hover, .certificat-uploader-icon:focus {
+        color: #4b8f9b;
+        border-color: #4b8f9b;
+    }
+
+     .certificat-uploader-icon {
+         border: 1px dashed #4b8f9b;
+         border-radius: 6px;
+         cursor: pointer;
+         font-size: 28px;
+         color: #8c939d;
+         width: 196px;
+         height: 178px;
+         line-height: 178px;
+         text-align: center;
+    }
+    .certificat {
+        border-radius: 6px;
+        display: inline-block;
+        position: absolute;
+        top: 1px;
+        left: 183px;
+        height: 176px;
+        cursor: pointer;
+        width: 194px;
+    }
+
+    .el-icon-upload {
+        font-size: 64px;
     }
 </style>

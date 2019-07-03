@@ -20,6 +20,7 @@ class CreateCertificatTable extends Migration
             $table->string('certificat');
             $table->string('record');
             $table->string('time');
+            $table->string('check_user')->nullable();
             $table->timestamps();
             $table->tinyInteger('audit_state')->default(0);
         });

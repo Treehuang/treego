@@ -16,8 +16,8 @@
                     </router-link>
                 </li>
 
-                <li class="nav-item" @click="logoutVisible = true">
-                    <i class="fas fa-power-off"></i>
+                <li class="nav-item">
+                    <i class="fas fa-power-off" @click="logoutVisible = true"></i>
                 </li>
 
                 <el-dialog title="提示" :visible.sync="logoutVisible" width="300px" :show-close="showClose" center>

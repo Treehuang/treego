@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Mess;
 
+use App\Models\User;
 use \DB;
 use Auth;
 use App\Models\Notice;
@@ -13,12 +14,14 @@ use App\Http\Controllers\Api\Controller;
 class MessController extends Controller
 {
     public function getUnread() {
+        $user_id = Auth::guard('api')->id();
+
         // 取出所有公告消息(排序)
-        $notices = Notice::where([])->latest()->get();
+        $notices = Notice::where('user_id', '=', 0)->orWhere('user_id', '=', $user_id)->latest()->get();
 
         // 取出此用户已读消息的message_id
         $readIdList = Message::where([
-            ['user_id', '=', Auth::guard('api')->id()],
+            ['user_id', '=', $user_id],
         ])->pluck('message_id');
 
         $newReadIdList = [];

@@ -114,7 +114,14 @@ Validator.extend('college', {
 Validator.extend('introduction', {
     getMessage: field => '不能含有非法字符',
     validate: value => {
-        return /^[a-zA-Z0-9\,!，！\.。\u4e00-\u9fa5]{0,50}$/.test(value)
+        return /^[a-zA-Z0-9\,!，！~\.。\u4e00-\u9fa5]{0,50}$/.test(value)
+    }
+});
+
+Validator.extend('noPassReason', {
+    getMessage: field => '含有非法字符或者字数超出30',
+    validate: value => {
+        return /^[a-zA-Z0-9\,!，！~\.。\u4e00-\u9fa5]{0,20}$/.test(value)
     }
 });
 

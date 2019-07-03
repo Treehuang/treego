@@ -8,5 +8,5 @@ class Notice extends Model
 {
     protected $table = 'notices';
 
-    protected $fillable = ['mess'];
+    protected $fillable = ['mess','user_id'];
 }

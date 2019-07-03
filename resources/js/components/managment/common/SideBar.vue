@@ -8,7 +8,11 @@
                     <template v-if="item.subs">
                         <el-submenu :index="item.index" :key="item.index">
                             <template slot="title">
-                                <i :class="item.icon"></i><span slot="title">{{ item.title }}</span>
+
+                                <i :class="item.icon"></i>
+
+                                <span slot="title">{{ item.title }}</span>
+
                             </template>
 
                             <template v-for="subItem in item.subs">
@@ -28,7 +32,14 @@
 
                     <template v-else>
                         <el-menu-item :index="item.index" :key="item.index">
-                            <i :class="item.icon"></i><span slot="title">{{ item.title }}</span>
+
+                            <el-badge v-if="item.icon === 'el-icon-document-checked' && no_audit_num !== 0" :value="no_audit_num" :max="20">
+                                <i class="el-icon-document-checked"></i>
+                            </el-badge>
+                            <i v-else :class="item.icon"></i>
+
+                            <span v-if="item.index === 'mhome'">{{ item.title }}</span>
+                            <span v-else slot="title">{{ item.title }}</span>
                         </el-menu-item>
                     </template>
 
@@ -48,6 +59,16 @@
             // 通过 Event Bus 进行组件间通信，来折叠侧边栏
             bus.$on('collapse', msg => {
                 this.collapse = msg;
+            });
+
+            // 通过 Event Bus 进行组件间通信，来读取待审核学籍的个数
+            bus.$on('get_no_audit_num', msg => {
+                this.no_audit_num = msg;
+            });
+
+            // 获取待审核学籍证明
+            this.$api.management_audit.getNoAudits().then(response => {
+                this.no_audit_num = response.data.data.length;
             })
         },
 
@@ -60,6 +81,7 @@
         data() {
             return {
                 collapse: true,
+                no_audit_num: 0,
                 items: [
                     {
                         icon: 'el-icon-s-home',
@@ -72,7 +94,12 @@
                         title: '用户管理',
                     },
                     {
-                        icon: 'el-icon-bell',
+                        icon: 'el-icon-document-checked',
+                        index: 'certificatCheck',
+                        title: '学籍审核',
+                    },
+                    {
+                        icon: 'el-icon-message-solid',
                         index: 'w',
                         title: '消息中心',
                         subs: [
@@ -138,5 +165,13 @@
 
     .el-menu-item.is-active {
         background-color: #283446 !important;
+    }
+
+    /deep/ .el-badge__content.is-fixed {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        -webkit-transform: translateY(-50%) translateX(100%);
+        transform: translateY(-50%) translateX(100%);
     }
 </style>

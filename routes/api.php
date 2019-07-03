@@ -172,6 +172,31 @@ $api->version('v1', [
             // 管理系统账号管理 -- 回收管理员授权
             $api->post('/management/unAuthorization', 'Management\UserController@unAuthorization');
 
+            // 管理系统学籍审核 -- 待审核（全部）
+            $api->get('/management/noaudits', 'Management\AuditController@getNoAudits');
+            // 管理系统学籍审核 -- 待审核（7条数据）
+            $api->get('/management/noaudit', 'Management\AuditController@getNoAudit');
+            // 管理系统学籍审核 -- 已审核（7条数据）
+            $api->get('/management/audit', 'Management\AuditController@getAudit');
+            // 管理系统学籍审核 -- 获取特定页待审核
+            $api->get('/management/pagesnoaudit', 'Management\AuditController@getPagesNoAudit');
+            // 管理系统学籍审核 -- 管理员通过审核
+            $api->post('/management/throwaudit', 'Management\AuditController@throwAudit');
+            // 管理系统学籍审核 -- 管理员不给通过审核
+            $api->post('/management/nothrowaudit', 'Management\AuditController@noThrowAudit');
+            // 管理系统学籍审核 -- 获取特定页已审核
+            $api->get('/management/pagesaudit', 'Management\AuditController@getPagesAudit');
+            // 管理系统学籍审核 -- 获取不能通过审核的原因
+            $api->get('/management/nopassreason', 'Management\AuditController@getNoPassReason');
+            // 管理系统学籍审核 -- 通过审核（7条）
+            $api->get('/management/pass', 'Management\AuditController@getThrowAudit');
+            // 管理系统学籍审核 -- 获取特定页通过审核
+            $api->get('/management/pagesthrowaudit', 'Management\AuditController@getCurrentPagesThrowAudit');
+            // 管理系统学籍审核 -- 未通过审核（7条）
+            $api->get('/management/nopass', 'Management\AuditController@getNoThrowAudit');
+            // 管理系统学籍审核 -- 获取特定页未通过审核
+            $api->get('/management/pagesnothrowaudit', 'Management\AuditController@getCurrentPagesNoThrowAudit');
+
             // 测试
             $api->get('/testme', 'Test\TestController@me');
         });
