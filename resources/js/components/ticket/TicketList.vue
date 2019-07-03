@@ -100,7 +100,7 @@
     }
 
     .card {
-        width: 37%;
+        width: 40%;
         background-color: #ffffff;
         border-radius: 6px;
         border: 1px solid rgba(139, 128, 249, 0.2);
@@ -116,7 +116,7 @@
     }
 
     .date, .leader {
-        margin-right: 10px;
+        margin-right: 6px;
         border: 1px solid rgba(139, 128, 249, 0.1);
         border-radius: 3px;
         padding: 2px 6px 2px 6px;
@@ -147,7 +147,7 @@
 
     .fare {
         top: 0;
-        left: 320px;
+        left: 340px;
         width: 420px;
         position: absolute;
         color: #45555d;
