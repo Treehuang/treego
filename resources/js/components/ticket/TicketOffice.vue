@@ -106,7 +106,7 @@
                     // 登录的用户
                     if (this.isAuth) {
                         this.$api.ticket.getAuthTickets().then(response => {
-                            this.price = this.startPlaceTicketList = response.data.startPlaceTicketList[0].price;
+                            this.price = response.data.price;
                             this.osmanthusTicketList  = response.data.osmanthusTicketList;
                             this.startPlaceTicketList = response.data.startPlaceTicketList;
                             this.universityTicketList = response.data.universityTicketList;
@@ -123,6 +123,7 @@
                     }else {
                         // 游客
                         this.$api.ticket.getNoAuthTickets().then(response => {
+                            this.price = 0;
                             this.startPlaceTicketList = response.data.startPlaceTicketList;
                         }).catch(error => {
                             this.hasError(error);
@@ -289,7 +290,7 @@
         overflow: hidden;
     }
 
-    .item-title{
+    .item-title {
         padding: 10px 12px 4px 12px;
         color: #45555d;
         font-size: 16px;
@@ -299,7 +300,7 @@
         width: 371px;
 
         padding: 0 8px 8px;
-        height: 443px;
+        height: 440px;
         overflow-y: scroll;
 
         /* 去掉横向滚动条 */
@@ -316,8 +317,11 @@
 
     .drag-list {
         margin: 5px 0 10px;
-        -webkit-transition: border .3s ease-in;
         transition: border .3s ease-in;
+
+        -moz-transition: border .3s ease-in; /* Firefox 4 */
+        -webkit-transition: border .3s ease-in; /* Safari and Chrome */
+        -o-transition: border .3s ease-in; /* Opera */
     }
 
     .drag-list:hover {

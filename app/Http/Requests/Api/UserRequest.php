@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
                 }else {
                     $introduction = [
                         'bail',
-                        'regex: /^[a-zA-Z0-9\,!，！\.。\x{4e00}-\x{9fa5}]{0,50}$/u'
+                        'regex: /^[a-zA-Z0-9\,!，！~\.。\x{4e00}-\x{9fa5}]{0,50}$/u'
                     ];
                 }
 

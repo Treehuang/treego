@@ -9,6 +9,6 @@ class Ticket extends Model
     protected $table = 'tickets';
 
     protected $fillable = [
-        'leader', 'ticket_id', 'start_place', 'from_time', 'arrival_time', 'date', 'ticket_num', 'price'
+        'leader', 'start_place', 'from_time', 'arrival_time', 'date', 'ticket_num', 'price', 'state'
     ];
 }

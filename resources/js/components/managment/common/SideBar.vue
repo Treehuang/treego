@@ -9,7 +9,13 @@
                         <el-submenu :index="item.index" :key="item.index">
                             <template slot="title">
 
-                                <i :class="item.icon"></i>
+                                <el-badge v-if="item.icon === 'el-icon-mobile' && ticketsOfficeState === 1" is-dot type="success">
+                                    <i class="el-icon-mobile"></i>
+                                </el-badge>
+                                <el-badge v-else-if="item.icon === 'el-icon-mobile' && ticketsOfficeState === 0" is-dot type="info">
+                                    <i class="el-icon-mobile"></i>
+                                </el-badge>
+                                <i v-else :class="item.icon"></i>
 
                                 <span slot="title">{{ item.title }}</span>
 
@@ -33,7 +39,7 @@
                     <template v-else>
                         <el-menu-item :index="item.index" :key="item.index">
 
-                            <el-badge v-if="item.icon === 'el-icon-document-checked' && no_audit_num !== 0" :value="no_audit_num" :max="20">
+                            <el-badge v-if="item.icon === 'el-icon-document-checked' && no_audit_num !== 0" :value="no_audit_num" :max="9">
                                 <i class="el-icon-document-checked"></i>
                             </el-badge>
                             <i v-else :class="item.icon"></i>
@@ -69,6 +75,11 @@
             // 获取待审核学籍证明
             this.$api.management_audit.getNoAudits().then(response => {
                 this.no_audit_num = response.data.data.length;
+            });
+
+            // 获取车票系统是否开启
+            this.$api.ticket.getTicketsOfficeState().then(response => {
+                this.ticketsOfficeState = response.data.ticketsOfficeState;
             })
         },
 
@@ -82,6 +93,7 @@
             return {
                 collapse: true,
                 no_audit_num: 0,
+                ticketsOfficeState: 1,
                 items: [
                     {
                         icon: 'el-icon-s-home',
@@ -98,33 +110,37 @@
                         index: 'certificatCheck',
                         title: '学籍审核',
                     },
+                    // {
+                    //     icon: 'el-icon-message-solid',
+                    //     index: 'w',
+                    //     title: '消息中心',
+                    //     subs: [
+                    //         {
+                    //             index: 's',
+                    //             title: '系统公告'
+                    //         },
+                    //         {
+                    //             index: 'h',
+                    //             title: '短信通知',
+                    //         },
+                    //     ]
+                    // },
                     {
-                        icon: 'el-icon-message-solid',
-                        index: 'w',
-                        title: '消息中心',
-                        subs: [
-                            {
-                                index: 's',
-                                title: '系统公告'
-                            },
-                            {
-                                index: 'h',
-                                title: '短信通知',
-                            },
-                        ]
-                    },
-                    {
-                        icon: 'el-icon-bank-card',
+                        icon: 'el-icon-mobile',
                         index: 'k',
                         title: '车票系统',
                         subs: [
                             {
-                              index: 'kd',
-                              title: '设置开启'
+                              index: 'setTickets',
+                              title: '添加车票',
+                            },
+                            {
+                                index: 'df',
+                                title: '管理车票',
                             },
                             {
                                 index: 'hs',
-                                title: '统计分析'
+                                title: '统计中心'
                             }
                         ]
                     }
@@ -173,5 +189,13 @@
         right: 15px;
         -webkit-transform: translateY(-50%) translateX(100%);
         transform: translateY(-50%) translateX(100%);
+    }
+
+    /deep/ .el-badge__content.is-dot {
+        height: 10px;
+        width: 10px;
+        padding: 0;
+        right: 0;
+        border-radius: 50%;
     }
 </style>

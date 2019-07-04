@@ -73,7 +73,7 @@ instance.interceptors.response.use(response => {
             case 500:
                 swal.fire({
                     type: 'error',
-                    title: '出错啦~ 呼叫程序小哥哥！',
+                    title: '出错啦~ 赶快呼叫程序小哥哥！',
                     toast: true,
                     position: 'top',
                     showConfirmButton: false,

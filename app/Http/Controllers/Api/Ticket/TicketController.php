@@ -24,7 +24,7 @@ class TicketController extends Controller
         $userId = Auth::guard('api')->id();
 
         // 取出所有起始点的车票
-        $tickets = Ticket::all();
+        $tickets = Ticket::where('state', '=', 1)->get();
 
         // 取出此用户已购的车票的ticket_id
         $noBuyTicketsList = UserTicket::where([
@@ -41,7 +41,7 @@ class TicketController extends Controller
         // 用户未购买的车票
         $startPlaceTicketList = [];
         foreach ($tickets as $ticket) {
-            if (!in_array($ticket['ticket_id'], $newNoBuyTicketsList)) {
+            if (!in_array($ticket['id'], $newNoBuyTicketsList)) {
                 $startPlaceTicketList[] = $ticket;
             }
         }
@@ -61,6 +61,7 @@ class TicketController extends Controller
         ])->get();
 
         return response()->json([
+            'price' => $tickets[0]['price'],
             'osmanthusTicketList'  => $osmanthusTicketList,
             'startPlaceTicketList' => $startPlaceTicketList,
             'universityTicketList' => $universityTicketList,
@@ -90,7 +91,7 @@ class TicketController extends Controller
         foreach ($request->universityTicketList as $universityTicket) {
             $newUniversityTicketList[] = [
                 'user_id' => $userId,
-                'ticket_id' => $universityTicket['ticket_id'],
+                'ticket_id' => $universityTicket['id'],
                 'start_place' => $universityTicket['start_place'],
                 'terminus' => '大学城',
                 'from_time' => $universityTicket['from_time'],
@@ -125,7 +126,7 @@ class TicketController extends Controller
         foreach ($request->osmanthusTicketList as $osmanthusTicket) {
             $newOsmanthusTicketList[] = [
                 'user_id' => $userId,
-                'ticket_id' => $osmanthusTicket['ticket_id'],
+                'ticket_id' => $osmanthusTicket['id'],
                 'start_place' => $osmanthusTicket['start_place'],
                 'terminus' => '桂花岗',
                 'from_time' => $osmanthusTicket['from_time'],

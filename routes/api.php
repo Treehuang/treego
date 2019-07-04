@@ -197,6 +197,9 @@ $api->version('v1', [
             // 管理系统学籍审核 -- 获取特定页未通过审核
             $api->get('/management/pagesnothrowaudit', 'Management\AuditController@getCurrentPagesNoThrowAudit');
 
+            // 管理系统车票系统 -- 添加车票
+            $api->post('/management/addfares', 'Management\FareController@addFares');
+
             // 测试
             $api->get('/testme', 'Test\TestController@me');
         });

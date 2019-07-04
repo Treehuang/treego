@@ -521,7 +521,7 @@
         border-top: 0;
         border-right: 1px solid #dee2e6;
         border-left: 1px solid #dee2e6;
-        border-bottom: 1px solid #dee2e6;
+        border-bottom: 0;
         width: auto;
         border-radius: 4px;
     }
@@ -725,5 +725,9 @@
     .del-dialog-cnt{
         font-size: 16px;
         text-align: center
+    }
+
+    /deep/ .el-table td, /deep/ .el-table th.is-leaf {
+        border-bottom: 0;
     }
 </style>

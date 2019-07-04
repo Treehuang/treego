@@ -78,6 +78,12 @@ let routes = [
         name: 'certificatCheck',
         components: require('./components/managment/certificatCheck/certificatCheck'),
         meta: { title: '学籍审核' }
+    },
+    {
+        path: '/setTickets',
+        name: 'setTickets',
+        components: require('./components/managment/ticketCenter/SetTicket'),
+        meta: { title: '添加车票' }
     }
 ];
 

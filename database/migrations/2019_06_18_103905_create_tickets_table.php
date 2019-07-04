@@ -15,14 +15,14 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('ticket_id');
             $table->string('leader');
             $table->string('start_place');
             $table->string('from_time');
             $table->string('arrival_time');
             $table->date('date');
             $table->integer('price');
-            $table->tinyInteger('ticket_num');
+            $table->tinyInteger('state')->default(0);
+            $table->tinyInteger('ticket_num')->default(1);
             $table->timestamps();
         });
     }

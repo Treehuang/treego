@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8">
@@ -11,6 +11,7 @@
         <title>tree go</title>
 
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <script src="/laydate/laydate.js"></script>
     </head>
 
     <body class="body">

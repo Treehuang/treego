@@ -96,7 +96,7 @@ class AuditController extends Controller
                 return response()->json(['data' => $exception->getMessage()], 500);
             }
 
-            return response()->json(['data' => '出错啦，呼叫程序小哥哥！'], 500);
+            return response()->json(['data' => '出错啦，赶快呼叫程序小哥哥！'], 500);
         }
     }
 
