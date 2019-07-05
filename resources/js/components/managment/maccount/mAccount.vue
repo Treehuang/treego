@@ -30,10 +30,10 @@
             <el-table-column type="selection" width="55"></el-table-column>
 
             <el-table-column
-                    label="日期"
+                    label="注册日期"
                     width="130px"
                     align="center">
-                <template slot-scope="scope"><i class="el-icon-time"></i><span style="margin-left: 10px">{{ scope.row.created_at }}</span></template>
+                <template slot-scope="scope"><i class="el-icon-date"> {{ scope.row.created_at }}</i></template>
             </el-table-column>
 
             <el-table-column
@@ -473,7 +473,7 @@
                     params: {
                         current_page: current_page,
                     }
-                }
+                };
                 this.$api.management_account.getCurrentPagesUsers(formData).then(response => {
                     this.tableData = response.data.data;
                     this.total_pages = response.data.meta.pagination.total_pages * 10;

@@ -12,7 +12,7 @@ import swal from 'sweetalert2';     // 引入sweetalert2
 import LightTimeline from 'vue-light-timeline';     // 引入vue-light-timeline
 
 // import ElementUI from 'element-ui';
-import { Menu, Submenu, MenuItem, MenuItemGroup, Table, TableColumn, Pagination, Button, Tag, Select, Option, OptionGroup, Input, Dialog, Badge, Upload, Image, DatePicker, TimePicker } from 'element-ui';
+import { Menu, Radio, Tooltip, Submenu, MenuItem, MenuItemGroup, Table, TableColumn, Pagination, Button, Tag, Select, Option, OptionGroup, Input, Dialog, Badge, Upload, Image, DatePicker, TimePicker, Switch } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 // 全局引入数据验证
@@ -22,9 +22,9 @@ import './veevalidate/validate'
 import './geetest/gt'
 
 // Vue.use(ElementUI);
-Vue.use(Menu); Vue.use(Submenu);
-Vue.use(MenuItem); Vue.use(MenuItemGroup);
-Vue.use(Table); Vue.use(TableColumn);
+Vue.use(Menu); Vue.use(Submenu); Vue.use(Switch);
+Vue.use(MenuItem); Vue.use(MenuItemGroup); Vue.use(Radio);
+Vue.use(Table); Vue.use(TableColumn); Vue.use(Tooltip);
 Vue.use(Pagination); Vue.use(Upload); Vue.use(TimePicker); Vue.use(DatePicker);
 Vue.use(Button); Vue.use(Dialog); Vue.use(Image);
 Vue.use(Tag); Vue.use(Input); Vue.use(Badge);

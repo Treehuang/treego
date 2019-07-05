@@ -84,6 +84,12 @@ let routes = [
         name: 'setTickets',
         components: require('./components/managment/ticketCenter/SetTicket'),
         meta: { title: '添加车票' }
+    },
+    {
+        path: '/opeTickets',
+        name: 'opeTickets',
+        components: require('./components/managment/ticketCenter/OperateTicket'),
+        meta: { title: '管理车票' }
     }
 ];
 

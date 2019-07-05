@@ -139,7 +139,7 @@
 
             <span slot="footer" class="dialog-footer">
                 <span class="cancel" @click="certificatVisible = false">取 消</span>
-                <span class="sure">确 定</span>
+                <span class="sure" @click="certificatVisible = false">确 定</span>
             </span>
         </el-dialog>
 

@@ -62,7 +62,7 @@ instance.interceptors.response.use(response => {
             case 429:
                 swal.fire({
                     type: 'warning',
-                    title: '您操作太频繁了，请稍后~',
+                    title: '您操作太频繁了，请稍等1分钟再操作~',
                     toast: true,
                     position: 'top',
                     showConfirmButton: false,

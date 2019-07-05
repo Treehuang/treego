@@ -199,7 +199,18 @@ $api->version('v1', [
 
             // 管理系统车票系统 -- 添加车票
             $api->post('/management/addfares', 'Management\FareController@addFares');
-
+            // 管理系统车票系统 -- 管理车票--获取车票
+            $api->get('/management/allfares', 'Management\FareController@getAllFares');
+            // 管理系统车票系统 -- 管理车票--获取特定页车票
+            $api->get('/management/currentfares', 'Management\FareController@getCurrentFares');
+            // 管理系统车票系统 -- 管理车票--删除车票
+            $api->delete('/management/unsetfare', 'Management\FareController@deleteFare');
+            // 管理系统车票系统 -- 管理车票--激活车票
+            $api->patch('/management/activefare', 'Management\FareController@activeFare');
+            // 管理系统车票系统 -- 管理车票--车票失效
+            $api->patch('/management/unactivefare', 'Management\FareController@unActiveFare');
+            // 管理系统车票系统 -- 管理车票--开启/关闭Ticket Office
+            $api->patch('/management/setTicketOffice', 'Management\FareController@setTicketOffice');
             // 测试
             $api->get('/testme', 'Test\TestController@me');
         });

@@ -42,6 +42,7 @@ class TicketController extends Controller
         $startPlaceTicketList = [];
         foreach ($tickets as $ticket) {
             if (!in_array($ticket['id'], $newNoBuyTicketsList)) {
+                $ticket['ticket_id'] = $ticket['id'];           // 为了让ticket_id与id保持一致（数据库无法做到，在这里添加）
                 $startPlaceTicketList[] = $ticket;
             }
         }
@@ -91,7 +92,7 @@ class TicketController extends Controller
         foreach ($request->universityTicketList as $universityTicket) {
             $newUniversityTicketList[] = [
                 'user_id' => $userId,
-                'ticket_id' => $universityTicket['id'],
+                'ticket_id' => $universityTicket['ticket_id'],
                 'start_place' => $universityTicket['start_place'],
                 'terminus' => '大学城',
                 'from_time' => $universityTicket['from_time'],
@@ -126,7 +127,7 @@ class TicketController extends Controller
         foreach ($request->osmanthusTicketList as $osmanthusTicket) {
             $newOsmanthusTicketList[] = [
                 'user_id' => $userId,
-                'ticket_id' => $osmanthusTicket['id'],
+                'ticket_id' => $osmanthusTicket['ticket_id'],
                 'start_place' => $osmanthusTicket['start_place'],
                 'terminus' => '桂花岗',
                 'from_time' => $osmanthusTicket['from_time'],

@@ -1,7 +1,5 @@
 <template>
     <div class="table">
-        <!--<button class="btn btn-primary" @click="test">测试</button>-->
-
         <div class="handle-box">
             <span class="sure" @click="save">提交</span>
         </div>
@@ -48,6 +46,7 @@
 
             <el-table-column label="操作" align="center">
                 <template slot-scope="scope">
+                    <i class="el-icon-magic-stick add" @click="clear(scope.row)"></i>
                     <i class="el-icon-circle-plus add" @click="addRow"></i>
                     <i class="el-icon-remove reduce" @click="delRow(scope.$index)"></i>
                 </template>
@@ -82,10 +81,6 @@
         },
 
         methods: {
-            test() {
-                console.log(this.tableData);
-            },
-
             // 获取随机 dom id
             getRandomId() {
                 let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -209,6 +204,15 @@
                         },
                     ]
                 })
+            },
+
+            clear(row) {
+                row.date = '';
+                row.price = '';
+                row.leader = '';
+                row.from_time = '';
+                row.arrival_time = '';
+                row.start_place = '';
             }
         }
     }

@@ -131,6 +131,11 @@
                     }
                 }
 
+                // 获取用户是否进行学籍认证
+                this.$api.auth.me().then(response => {
+                    this.is_check = response.data.is_check;
+                })
+
             }).catch(error => {
                 this.hasError(error);
             });
@@ -148,6 +153,7 @@
 
                 pop: false,
                 price: '',
+                is_check: 0,
                 startPlaceTicketList: [],
                 universityTicketList: [],
                 osmanthusTicketList:[]
@@ -158,6 +164,19 @@
             addToUniversity() {
 
                 if (this.isAuth) {
+                    if (this.is_check !== 1) {
+                        this.$swal.fire({
+                            type: 'warning',
+                            title: '您需要完成学籍认证才可以进行此操作~',
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2500,
+                        });
+
+                        return false;
+                    }
+
                     let formData = { universityTicketList: this.universityTicketList };
                     this.$api.ticket.addToUniversity(formData).then(() => {
                         this.$swal.fire({
@@ -194,6 +213,19 @@
             toOsmanthus() {
 
                 if (this.isAuth) {
+                    if (this.is_check !== 1) {
+                        this.$swal.fire({
+                            type: 'warning',
+                            title: '您需要完成学籍认证才可以进行此操作~',
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2500,
+                        });
+
+                        return false;
+                    }
+
                     let formData = { osmanthusTicketList: this.osmanthusTicketList };
                     this.$api.ticket.addToOsmanthus(formData).then(() => {
                         this.$swal.fire({
@@ -233,7 +265,7 @@
                     this.pop = true;
                     this.$swal.fire({
                         type: 'warning',
-                        title: '您操作太频繁了，请稍后~',
+                        title: '您操作太频繁了，请稍等1分钟再操作~',
                         toast: true,
                         position: 'top',
                         showConfirmButton: false,

@@ -72,6 +72,11 @@
                 this.no_audit_num = msg;
             });
 
+            // 通过 Event Bus 进行组件间通信，来读取车票系统是否开启
+            bus.$on('get_ticket_state', msg => {
+                this.ticketsOfficeState = msg;
+            });
+
             // 获取待审核学籍证明
             this.$api.management_audit.getNoAudits().then(response => {
                 this.no_audit_num = response.data.data.length;
@@ -93,7 +98,7 @@
             return {
                 collapse: true,
                 no_audit_num: 0,
-                ticketsOfficeState: 1,
+                ticketsOfficeState: 0,
                 items: [
                     {
                         icon: 'el-icon-s-home',
@@ -135,7 +140,7 @@
                               title: '添加车票',
                             },
                             {
-                                index: 'df',
+                                index: 'opeTickets',
                                 title: '管理车票',
                             },
                             {
@@ -197,5 +202,9 @@
         padding: 0;
         right: 0;
         border-radius: 50%;
+    }
+
+    /deep/ .el-badge__content--success {
+        background-color: #1ab394;
     }
 </style>
