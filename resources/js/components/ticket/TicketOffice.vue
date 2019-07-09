@@ -120,6 +120,11 @@
                                 timer: 2500,
                             })
                         });
+
+                        // 获取用户是否进行学籍认证
+                        this.$api.auth.me().then(response => {
+                            this.is_check = response.data.is_check;
+                        })
                     }else {
                         // 游客
                         this.$api.ticket.getNoAuthTickets().then(response => {
@@ -130,12 +135,6 @@
                         });
                     }
                 }
-
-                // 获取用户是否进行学籍认证
-                this.$api.auth.me().then(response => {
-                    this.is_check = response.data.is_check;
-                })
-
             }).catch(error => {
                 this.hasError(error);
             });

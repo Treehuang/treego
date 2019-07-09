@@ -211,6 +211,29 @@ $api->version('v1', [
             $api->patch('/management/unactivefare', 'Management\FareController@unActiveFare');
             // 管理系统车票系统 -- 管理车票--开启/关闭Ticket Office
             $api->patch('/management/setTicketOffice', 'Management\FareController@setTicketOffice');
+
+            // 管理系统统计中心 -- 获取激活的车票
+            $api->get('/management/activefares', 'Management\StatisController@getActiveFares');
+            // 管理系统统计中心 -- 获取每个起始点车票的订购情况
+            $api->get('/management/countfares', 'Management\StatisController@getCountFares');
+            // 管理系统统计中心 -- 获取所有用户订购的车票（7条）
+            $api->get('/management/buyfares', 'Management\StatisController@getAllBuyFares');
+            // 管理系统统计中心 -- 获取所有用户订购的车票(特定页)
+            $api->get('/management/currentbuyfares', 'Management\StatisController@getCurrentBuyFares');
+            // 管理系统统计中心 -- 搜索
+            $api->get('/management/searchfares', 'Management\StatisController@getSearchFares');
+            // 管理系统统计中心 -- 搜索(特定页)
+            $api->get('/management/currentsearchfares', 'Management\StatisController@getCurrentSearchFares');
+            // 管理系统统计中心 -- execl数据（全部）
+            $api->get('/management/execlfares', 'Management\StatisController@getExeclFares');
+            // 管理系统统计中心 -- execl数据（特定）
+            $api->get('/management/execlfare', 'Management\StatisController@getExeclFare');
+            // 管理系统统计中心 -- 抵达大学城或桂花岗的车票（7条）
+            $api->get('/management/unosfare', 'Management\StatisController@getUnOsFare');
+            // 管理系统统计中心 -- 抵达大学城或桂花岗的车票（特定）
+            $api->get('/management/currentunosfare', 'Management\StatisController@getCurrentUnOsFare');
+            // 管理系统统计中心 -- 抵达大学城或桂花岗的车票（全部）
+            $api->get('/management/unosfares', 'Management\StatisController@getUnOsFares');
             // 测试
             $api->get('/testme', 'Test\TestController@me');
         });

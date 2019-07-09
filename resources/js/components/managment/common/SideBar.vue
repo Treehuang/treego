@@ -144,8 +144,12 @@
                                 title: '管理车票',
                             },
                             {
-                                index: 'hs',
+                                index: 'statisticalCenter',
                                 title: '统计中心'
+                            },
+                            {
+                                index: 'exportdown',
+                                title: '下载导出',
                             }
                         ]
                     }

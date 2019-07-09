@@ -21,6 +21,7 @@ class CreateUserTicketsTable extends Migration
             $table->string('start_place');
             $table->string('terminus');
             $table->string('from_time');
+            $table->string('username');
             $table->string('arrival_time');
             $table->date('date');
             $table->tinyInteger('ticket_num');

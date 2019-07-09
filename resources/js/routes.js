@@ -90,6 +90,18 @@ let routes = [
         name: 'opeTickets',
         components: require('./components/managment/ticketCenter/OperateTicket'),
         meta: { title: '管理车票' }
+    },
+    {
+        path: '/statisticalCenter',
+        name: 'statisticalCenter',
+        components: require('./components/managment/statisticalCenter/StatisticalCenter'),
+        meta: { title: '统计中心' }
+    },
+    {
+        path: '/exportdown',
+        name: 'exportdown',
+        components: require('./components/managment/statisticalCenter/ExportDown'),
+        meta: { title: '下载导出' }
     }
 ];
 

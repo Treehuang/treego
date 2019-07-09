@@ -79,7 +79,9 @@ class TicketController extends Controller
     // 保存前往大学城的车票
     public function addToUniversity(Request $request) {
 
-        $userId = Auth::guard('api')->id();
+        $user = Auth::guard('api')->user();
+        $userId = $user->id;
+        $username = $user->username;
 
         // 将该用户大学城车票全部的state置为0
         UserTicket::where([
@@ -99,6 +101,7 @@ class TicketController extends Controller
                 'arrival_time' => $universityTicket['arrival_time'],
                 'ticket_num' => (integer)$universityTicket['ticket_num'],
                 'state' => 1,
+                'username' => $username,
                 'leader' => $universityTicket['leader'],
                 'date' => $universityTicket['date'],
                 'price' => $universityTicket['price'],
@@ -114,7 +117,9 @@ class TicketController extends Controller
 
     // 保存前往桂花岗的车票
     public function addToOsmanthus(Request $request) {
-        $userId = Auth::guard('api')->id();
+        $user = Auth::guard('api')->user();
+        $userId = $user->id;
+        $username = $user->username;
 
         // 将该用户桂花岗车票全部的state置为0
         UserTicket::where([
@@ -134,6 +139,7 @@ class TicketController extends Controller
                 'arrival_time' => $osmanthusTicket['arrival_time'],
                 'ticket_num' => $osmanthusTicket['ticket_num'],
                 'state' => 1,
+                'username' => $username,
                 'leader' => $osmanthusTicket['leader'],
                 'date' => $osmanthusTicket['date'],
                 'price' => $osmanthusTicket['price'],
